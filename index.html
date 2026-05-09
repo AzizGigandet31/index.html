@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="MM Food"/>
+<title>MM Food Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Nunito',sans-serif;background:#111418;color:#f0f0f0;min-height:100vh;padding-bottom:90px;}
+input,select,button{font-family:'Nunito',sans-serif;}
+input::placeholder{color:#444;}
+input:focus,select:focus{outline:none;border-color:#f97316!important;}
+::-webkit-scrollbar{width:3px;height:3px;}
+::-webkit-scrollbar-thumb{background:#2a2d33;border-radius:4px;}
+
+.header{background:linear-gradient(135deg,#c94400,#f97316);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.tabbar{display:flex;background:#16191e;border-bottom:1px solid #2a2d33;overflow-x:auto;position:sticky;top:62px;z-index:99;}
+.tab-btn{flex:1;padding:14px 8px;border:none;background:none;color:#555;font-weight:600;font-size:11px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s;min-width:64px;}
+.tab-btn.active{color:#f97316;font-weight:900;border-bottom-color:#f97316;}
+.tab-icon{font-size:22px;margin-bottom:4px;}
+.page{padding:12px;max-width:860px;margin:0 auto;display:none;}
+.page.active{display:block;}
+
+.card{background:#1c1f24;border-radius:16px;padding:16px;border:1px solid #2a2d33;margin-bottom:12px;}
+.row{display:flex;justify-content:space-between;align-items:center;}
+.sep{border-top:1px solid #2a2d33;margin:8px 0;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+
+.btn{border:none;color:#fff;border-radius:10px;padding:10px 16px;font-weight:800;font-size:13px;cursor:pointer;}
+.btn-orange{background:linear-gradient(135deg,#c94400,#f97316);}
+.btn-green{background:#22c55e;}
+.btn-gray{background:#2a2d33;}
+.btn-edit{background:#1e2a3a;border:1px solid #3b82f640;color:#60a5fa;border-radius:8px;padding:5px 10px;cursor:pointer;font-size:11px;font-weight:700;}
+.btn-del{background:#2a1a1a;border:1px solid #ef444440;color:#ef4444;border-radius:8px;padding:5px 10px;cursor:pointer;font-size:11px;font-weight:700;}
+.btn-outline{width:100%;background:transparent;border:2px dashed #f97316;color:#f97316;border-radius:12px;padding:12px;font-weight:800;cursor:pointer;font-size:13px;margin-top:4px;}
+
+.inp{width:100%;background:#111418;border:1px solid #2a2d33;border-radius:10px;padding:10px 12px;color:#f0f0f0;font-size:13px;margin-bottom:8px;}
+.tag{border-radius:7px;padding:3px 9px;font-size:11px;font-weight:700;display:inline-block;}
+.section-title{font-weight:900;color:#f97316;margin-bottom:8px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;}
+.fin-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #2a2d33;}
+.empty{text-align:center;padding:40px 20px;color:#333;}
+
+.prod-btn{background:#1c1f24;border:1px solid #2a2d33;border-radius:11px;padding:9px 7px;cursor:pointer;text-align:left;transition:all .15s;width:100%;}
+.prod-btn.in-cart{background:#f9731615;border-color:#f97316;}
+
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;align-items:flex-end;justify-content:center;padding:0;}
+.modal-overlay.open{display:flex;}
+.modal{background:#1c1f24;border-radius:20px 20px 0 0;padding:20px;width:100%;max-height:85vh;overflow-y:auto;}
+.modal-title{font-weight:900;font-size:16px;margin-bottom:14px;}
+
+.acc-header{display:flex;justify-content:space-between;align-items:center;padding:12px;cursor:pointer;}
+.acc-body{padding:0 12px 12px;border-top:1px solid #2a2d33;}
+</style>
+
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div style="font-size:20px;font-weight:900">🍔 MM Food Manager</div>
+    <div style="font-size:13px;opacity:0.85;font-weight:600;margin-top:2px">Bonjour Aziz 👋</div>
+  </div>
+  <div style="background:rgba(0,0,0,0.25);border-radius:10px;padding:5px 12px;font-size:11px;font-weight:800">🇩🇿 DZD</div>
+</div>
+
+<div class="tabbar">
+  <button class="tab-btn active" onclick="switchTab('dashboard')"><div class="tab-icon">📊</div>Dashboard</button>
+  <button class="tab-btn" onclick="switchTab('caisse')"><div class="tab-icon">🛒</div>Caisse</button>
+  <button class="tab-btn" onclick="switchTab('ingredients')"><div class="tab-icon">🥬</div>Ingrédients</button>
+  <button class="tab-btn" onclick="switchTab('preparations')"><div class="tab-icon">🏭</div>Préparations</button>
+  <button class="tab-btn" onclick="switchTab('recettes')"><div class="tab-icon">🍔</div>Recettes</button>
+  <button class="tab-btn" onclick="switchTab('charges')"><div class="tab-icon">💸</div>Charges</button>
+  <button class="tab-btn" onclick="switchTab('employes')"><div class="tab-icon">👥</div>Employés</button>
+  <button class="tab-btn" onclick="switchTab('fournisseurs')"><div class="tab-icon">🚚</div>Fournisseurs</button>
+  <button class="tab-btn" onclick="switchTab('rapport')"><div class="tab-icon">📋</div>Rapport</button>
+</div>
+
+<div id="page-dashboard"     class="page active"></div>
+<div id="page-caisse"        class="page"></div>
+<div id="page-ingredients"   class="page"></div>
+<div id="page-preparations"  class="page"></div>
+<div id="page-recettes"      class="page"></div>
+<div id="page-charges"       class="page"></div>
+<div id="page-employes"      class="page"></div>
+<div id="page-fournisseurs"  class="page"></div>
+<div id="page-rapport"       class="page"></div>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-title" id="modal-title"></div>
+    <div id="modal-fields"></div>
+    <div style="display:flex;gap:8px;margin-top:8px;">
+      <button class="btn btn-orange" onclick="saveModal()">💾 Enregistrer</button>
+      <button class="btn btn-gray" onclick="closeModal()">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// FIREBASE
+// ══════════════════════════════════════════
+const DB_URL = 'https://fastfood-aziz-default-rtdb.firebaseio.com';
+
+function sauvegarder() {
+  const data = {ingredients,preparations,recettes,charges,employes,ventes,fournisseurs,historiqueSemaines};
+  fetch(DB_URL+'/fastfood.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+    .catch(e=>console.log('Save error:',e));
+}
+
+function chargerDonnees() {
+  // Show loading indicator
+  document.getElementById('page-dashboard').innerHTML = '<div style="text-align:center;padding:60px;color:#555"><div style="font-size:40px">⏳</div><div style="margin-top:12px;font-size:14px">Chargement...</div></div>';
+  
+  fetch(DB_URL+'/fastfood.json', {
+    method: 'GET',
+    headers: {'Accept': 'application/json'},
+    mode: 'cors'
+  })
+    .then(r=>{
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      return r.json();
+    })
+    .then(data=>{
+      if(data && typeof data === 'object') {
+        if(data.ingredients && data.ingredients.length)        ingredients        = data.ingredients;
+        if(data.preparations && data.preparations.length)      preparations       = data.preparations;
+        if(data.recettes && data.recettes.length)              recettes           = data.recettes;
+        if(data.charges && data.charges.length)                charges            = data.charges;
+        if(data.employes && data.employes.length)              employes           = data.employes;
+        if(data.ventes && data.ventes.length)                  {ventes=data.ventes;ventes.forEach(v=>v.date=new Date(v.date));}
+        if(data.fournisseurs && data.fournisseurs.length)      fournisseurs       = data.fournisseurs;
+        if(data.historiqueSemaines)                            historiqueSemaines = data.historiqueSemaines;
+      }
+      renderDashboard();
+    })
+    .catch(e=>{
+      console.log('Load error:',e);
+      // Continue with default data even if Firebase fails
+      renderDashboard();
+    });
+}
+
+// ══════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════
+const UNITE_OPTIONS = [{v:'kg',l:'kg'},{v:'g',l:'g'},{v:'L',l:'Litre'},{v:'ml',l:'ml'},{v:'unité',l:'Unité'},{v:'pièce',l:'Pièce'}];
+const DAYS = ["Sam","Dim","Lun","Mar","Mer","Jeu","Ven"]; // Fournisseurs: Sam → Ven
+const DAYS_EMP = ["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"]; // Employés: Dim → Sam
+
+// Ingrédients de base (prix par unité de base)
+let ingredients = [
+  {id:1,  nom:"Farine",          prix:45,   unite:"kg",  prixUnitaire:0.045},
+  {id:2,  nom:"Poulet",          prix:850,  unite:"kg",  prixUnitaire:0.85},
+  {id:3,  nom:"Viande hachée",   prix:1200, unite:"kg",  prixUnitaire:1.2},
+  {id:4,  nom:"Fromage",         prix:1200, unite:"kg",  prixUnitaire:1.2},
+  {id:5,  nom:"Gouda",           prix:1400, unite:"kg",  prixUnitaire:1.4},
+  {id:6,  nom:"Sauce fromagère", prix:800,  unite:"kg",  prixUnitaire:0.8},
+  {id:7,  nom:"Sauce tomate",    prix:300,  unite:"kg",  prixUnitaire:0.3},
+  {id:8,  nom:"Huile",           prix:200,  unite:"L",   prixUnitaire:0.2},
+  {id:9,  nom:"Pain burger",     prix:50,   unite:"pièce",prixUnitaire:50},
+  {id:10, nom:"Pain sandwich",   prix:30,   unite:"pièce",prixUnitaire:30},
+  {id:11, nom:"Salade",          prix:150,  unite:"kg",  prixUnitaire:0.15},
+  {id:12, nom:"Tomate",          prix:120,  unite:"kg",  prixUnitaire:0.12},
+  {id:13, nom:"Frites",          prix:200,  unite:"kg",  prixUnitaire:0.2},
+  {id:14, nom:"Levure",          prix:300,  unite:"kg",  prixUnitaire:0.3},
+  {id:15, nom:"Sel",             prix:50,   unite:"kg",  prixUnitaire:0.05},
+  {id:16, nom:"Sucre",           prix:80,   unite:"kg",  prixUnitaire:0.08},
+  {id:17, nom:"Crème fraîche",   prix:600,  unite:"L",   prixUnitaire:0.6},
+  {id:18, nom:"Escalope poulet", prix:1000, unite:"kg",  prixUnitaire:1.0},
+  {id:19, nom:"Thon",            prix:900,  unite:"kg",  prixUnitaire:0.9},
+  {id:20, nom:"Oeuf",            prix:25,   unite:"pièce",prixUnitaire:25},
+];
+
+// Préparations maison (recettes intermédiaires)
+let preparations = [
+  {id:1, nom:"Pâte à pizza", description:"Base pour toutes les pizzas",
+   ingredients:[
+     {ingId:1, qte:500, unite:"g"},
+     {ingId:14,qte:10,  unite:"g"},
+     {ingId:8, qte:30,  unite:"ml"},
+     {ingId:15,qte:5,   unite:"g"},
+     {ingId:16,qte:5,   unite:"g"},
+   ], rendement:4, uniteRendement:"pizzas"},
+  {id:2, nom:"Sauce fromagère maison", description:"Pour tacos, sandwichs, poutine",
+   ingredients:[
+     {ingId:17,qte:200, unite:"ml"},
+     {ingId:4, qte:100, unite:"g"},
+   ], rendement:300, uniteRendement:"ml"},
+];
+
+// Recettes (produits finaux avec coût calculé)
+let recettes = [
+  // BURGER
+  {id:1,  nom:"Burger Simple",    cat:"Burger",   prix:400,  ingredients:[]},
+  {id:2,  nom:"Burger Classique", cat:"Burger",   prix:450,  ingredients:[]},
+  {id:3,  nom:"Burger Crispy",    cat:"Burger",   prix:500,  ingredients:[]},
+  {id:4,  nom:"Burger Suprême",   cat:"Burger",   prix:550,  ingredients:[]},
+  {id:5,  nom:"Burger King",      cat:"Burger",   prix:600,  ingredients:[]},
+  // TACOS
+  {id:11, nom:"Tacos Poulet",         cat:"Tacos", prix:550,  ingredients:[]},
+  {id:12, nom:"Tacos Poulet XLL",     cat:"Tacos", prix:900,  ingredients:[]},
+  {id:13, nom:"Tacos Viande",         cat:"Tacos", prix:600,  ingredients:[]},
+  {id:14, nom:"Tacos Viande XLL",     cat:"Tacos", prix:950,  ingredients:[]},
+  {id:15, nom:"Tacos Mix",            cat:"Tacos", prix:650,  ingredients:[]},
+  {id:16, nom:"Tacos Mix XLL",        cat:"Tacos", prix:1000, ingredients:[]},
+  {id:17, nom:"MM Tacos",             cat:"Tacos", prix:800,  ingredients:[]},
+  {id:18, nom:"MM Tacos XLL",         cat:"Tacos", prix:1200, ingredients:[]},
+  // POUTINE
+  {id:21, nom:"Poutine Poulet",           cat:"Poutine", prix:500, ingredients:[]},
+  {id:22, nom:"Poutine Poulet 3 Fromages",cat:"Poutine", prix:700, ingredients:[]},
+  {id:23, nom:"Poutine VH",               cat:"Poutine", prix:600, ingredients:[]},
+  {id:24, nom:"Poutine Mix",              cat:"Poutine", prix:700, ingredients:[]},
+  {id:25, nom:"Poutine Crispy",           cat:"Poutine", prix:600, ingredients:[]},
+  // SANDWICH
+  {id:31, nom:"Sandwich Kebda",      cat:"Sandwich", prix:300, ingredients:[]},
+  {id:32, nom:"Sandwich Mariné",     cat:"Sandwich", prix:350, ingredients:[]},
+  {id:33, nom:"Sandwich Boeuf",      cat:"Sandwich", prix:500, ingredients:[]},
+  {id:34, nom:"Sandwich Escalope",   cat:"Sandwich", prix:500, ingredients:[]},
+  {id:35, nom:"Sandwich BBQ",        cat:"Sandwich", prix:550, ingredients:[]},
+  {id:36, nom:"Sandwich Crispy",     cat:"Sandwich", prix:550, ingredients:[]},
+  {id:37, nom:"Sandwich Mix",        cat:"Sandwich", prix:600, ingredients:[]},
+  {id:38, nom:"Sandwich Mexicane",   cat:"Sandwich", prix:600, ingredients:[]},
+  {id:39, nom:"Sandwich Le Parfait", cat:"Sandwich", prix:700, ingredients:[]},
+  {id:40, nom:"Sandwich Crevette 🌟",cat:"Sandwich", prix:1000,ingredients:[]},
+  // PLAT
+  {id:41, nom:"Plat Escalope",  cat:"Plat", prix:900,  ingredients:[]},
+  {id:42, nom:"Plat Crispy",    cat:"Plat", prix:1000, ingredients:[]},
+  {id:43, nom:"Plat Mexicane",  cat:"Plat", prix:1300, ingredients:[]},
+  {id:44, nom:"Plat Mixte",     cat:"Plat", prix:1500, ingredients:[]},
+  {id:45, nom:"Plat Hot Dog",   cat:"Plat", prix:1000, ingredients:[]},
+  {id:46, nom:"Plat BBQ",       cat:"Plat", prix:1000, ingredients:[]},
+  {id:47, nom:"MM Pizza Plat",  cat:"Plat", prix:1300, ingredients:[]},
+  // PIZZA
+  {id:51, nom:"Pizza Marguerite",          cat:"Pizza", prix:400,  ingredients:[]},
+  {id:52, nom:"Pizza Marguerite XLL",      cat:"Pizza", prix:1000, ingredients:[]},
+  {id:53, nom:"Pizza Végétarienne",        cat:"Pizza", prix:500,  ingredients:[]},
+  {id:54, nom:"Pizza Végétarienne XLL",    cat:"Pizza", prix:1500, ingredients:[]},
+  {id:55, nom:"Pizza Pêcheur",             cat:"Pizza", prix:700,  ingredients:[]},
+  {id:56, nom:"Pizza Pêcheur XLL",         cat:"Pizza", prix:1900, ingredients:[]},
+  {id:57, nom:"Pizza Chicken Cheese",      cat:"Pizza", prix:700,  ingredients:[]},
+  {id:58, nom:"Pizza Chicken Cheese XLL",  cat:"Pizza", prix:2200, ingredients:[]},
+  {id:59, nom:"Pizza Boeuf",               cat:"Pizza", prix:800,  ingredients:[]},
+  {id:60, nom:"Pizza Boeuf XLL",           cat:"Pizza", prix:2300, ingredients:[]},
+  {id:61, nom:"Pizza Mexicaine",           cat:"Pizza", prix:800,  ingredients:[]},
+  {id:62, nom:"Pizza Mexicaine XLL",       cat:"Pizza", prix:2400, ingredients:[]},
+  {id:63, nom:"Pizza 4 Fromages",          cat:"Pizza", prix:900,  ingredients:[]},
+  {id:64, nom:"Pizza 4 Fromages XLL",      cat:"Pizza", prix:2700, ingredients:[]},
+  {id:65, nom:"Pizza Fumato",              cat:"Pizza", prix:950,  ingredients:[]},
+  {id:66, nom:"Pizza Fumato XLL",          cat:"Pizza", prix:2800, ingredients:[]},
+  {id:67, nom:"Pizza Fumé",               cat:"Pizza", prix:900,  ingredients:[]},
+  {id:68, nom:"Pizza Fumé XLL",           cat:"Pizza", prix:2700, ingredients:[]},
+  {id:69, nom:"Pizza Hot Dog",             cat:"Pizza", prix:1000, ingredients:[]},
+  {id:70, nom:"Pizza Hot Dog XLL",         cat:"Pizza", prix:3000, ingredients:[]},
+  {id:71, nom:"Pizza BBQ",                 cat:"Pizza", prix:1000, ingredients:[]},
+  {id:72, nom:"Pizza BBQ XLL",             cat:"Pizza", prix:3000, ingredients:[]},
+  {id:73, nom:"MM Pizza",                  cat:"Pizza", prix:1300, ingredients:[]},
+  {id:74, nom:"MM Pizza XLL",              cat:"Pizza", prix:3500, ingredients:[]},
+  {id:75, nom:"Pizza Crevette 🌟",         cat:"Pizza", prix:800,  ingredients:[]},
+  {id:76, nom:"Pizza Crevette XLL 🌟",     cat:"Pizza", prix:2400, ingredients:[]},
+  {id:77, nom:"Pizza Calamar 🌟",          cat:"Pizza", prix:900,  ingredients:[]},
+  {id:78, nom:"Pizza Calamar XLL 🌟",      cat:"Pizza", prix:2700, ingredients:[]},
+  {id:79, nom:"Pizza Fruits de mer 🌟",    cat:"Pizza", prix:1200, ingredients:[]},
+  {id:80, nom:"Pizza Fruits de mer XLL 🌟",cat:"Pizza", prix:3500, ingredients:[]},
+  // SALADE
+  {id:91, nom:"Salade Poulet", cat:"Salade", prix:450, ingredients:[]},
+  {id:92, nom:"Salade Thon",   cat:"Salade", prix:450, ingredients:[]},
+  {id:93, nom:"Salade César",  cat:"Salade", prix:600, ingredients:[]},
+  // BOISON
+  {id:101,nom:"Coca Cola",    cat:"Boison", prix:150, ingredients:[]},
+  {id:102,nom:"Fanta",        cat:"Boison", prix:150, ingredients:[]},
+  {id:103,nom:"Sprite",       cat:"Boison", prix:150, ingredients:[]},
+  {id:104,nom:"Eau Minérale", cat:"Boison", prix:80,  ingredients:[]},
+  {id:105,nom:"Jus Orange",   cat:"Boison", prix:200, ingredients:[]},
+  {id:106,nom:"Café",         cat:"Boison", prix:100, ingredients:[]},
+  // dummy to close - will be replaced
+];
+
+let charges = [
+  {id:1,nom:"Loyer",         montant:50000,type:"fixe"},
+  {id:2,nom:"Électricité",   montant:12000,type:"fixe"},
+  {id:3,nom:"Internet",      montant:3000, type:"fixe"},
+  {id:4,nom:"Assurance",     montant:8000, type:"fixe"},
+  {id:5,nom:"Emballages",    montant:10000,type:"variable"},
+  {id:6,nom:"Nettoyage",     montant:5000, type:"variable"},
+  {id:7,nom:"Marketing",     montant:7000, type:"variable"},
+];
+
+let employes = [
+  {id:1, nom:"Hafid",   poste:"Pizza",          salaireService:2500,planning:{},penalites:[],acomptes:[]},
+  {id:2, nom:"Hicham",  poste:"Plaque",          salaireService:2500,planning:{},penalites:[],acomptes:[]},
+  {id:3, nom:"Yacin",   poste:"Plaque",          salaireService:2500,planning:{},penalites:[],acomptes:[]},
+  {id:4, nom:"Yacin 2", poste:"Pizza",           salaireService:2000,planning:{},penalites:[],acomptes:[]},
+  {id:5, nom:"Yahya",   poste:"Pizza",           salaireService:2000,planning:{},penalites:[],acomptes:[]},
+  {id:6, nom:"Mohamed", poste:"Plaque",          salaireService:2000,planning:{},penalites:[],acomptes:[]},
+  {id:7, nom:"Taybe",   poste:"Transport",       salaireService:1200,planning:{},penalites:[],acomptes:[]},
+  {id:8, nom:"Nadia",   poste:"Femme de ménage", salaireService:1500,planning:{},penalites:[],acomptes:[]},
+  {id:9, nom:"Haja",    poste:"Femme de ménage", salaireService:1000,planning:{},penalites:[],acomptes:[]},
+];
+
+let fournisseurs       = [];
+let historiqueSemaines = {};
+let ventes             = [];
+let panier             = [];
+
+// ══════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════
+const fc  = v => `${Math.round(v||0).toLocaleString('fr-DZ')} DZD`;
+const fp  = v => `${(v||0).toFixed(1)}%`;
+const uid = () => Date.now()+Math.random();
+
+// Calcul coût d'une recette
+function coutRecette(r) {
+  if(!r.ingredients||!r.ingredients.length) return 0;
+  return r.ingredients.reduce((total,item)=>{
+    if(item.type==='ing'){
+      const ing = ingredients.find(i=>i.id===item.id);
+      if(!ing) return total;
+      // Convertir en unité de base
+      let qteBase = item.qte;
+      if(item.unite==='g' && ing.unite==='kg') qteBase = item.qte/1000;
+      else if(item.unite==='ml' && ing.unite==='L') qteBase = item.qte/1000;
+      return total + (ing.prix * qteBase);
+    } else if(item.type==='prep'){
+      const prep = preparations.find(p=>p.id===item.id);
+      if(!prep) return total;
+      const coutTotal = coutPreparation(prep);
+      const coutParPortion = coutTotal / (prep.rendement||1);
+      return total + (coutParPortion * item.qte);
+    }
+    return total;
+  },0);
+}
+
+// Calcul coût d'une préparation
+function coutPreparation(prep) {
+  if(!prep.ingredients||!prep.ingredients.length) return 0;
+  return prep.ingredients.reduce((total,item)=>{
+    const ing = ingredients.find(i=>i.id===item.id);
+    if(!ing) return total;
+    let qteBase = item.qte;
+    if(item.unite==='g' && ing.unite==='kg') qteBase = item.qte/1000;
+    else if(item.unite==='ml' && ing.unite==='L') qteBase = item.qte/1000;
+    return total + (ing.prix * qteBase);
+  },0);
+}
+
+function calcStats() {
+  const totalCA    = ventes.reduce((s,v)=>s+v.total,0);
+  const totalCout  = ventes.reduce((s,v)=>s+v.cout,0);
+  const totalChg   = charges.reduce((s,c)=>s+Number(c.montant),0);
+  const masseSal   = employes.reduce((s,e)=>s+salaireEmp(e),0);
+  const totalFourn = totalTousFourn(getCurrentSemaine());
+  const profitBrut = totalCA - totalCout;
+  const profitNet  = profitBrut - totalChg - masseSal - totalFourn;
+  const margeBrute = totalCA>0?(profitBrut/totalCA)*100:0;
+  const margeNette = totalCA>0?(profitNet/totalCA)*100:0;
+  return {totalCA,totalCout,totalChg,masseSal,totalFourn,profitBrut,profitNet,margeBrute,margeNette};
+}
+
+function salaireEmp(e) {
+  const planning=e.planning||{};
+  const penalites=e.penalites||[];
+  const acomptes=e.acomptes||[];
+  let srv=0;
+  DAYS_EMP.forEach(d=>{const s=planning[d]||'repos';if(s==='matin'||s==='soir')srv+=1;else if(s==='journee')srv+=2;});
+  const brut=srv*Number(e.salaireService||0);
+  const pen=penalites.reduce((s,p)=>s+Number(p.montant||200),0);
+  const acp=acomptes.reduce((s,a)=>s+Number(a.montant||0),0);
+  return Math.max(0,brut-pen-acp);
+}
+
+function getCurrentSemaine() {
+  const now=new Date();
+  // Week starts Saturday (day 6)
+  const day=now.getDay(); // 0=Sun, 6=Sat
+  const diff=now.getDate() - day + (day===6?0:-1) - (day===0?6:day-6);
+  const weekStart=new Date(now.setDate(diff));
+  const start=new Date(weekStart.getFullYear(),0,1);
+  const week=Math.ceil(((weekStart-start)/86400000+start.getDay()+1)/7);
+  return weekStart.getFullYear()+'-S'+String(week).padStart(2,'0');
+}
+function getSemaines(){const t=Object.keys(historiqueSemaines).sort().reverse();if(!t.includes(semaineActive))t.unshift(semaineActive);return t;}
+function getAchats(fId,sem){return (historiqueSemaines[sem]&&historiqueSemaines[sem][fId])||[];}
+function totalFournisseur(fId,sem){return getAchats(fId,sem).reduce((s,a)=>s+Number(a.prix),0);}
+function totalTousFourn(sem){return fournisseurs.reduce((s,f)=>s+totalFournisseur(f.id,sem),0);}
+
+let currentTab='dashboard';
+let semaineActive=getCurrentSemaine();
+
+function switchTab(tab){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+tab).classList.add('active');
+  const tabs=['dashboard','caisse','ingredients','preparations','recettes','charges','employes','fournisseurs','rapport'];
+  document.querySelectorAll('.tab-btn')[tabs.indexOf(tab)].classList.add('active');
+  currentTab=tab;
+  renders[tab]&&renders[tab]();
+}
+
+const renders={
+  dashboard:renderDashboard,
+  caisse:renderCaisse,
+  ingredients:renderIngredients,
+  preparations:renderPreparations,
+  recettes:renderRecettes,
+  charges:renderCharges,
+  employes:renderEmployes,
+  fournisseurs:renderFournisseurs,
+  rapport:renderRapport
+};
+
+// ══════════════════════════════════════════
+// MODAL
+// ══════════════════════════════════════════
+let modalCb=null, modalData={};
+function openModal(title,fields,cb,accent='#f97316'){
+  modalCb=cb; modalData={};
+  fields.forEach(f=>modalData[f.k]=f.v!==undefined?String(f.v):'');
+  document.getElementById('modal-title').textContent=title;
+  document.getElementById('modal-title').style.color=accent;
+  let html='';
+  fields.forEach(f=>{
+    if(f.t==='select'){
+      html+=`<select class="inp" onchange="modalData['${f.k}']=this.value">
+        ${f.opts.map(o=>`<option value="${o.v}"${o.v==f.v?' selected':''}>${o.l}</option>`).join('')}
+      </select>`;
+    } else {
+      html+=`<input class="inp" type="${f.t||'text'}" placeholder="${f.l}" value="${f.v!==undefined?f.v:''}" oninput="modalData['${f.k}']=this.value"/>`;
+    }
+  });
+  document.getElementById('modal-fields').innerHTML=html;
+  document.getElementById('modal').classList.add('open');
+}
+function saveModal(){if(modalCb)modalCb(modalData);closeModal();}
+function closeModal(){document.getElementById('modal').classList.remove('open');modalCb=null;}
+
+// ══════════════════════════════════════════
+// DASHBOARD
+// ══════════════════════════════════════════
+function renderDashboard(){
+  const s=calcStats();
+  const top=Object.entries(ventes.reduce((m,v)=>{v.items.forEach(i=>{m[i.nom]=(m[i.nom]||0)+i.qte;});return m;},{})).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  let h=`
+    <div class="grid2">
+      <div class="card"><div style="font-size:22px">💰</div><div style="font-size:17px;font-weight:900;color:#f97316;margin-top:4px">${fc(s.totalCA)}</div><div style="font-size:10px;color:#555;font-weight:700;margin-top:2px">Chiffre d'affaires</div></div>
+      <div class="card"><div style="font-size:22px">📈</div><div style="font-size:17px;font-weight:900;color:${s.profitNet>=0?'#22c55e':'#ef4444'};margin-top:4px">${fc(s.profitNet)}</div><div style="font-size:10px;color:#555;font-weight:700;margin-top:2px">Profit Net</div></div>
+      <div class="card"><div style="font-size:22px">📊</div><div style="font-size:20px;font-weight:900;color:#60a5fa;margin-top:4px">${fp(s.margeBrute)}</div><div style="font-size:10px;color:#555;font-weight:700;margin-top:2px">Marge Brute</div></div>
+      <div class="card"><div style="font-size:22px">🛒</div><div style="font-size:20px;font-weight:900;color:#a78bfa;margin-top:4px">${ventes.length}</div><div style="font-size:10px;color:#555;font-weight:700;margin-top:2px">Nb Ventes</div></div>
+    </div>
+    <div class="card">
+      <div style="font-weight:900;margin-bottom:10px;font-size:13px">📋 Résumé</div>
+      ${[
+        {l:"CA Total",         v:s.totalCA,    c:"#f97316",ico:"➕"},
+        {l:"Coût ingrédients", v:s.totalCout,  c:"#ef4444", ico:"➖"},
+        {l:"Profit Brut",      v:s.profitBrut, c:"#22c55e", ico:"═",b:true},
+        {l:"Charges",          v:s.totalChg,   c:"#ef4444", ico:"➖"},
+        {l:"Salaires",         v:s.masseSal,   c:"#ef4444", ico:"➖"},
+        {l:"Fournisseurs",     v:s.totalFourn, c:"#ef4444", ico:"➖"},
+        {l:"PROFIT NET",       v:s.profitNet,  c:s.profitNet>=0?'#22c55e':'#ef4444',ico:"═",b:true},
+      ].map(r=>`<div class="fin-row" style="font-weight:${r.b?900:500}">
+        <span style="color:#aaa;font-size:12px">${r.ico} ${r.l}</span>
+        <span style="color:${r.c};font-size:12px;font-weight:${r.b?900:600}">${fc(Math.abs(r.v))}</span>
+      </div>`).join('')}
+    </div>
+    ${top.length?`<div class="card"><div style="font-weight:900;margin-bottom:10px;font-size:13px">🏆 Top Produits</div>${top.map(([n,q],i)=>`<div class="row" style="margin-bottom:6px"><div style="display:flex;gap:8px;align-items:center"><span style="color:${['#ffd700','#c0c0c0','#cd7f32','#888','#666'][i]};font-weight:900">#${i+1}</span><span style="font-size:12px">${n}</span></div><span class="tag" style="background:#f9731622;color:#f97316">${q}</span></div>`).join('')}</div>`:''}
+    ${!ventes.length?`<div class="empty"><div style="font-size:48px">🍔</div><div style="font-size:13px;margin-top:8px;color:#555">Lance tes premières ventes depuis <b style="color:#f97316">Caisse</b> !</div></div>`:''}`;
+  document.getElementById('page-dashboard').innerHTML=h;
+}
+
+// ══════════════════════════════════════════
+// CAISSE
+// ══════════════════════════════════════════
+let caisseSearch='', caisseCat='Tous';
+function renderCaisse(){
+  const cats=['Tous',...new Set(recettes.map(r=>r.cat))];
+  const filtered=recettes.filter(r=>caisseCat==='Tous'||r.cat===caisseCat).filter(r=>r.nom.toLowerCase().includes(caisseSearch.toLowerCase()));
+  let h=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+    <input class="inp" style="margin:0" placeholder="🔍 Rechercher…" value="${caisseSearch}" oninput="caisseSearch=this.value;renderCaisse()"/>
+    <select class="inp" style="margin:0" onchange="caisseCat=this.value;renderCaisse()">
+      ${cats.map(c=>`<option${c===caisseCat?' selected':''}>${c}</option>`).join('')}
+    </select>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:12px">`;
+  filtered.forEach(r=>{
+    const qte=panier.find(x=>x.id===r.id)?.qte||0;
+    const cout=coutRecette(r);
+    h+=`<button class="prod-btn${qte>0?' in-cart':''}" onclick="addToCart(${r.id})">
+      <div style="font-size:9px;color:#555;margin-bottom:1px;font-weight:700;text-transform:uppercase">${r.cat}</div>
+      <div style="font-size:11px;font-weight:700;color:#f0f0f0;line-height:1.3;margin-bottom:3px">${r.nom}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="color:#f97316;font-weight:900;font-size:12px">${fc(r.prix)}</span>
+        ${qte>0?`<span style="background:#f97316;color:#fff;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900">${qte}</span>`:''}
+      </div>
+    </button>`;
+  });
+  h+=`</div>`;
+  if(panier.length>0){
+    const total=panier.reduce((s,x)=>s+x.prix*x.qte,0);
+    h+=`<div class="card" style="border-color:#f9731640">
+      <div style="font-weight:900;margin-bottom:10px;font-size:13px">🛒 Commande</div>`;
+    panier.forEach(x=>{
+      h+=`<div class="row" style="margin-bottom:8px">
+        <span style="font-size:12px;flex:1">${x.nom}</span>
+        <div style="display:flex;align-items:center;gap:6px">
+          <button onclick="remFromCart(${x.id})" style="background:#2a2d33;border:none;color:#fff;border-radius:6px;width:26px;height:26px;cursor:pointer;font-weight:800;font-size:14px">−</button>
+          <span style="font-weight:900;min-width:18px;text-align:center">${x.qte}</span>
+          <button onclick="addToCart(${x.id})" style="background:#f97316;border:none;color:#fff;border-radius:6px;width:26px;height:26px;cursor:pointer;font-weight:800;font-size:14px">+</button>
+          <span style="color:#f97316;font-weight:800;font-size:11px;min-width:70px;text-align:right">${fc(x.prix*x.qte)}</span>
+        </div>
+      </div>`;
+    });
+    h+=`<div class="sep"></div>
+      <div class="row" style="margin-top:8px">
+        <span style="font-weight:900;font-size:14px">Total: <span style="color:#f97316">${fc(total)}</span></span>
+        <button class="btn btn-orange" onclick="validerVente()">✅ Valider</button>
+      </div></div>`;
+  }
+  if(ventes.length>0){
+    h+=`<div style="margin-top:12px"><div style="font-weight:900;margin-bottom:8px;font-size:13px">📜 Historique</div>`;
+    ventes.slice(0,8).forEach(v=>{
+      h+=`<div class="card" style="margin-bottom:6px">
+        <div class="row"><span style="color:#555;font-size:10px">${v.date.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</span><span style="color:#f97316;font-weight:900">${fc(v.total)}</span></div>
+        <div style="font-size:11px;color:#888;margin-top:3px">${v.items.map(i=>`${i.nom} ×${i.qte}`).join(', ')}</div>
+      </div>`;
+    });
+    h+=`</div>`;
+  }
+  document.getElementById('page-caisse').innerHTML=h;
+}
+function addToCart(id){
+  const r=recettes.find(x=>String(x.id)===String(id));if(!r)return;
+  const ex=panier.find(x=>x.id===id);
+  if(ex)ex.qte++;else panier.push({...r,qte:1});
+  renderCaisse();
+}
+function remFromCart(id){
+  const ex=panier.find(x=>x.id===id);if(!ex)return;
+  if(ex.qte===1)panier=panier.filter(x=>x.id!==id);else ex.qte--;
+  renderCaisse();
+}
+function validerVente(){
+  if(!panier.length)return;
+  const total=panier.reduce((s,x)=>s+x.prix*x.qte,0);
+  const cout=panier.reduce((s,x)=>s+coutRecette(x)*x.qte,0);
+  ventes.unshift({id:uid(),items:panier.map(x=>({nom:x.nom,qte:x.qte,prix:x.prix})),total,cout,date:new Date()});
+  panier=[];sauvegarder();renderCaisse();
+}
+
+// ══════════════════════════════════════════
+// INGRÉDIENTS
+// ══════════════════════════════════════════
+let showAddIng=false, newIng={nom:'',prix:'',unite:'kg'};
+function renderIngredients(){
+  let h=`<div class="row" style="margin-bottom:10px">
+    <span style="color:#555;font-size:12px;font-weight:700">${ingredients.length} ingrédients</span>
+    <button class="btn btn-orange" onclick="showAddIng=true;renderIngredients()">+ Ajouter</button>
+  </div>`;
+  if(showAddIng){
+    h+=`<div class="card" style="border-color:#f9731640;margin-bottom:12px">
+      <div style="font-weight:900;margin-bottom:10px">Nouvel ingrédient</div>
+      <input class="inp" placeholder="Nom (ex: Poulet)" value="${newIng.nom}" oninput="newIng.nom=this.value"/>
+      <input class="inp" type="number" placeholder="Prix" value="${newIng.prix}" oninput="newIng.prix=this.value"/>
+      <select class="inp" onchange="newIng.unite=this.value">
+        ${UNITE_OPTIONS.map(u=>`<option value="${u.v}"${u.v===newIng.unite?' selected':''}>${u.l}</option>`).join('')}
+      </select>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-orange" onclick="addIng()">Ajouter</button>
+        <button class="btn btn-gray" onclick="showAddIng=false;renderIngredients()">Annuler</button>
+      </div>
+    </div>`;
+  }
+  ingredients.forEach(ing=>{
+    h+=`<div class="card" style="margin-bottom:6px">
+      <div class="row">
+        <div><div style="font-weight:700;font-size:13px">${ing.nom}</div>
+        <div style="font-size:11px;color:#555;margin-top:2px">Prix: ${fc(ing.prix)} / ${ing.unite}</div></div>
+        <div style="display:flex;gap:6px">
+          <button class="btn-edit" onclick="editIng(${ing.id})">✏️</button>
+          <button class="btn-del" onclick="delIng(${ing.id})">🗑</button>
+        </div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('page-ingredients').innerHTML=h;
+}
+function addIng(){
+  if(!newIng.nom||!newIng.prix)return;
+  ingredients.push({id:uid(),nom:newIng.nom,prix:+newIng.prix,unite:newIng.unite});
+  newIng={nom:'',prix:'',unite:'kg'};showAddIng=false;sauvegarder();renderIngredients();
+}
+function delIng(id){ingredients=ingredients.filter(i=>String(i.id)!==String(id));sauvegarder();renderIngredients();}
+function editIng(id){
+  const ing=ingredients.find(i=>i.id===id);
+  openModal('✏️ Modifier ingrédient',[
+    {k:'nom',  l:'Nom',   t:'text',   v:ing.nom},
+    {k:'prix', l:'Prix',  t:'number', v:ing.prix},
+    {k:'unite',l:'Unité', t:'select', v:ing.unite, opts:UNITE_OPTIONS},
+  ],data=>{Object.assign(ing,{nom:data.nom,prix:+data.prix,unite:data.unite});sauvegarder();renderIngredients();});
+}
+
+// ══════════════════════════════════════════
+// PRÉPARATIONS
+// ══════════════════════════════════════════
+let expandedPrep=null, showAddPrep=false, newPrep={nom:'',description:'',rendement:'',uniteRendement:'portions'};
+function renderPreparations(){
+  let h=`<div class="row" style="margin-bottom:10px">
+    <span style="color:#555;font-size:12px;font-weight:700">${preparations.length} préparations maison</span>
+    <button class="btn btn-orange" onclick="showAddPrep=true;renderPreparations()">+ Ajouter</button>
+  </div>`;
+  if(showAddPrep){
+    h+=`<div class="card" style="border-color:#f9731640;margin-bottom:12px">
+      <div style="font-weight:900;margin-bottom:10px">Nouvelle préparation</div>
+      <input class="inp" placeholder="Nom (ex: Pâte à pizza)" value="${newPrep.nom}" oninput="newPrep.nom=this.value"/>
+      <input class="inp" placeholder="Description" value="${newPrep.description}" oninput="newPrep.description=this.value"/>
+      <input class="inp" type="number" placeholder="Rendement (ex: 4)" value="${newPrep.rendement}" oninput="newPrep.rendement=this.value"/>
+      <input class="inp" placeholder="Unité rendement (ex: pizzas)" value="${newPrep.uniteRendement}" oninput="newPrep.uniteRendement=this.value"/>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-orange" onclick="addPrep()">Créer</button>
+        <button class="btn btn-gray" onclick="showAddPrep=false;renderPreparations()">Annuler</button>
+      </div>
+    </div>`;
+  }
+  preparations.forEach(prep=>{
+    const cout=coutPreparation(prep);
+    const isOpen=expandedPrep===prep.id;
+    h+=`<div class="card" style="margin-bottom:8px;padding:0;overflow:hidden">
+      <div class="acc-header" onclick="expandedPrep=expandedPrep===${prep.id}?null:${prep.id};renderPreparations()">
+        <div>
+          <div style="font-weight:900;font-size:14px">🏭 ${prep.nom}</div>
+          <div style="font-size:11px;color:#555;margin-top:2px">${prep.description}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="color:#a78bfa;font-weight:900">${fc(cout)}</div>
+          <div style="font-size:10px;color:#555">coût total</div>
+          <div style="font-size:10px;color:#22c55e">${fc(cout/(prep.rendement||1))} / portion</div>
+        </div>
+      </div>
+      ${isOpen?`<div class="acc-body">
+        <div style="font-size:11px;color:#555;font-weight:700;margin-bottom:8px;letter-spacing:1px">INGRÉDIENTS</div>
+        ${(prep.ingredients||[]).map(item=>{
+          const ing=ingredients.find(i=>i.id===item.ingId);
+          if(!ing)return '';
+          let qteBase=item.qte;
+          if(item.unite==='g'&&ing.unite==='kg')qteBase=item.qte/1000;
+          else if(item.unite==='ml'&&ing.unite==='L')qteBase=item.qte/1000;
+          const coutItem=ing.prix*qteBase;
+          return `<div class="row" style="padding:6px 0;border-bottom:1px solid #2a2d33">
+            <span style="font-size:12px">${ing.nom} — ${item.qte}${item.unite}</span>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="color:#f97316;font-size:12px;font-weight:700">${fc(coutItem)}</span>
+              <button onclick="delIngPrep(${prep.id},${item.ingId})" style="background:none;border:none;color:#555;cursor:pointer;font-size:14px">×</button>
+            </div>
+          </div>`;
+        }).join('')}
+        <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:6px;align-items:center">
+          <select id="prep_ing_${prep.id}" class="inp" style="margin:0">
+            ${ingredients.map(i=>`<option value="${i.id}">${i.nom}</option>`).join('')}
+          </select>
+          <input id="prep_qte_${prep.id}" class="inp" style="margin:0" type="number" placeholder="Qté"/>
+          <select id="prep_unite_${prep.id}" class="inp" style="margin:0">
+            ${UNITE_OPTIONS.map(u=>`<option value="${u.v}">${u.l}</option>`).join('')}
+          </select>
+          <button class="btn btn-orange" style="padding:10px 12px" onclick="addIngToPrep(${prep.id})">+</button>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button class="btn-del" onclick="delPrep(${prep.id})">🗑 Supprimer</button>
+        </div>
+      </div>`:''}
+    </div>`;
+  });
+  document.getElementById('page-preparations').innerHTML=h;
+}
+function addPrep(){
+  if(!newPrep.nom)return;
+  preparations.push({id:uid(),nom:newPrep.nom,description:newPrep.description,rendement:+newPrep.rendement||1,uniteRendement:newPrep.uniteRendement,ingredients:[]});
+  newPrep={nom:'',description:'',rendement:'',uniteRendement:'portions'};showAddPrep=false;sauvegarder();renderPreparations();
+}
+function delPrep(id){preparations=preparations.filter(p=>String(p.id)!==String(id));expandedPrep=null;sauvegarder();renderPreparations();}
+function addIngToPrep(prepId){
+  const prep=preparations.find(p=>p.id===prepId);if(!prep)return;
+  const ingId=+document.getElementById('prep_ing_'+prepId).value;
+  const qte=+document.getElementById('prep_qte_'+prepId).value;
+  const unite=document.getElementById('prep_unite_'+prepId).value;
+  if(!qte)return;
+  if(!prep.ingredients)prep.ingredients=[];
+  prep.ingredients.push({ingId,qte,unite});
+  sauvegarder();renderPreparations();
+}
+function delIngPrep(prepId,ingId){
+  const prep=preparations.find(p=>p.id===prepId);if(!prep)return;
+  prep.ingredients=prep.ingredients.filter(i=>i.ingId!==ingId);
+  sauvegarder();renderPreparations();
+}
+
+// ══════════════════════════════════════════
+// RECETTES
+// ══════════════════════════════════════════
+let expandedRec=null, showAddRec=false, newRec={nom:'',cat:'Burger',prix:''};
+const CATS=['Burger','Tacos','Poutine','Sandwich','Plat','Pizza','Salade','Boison'];
+function renderRecettes(){
+  let h=`<div class="row" style="margin-bottom:10px">
+    <span style="color:#555;font-size:12px;font-weight:700">${recettes.length} recettes</span>
+    <button class="btn btn-orange" onclick="showAddRec=true;renderRecettes()">+ Ajouter</button>
+  </div>`;
+  if(showAddRec){
+    h+=`<div class="card" style="border-color:#f9731640;margin-bottom:12px">
+      <div style="font-weight:900;margin-bottom:10px">Nouvelle recette</div>
+      <input class="inp" placeholder="Nom du produit" value="${newRec.nom}" oninput="newRec.nom=this.value"/>
+      <select class="inp" onchange="newRec.cat=this.value">
+        ${CATS.map(c=>`<option value="${c}"${c===newRec.cat?' selected':''}>${c}</option>`).join('')}
+      </select>
+      <input class="inp" type="number" placeholder="Prix de vente (DZD)" value="${newRec.prix}" oninput="newRec.prix=this.value"/>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-orange" onclick="addRec()">Créer</button>
+        <button class="btn btn-gray" onclick="showAddRec=false;renderRecettes()">Annuler</button>
+      </div>
+    </div>`;
+  }
+  CATS.forEach(cat=>{
+    const catRecs=recettes.filter(r=>r.cat===cat);
+    if(!catRecs.length)return;
+    h+=`<div style="margin-bottom:14px"><div class="section-title">${cat}</div>`;
+    catRecs.forEach(rec=>{
+      const cout=coutRecette(rec);
+      const marge=rec.prix>0?((rec.prix-cout)/rec.prix)*100:0;
+      const isOpen=String(expandedRec)===String(rec.id);
+      h+=`<div class="card" style="margin-bottom:6px;padding:0;overflow:hidden">
+        <div class="acc-header" onclick="expandedRec=String(expandedRec)===String(${rec.id})?null:${rec.id};renderRecettes()">
+          <div style="flex:1">
+            <div style="font-weight:900;font-size:13px">${rec.nom}</div>
+            <div style="font-size:11px;color:#555;margin-top:2px">
+              Coût: <span style="color:#ef4444;font-weight:700">${fc(cout)}</span> &nbsp;|&nbsp;
+              Marge: <span style="color:${marge>50?'#22c55e':marge>30?'#f59e0b':'#ef4444'};font-weight:700">${fp(marge)}</span>
+            </div>
+          </div>
+          <div style="text-align:right;margin-left:8px">
+            <div style="color:#f97316;font-weight:900">${fc(rec.prix)}</div>
+            <div style="color:#22c55e;font-size:10px">+${fc(rec.prix-cout)}</div>
+          </div>
+        </div>
+        ${isOpen?`<div class="acc-body">
+          <div style="font-size:11px;color:#555;font-weight:700;margin-bottom:8px;letter-spacing:1px">INGRÉDIENTS DE CETTE RECETTE</div>
+          ${(rec.ingredients||[]).map(item=>{
+            let nomItem='?', coutItem=0;
+            if(item.type==='ing'){
+              const ing=ingredients.find(i=>i.id===item.id);
+              if(ing){
+                nomItem=ing.nom;
+                let qteBase=item.qte;
+                if(item.unite==='g'&&ing.unite==='kg')qteBase=item.qte/1000;
+                else if(item.unite==='ml'&&ing.unite==='L')qteBase=item.qte/1000;
+                coutItem=ing.prix*qteBase;
+              }
+            } else if(item.type==='prep'){
+              const prep=preparations.find(p=>p.id===item.id);
+              if(prep){nomItem='🏭 '+prep.nom;coutItem=(coutPreparation(prep)/prep.rendement)*item.qte;}
+            }
+            return `<div class="row" style="padding:6px 0;border-bottom:1px solid #2a2d33">
+              <span style="font-size:12px">${nomItem} — ${item.qte} ${item.unite}</span>
+              <div style="display:flex;align-items:center;gap:8px">
+                <span style="color:#f97316;font-size:11px;font-weight:700">${fc(coutItem)}</span>
+                <button onclick="delIngRec(${rec.id},'${item.type}',${item.id})" style="background:none;border:none;color:#555;cursor:pointer;font-size:14px">×</button>
+              </div>
+            </div>`;
+          }).join('')}
+          <div style="margin-top:10px;font-size:11px;color:#a78bfa;font-weight:700;margin-bottom:6px">+ AJOUTER INGRÉDIENT</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:5px;align-items:center;margin-bottom:8px">
+            <select id="rec_ing_${rec.id}" class="inp" style="margin:0;font-size:11px">
+              ${ingredients.map(i=>`<option value="ing_${i.id}">${i.nom}</option>`).join('')}
+            </select>
+            <input id="rec_qte_${rec.id}" class="inp" style="margin:0" type="number" placeholder="Qté"/>
+            <select id="rec_unite_${rec.id}" class="inp" style="margin:0">
+              ${UNITE_OPTIONS.map(u=>`<option value="${u.v}">${u.l}</option>`).join('')}
+            </select>
+            <button class="btn btn-orange" style="padding:10px 10px" onclick="addIngToRec(${rec.id})">+</button>
+          </div>
+          <div style="font-size:11px;color:#22c55e;font-weight:700;margin-bottom:6px">+ AJOUTER PRÉPARATION MAISON</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:5px;align-items:center;margin-bottom:10px">
+            <select id="rec_prep_${rec.id}" class="inp" style="margin:0;font-size:11px">
+              ${preparations.map(p=>`<option value="${p.id}">${p.nom}</option>`).join('')}
+            </select>
+            <input id="rec_prep_qte_${rec.id}" class="inp" style="margin:0" type="number" placeholder="Nb portions"/>
+            <button class="btn btn-green" style="padding:10px 10px" onclick="addPrepToRec(${rec.id})">+</button>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn-edit" onclick="editRecette(this)" data-id="${rec.id}">✏️ Modifier prix</button>
+            <button class="btn-del" onclick="delRecette(this)" data-id="${rec.id}">🗑 Supprimer</button>
+          </div>
+        </div>`:''}
+      </div>`;
+    });
+    h+=`</div>`;
+  });
+  document.getElementById('page-recettes').innerHTML=h;
+}
+function addRec(){
+  if(!newRec.nom||!newRec.prix)return;
+  recettes.push({id:uid(),nom:newRec.nom,cat:newRec.cat,prix:+newRec.prix,ingredients:[]});
+  newRec={nom:'',cat:'Burger',prix:''};showAddRec=false;sauvegarder();renderRecettes();
+}
+function delRecette(btn){var id=btn.getAttribute('data-id');delRec(id);}
+function editRecette(btn){var id=+btn.getAttribute('data-id');editRec(id);}
+function delRec(id){
+  recettes=recettes.filter(r=>String(r.id)!==String(id));
+  expandedRec=null;
+  sauvegarder();
+  renderRecettes();
+}
+function editRec(id){
+  const r=recettes.find(x=>String(x.id)===String(id));
+  openModal('✏️ Modifier recette',[
+    {k:'nom',  l:'Nom',              t:'text',   v:r.nom},
+    {k:'prix', l:'Prix vente (DZD)', t:'number', v:r.prix},
+    {k:'cat',  l:'Catégorie',        t:'select', v:r.cat, opts:CATS.map(c=>({v:c,l:c}))},
+  ],data=>{Object.assign(r,{nom:data.nom,prix:+data.prix,cat:data.cat});sauvegarder();renderRecettes();});
+}
+function addIngToRec(recId){
+  const rec=recettes.find(r=>String(r.id)===String(recId));if(!rec)return;
+  const val=document.getElementById('rec_ing_'+recId).value;
+  const id=+val.split('_')[1];
+  const qte=+document.getElementById('rec_qte_'+recId).value;
+  const unite=document.getElementById('rec_unite_'+recId).value;
+  if(!qte)return;
+  if(!rec.ingredients)rec.ingredients=[];
+  rec.ingredients.push({type:'ing',id,qte,unite});
+  sauvegarder();renderRecettes();
+}
+function addPrepToRec(recId){
+  const rec=recettes.find(r=>String(r.id)===String(recId));if(!rec)return;
+  const id=+document.getElementById('rec_prep_'+recId).value;
+  const qte=+document.getElementById('rec_prep_qte_'+recId).value||1;
+  if(!rec.ingredients)rec.ingredients=[];
+  rec.ingredients.push({type:'prep',id,qte,unite:'portion'});
+  sauvegarder();renderRecettes();
+}
+function delIngRec(recId,type,ingId){
+  const rec=recettes.find(r=>String(r.id)===String(recId));if(!rec)return;
+  rec.ingredients=rec.ingredients.filter(i=>!(i.type===type&&i.id===ingId));
+  sauvegarder();renderRecettes();
+}
+
+// ══════════════════════════════════════════
+// CHARGES
+// ══════════════════════════════════════════
+let showAddChg=false,newChg={nom:'',montant:'',type:'fixe'};
+function renderCharges(){
+  const fixes=charges.filter(c=>c.type==='fixe').reduce((s,c)=>s+Number(c.montant),0);
+  const vars=charges.filter(c=>c.type==='variable').reduce((s,c)=>s+Number(c.montant),0);
+  let h=`<div class="grid2">
+    <div class="card"><div style="font-size:10px;color:#555;font-weight:700">Charges Fixes</div><div style="font-size:16px;font-weight:900;color:#ef4444;margin-top:4px">${fc(fixes)}</div></div>
+    <div class="card"><div style="font-size:10px;color:#555;font-weight:700">Charges Variables</div><div style="font-size:16px;font-weight:900;color:#f59e0b;margin-top:4px">${fc(vars)}</div></div>
+  </div>
+  <div class="card row" style="margin-bottom:14px"><span style="font-weight:900">Total / mois</span><span style="color:#ef4444;font-weight:900;font-size:16px">${fc(fixes+vars)}</span></div>`;
+  ['fixe','variable'].forEach(type=>{
+    h+=`<div style="margin-bottom:12px"><div class="section-title" style="color:${type==='fixe'?'#ef4444':'#f59e0b'}">${type==='fixe'?'🔒 Fixes':'🔄 Variables'}</div>`;
+    charges.filter(c=>c.type===type).forEach(c=>{
+      h+=`<div class="card row" style="margin-bottom:6px">
+        <span style="font-size:13px;font-weight:700">${c.nom}</span>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="color:#ef4444;font-weight:800">${fc(+c.montant)}</span>
+          <button class="btn-edit" onclick="editChg(${c.id})">✏️</button>
+          <button class="btn-del" onclick="delChg(${c.id})">🗑</button>
+        </div>
+      </div>`;
+    });
+    h+=`</div>`;
+  });
+  if(showAddChg){
+    h+=`<div class="card" style="border-color:#ef444440;margin-bottom:10px">
+      <div style="font-weight:900;margin-bottom:10px">Nouvelle charge</div>
+      <input class="inp" placeholder="Nom" value="${newChg.nom}" oninput="newChg.nom=this.value"/>
+      <input class="inp" type="number" placeholder="Montant (DZD)" value="${newChg.montant}" oninput="newChg.montant=this.value"/>
+      <select class="inp" onchange="newChg.type=this.value"><option value="fixe">Fixe</option><option value="variable">Variable</option></select>
+      <div style="display:flex;gap:8px">
+        <button class="btn" style="background:#ef4444" onclick="addChg()">Ajouter</button>
+        <button class="btn btn-gray" onclick="showAddChg=false;renderCharges()">Annuler</button>
+      </div>
+    </div>`;
+  }
+  h+=`<button class="btn-outline" onclick="showAddChg=true;renderCharges()">+ Ajouter une charge</button>`;
+  document.getElementById('page-charges').innerHTML=h;
+}
+function addChg(){if(!newChg.nom||!newChg.montant)return;charges.push({id:uid(),nom:newChg.nom,montant:+newChg.montant,type:newChg.type});newChg={nom:'',montant:'',type:'fixe'};showAddChg=false;sauvegarder();renderCharges();}
+function delChg(id){charges=charges.filter(c=>String(c.id)!==String(id));sauvegarder();renderCharges();}
+function editChg(id){const c=charges.find(x=>x.id===id);openModal('✏️ Modifier charge',[{k:'nom',l:'Nom',t:'text',v:c.nom},{k:'montant',l:'Montant (DZD)',t:'number',v:c.montant},{k:'type',l:'Type',t:'select',v:c.type,opts:[{v:'fixe',l:'Fixe'},{v:'variable',l:'Variable'}]}],data=>{Object.assign(c,{nom:data.nom,montant:+data.montant,type:data.type});sauvegarder();renderCharges();},'#ef4444');}
+
+// ══════════════════════════════════════════
+// EMPLOYÉS
+// ══════════════════════════════════════════
+let showAddEmp=false,newEmp={nom:'',poste:'',salaireService:''},expandedEmp=null,acompteTemp={};
+function cycleService(empId,jour){const e=employes.find(x=>x.id===empId);if(!e)return;if(!e.planning)e.planning={};const cur=e.planning[jour]||'repos';const next=cur==='repos'?'matin':cur==='matin'?'soir':cur==='soir'?'journee':'repos';e.planning[jour]=next;sauvegarder();renderEmployes();}
+function addPenalite(empId,type){const e=employes.find(x=>x.id===empId);if(!e)return;if(!e.penalites)e.penalites=[];e.penalites.push({id:uid(),type,montant:200,date:new Date().toLocaleDateString('fr-FR')});sauvegarder();renderEmployes();}
+function delPenalite(empId,penId){const e=employes.find(x=>x.id===empId);if(!e)return;e.penalites=(e.penalites||[]).filter(p=>p.id!==penId);sauvegarder();renderEmployes();}
+function addAcompte(empId,montant){const e=employes.find(x=>x.id===empId);if(!e||!montant)return;if(!e.acomptes)e.acomptes=[];e.acomptes.push({id:uid(),montant:+montant,date:new Date().toLocaleDateString('fr-FR')});sauvegarder();renderEmployes();}
+function delAcompte(empId,aId){const e=employes.find(x=>x.id===empId);if(!e)return;e.acomptes=(e.acomptes||[]).filter(a=>a.id!==aId);sauvegarder();renderEmployes();}
+
+function renderEmployes(){
+  const masseSal=employes.reduce((s,e)=>s+salaireEmp(e),0);
+  let h=`<div class="card" style="background:linear-gradient(135deg,#1a2e1a,#1c1f24);border-color:#22c55e30;margin-bottom:12px">
+    <div class="row">
+      <div><div style="font-size:10px;color:#555;font-weight:700;letter-spacing:1px">MASSE SALARIALE SEMAINE</div><div style="font-size:22px;font-weight:900;color:#22c55e;margin-top:4px">${fc(masseSal)}</div></div>
+      <div style="text-align:right"><div style="font-size:20px;font-weight:900;color:#555">${employes.length}</div><div style="font-size:10px;color:#555;font-weight:700">employé${employes.length>1?'s':''}</div></div>
+    </div>
+  </div>`;
+  employes.forEach(e=>{
+    const planning=e.planning||{},penalites=e.penalites||[],acomptes=e.acomptes||[];
+    const sal=salaireEmp(e);
+    let srv=0;DAYS_EMP.forEach(d=>{const s=planning[d]||'repos';if(s==='matin'||s==='soir')srv+=1;else if(s==='journee')srv+=2;});
+    const pen=penalites.reduce((s,p)=>s+Number(p.montant||200),0);
+    const acp=acomptes.reduce((s,a)=>s+Number(a.montant||0),0);
+    const brut=srv*Number(e.salaireService||0);
+    const isOpen=expandedEmp===e.id;
+    h+=`<div class="card" style="margin-bottom:8px;padding:0;overflow:hidden">
+      <div class="acc-header" onclick="expandedEmp=expandedEmp===${e.id}?null:${e.id};renderEmployes()">
+        <div><div style="font-weight:900;font-size:14px">${e.nom}</div><div style="font-size:11px;color:#555;margin-top:2px">${e.poste} — ${fc(Number(e.salaireService||0))}/service</div></div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="text-align:right"><div style="color:#22c55e;font-weight:900;font-size:15px">${fc(sal)}</div><div style="font-size:10px;color:#555">reste à payer</div></div>
+          <div style="color:#555">${isOpen?'▲':'▼'}</div>
+        </div>
+      </div>
+      ${isOpen?`<div class="acc-body">
+        <div style="background:#111418;border-radius:10px;padding:10px;margin-bottom:10px;font-size:12px">
+          <div class="row" style="margin-bottom:4px"><span style="color:#888">${srv} services × ${fc(e.salaireService||0)}</span><span style="font-weight:700">${fc(brut)}</span></div>
+          <div class="row" style="margin-bottom:4px"><span style="color:#888">Pénalités</span><span style="color:#ef4444;font-weight:700">− ${fc(pen)}</span></div>
+          <div class="row" style="margin-bottom:4px"><span style="color:#888">Acomptes</span><span style="color:#f59e0b;font-weight:700">− ${fc(acp)}</span></div>
+          <div class="sep"></div>
+          <div class="row"><span style="font-weight:800">Reste à payer</span><span style="color:#22c55e;font-weight:900">${fc(sal)}</span></div>
+        </div>
+        <div style="font-size:10px;color:#444;font-weight:700;letter-spacing:1px;margin-bottom:8px">PLANNING</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px">
+          ${DAYS_EMP.map(d=>{const s=planning[d]||'repos';const bg=s==='matin'?'#f59e0b':s==='soir'?'#3b82f6':s==='journee'?'#22c55e':'#2a2d33';const ico=s==='matin'?'🌅':s==='soir'?'🌙':s==='journee'?'☀️':'—';return `<div style="text-align:center"><div style="font-size:9px;color:#444;margin-bottom:3px;font-weight:700">${d}</div><button onclick="cycleService(${e.id},'${d}')" style="width:38px;height:38px;border-radius:9px;border:none;cursor:pointer;font-size:13px;background:${bg};color:#fff">${ico}</button></div>`;}).join('')}
+        </div>
+        <div style="font-size:10px;color:#444;font-weight:700;letter-spacing:1px;margin-bottom:6px">PÉNALITÉS</div>
+        ${penalites.map(p=>`<div style="background:#2a1a1a;border-radius:8px;padding:7px 10px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center"><div><span style="font-size:12px">${p.type==='retard'?'⏰':'🍳'} ${p.type==='retard'?'Retard':'Faute cuisine'}</span><span style="font-size:10px;color:#555;margin-left:6px">${p.date||''}</span></div><div style="display:flex;align-items:center;gap:6px"><span style="color:#ef4444;font-weight:700;font-size:12px">−${fc(p.montant||200)}</span><button onclick="delPenalite(${e.id},${p.id})" style="background:none;border:none;color:#555;cursor:pointer;font-size:15px">×</button></div></div>`).join('')}
+        <div style="display:flex;gap:8px;margin-bottom:12px;margin-top:6px">
+          <button onclick="addPenalite(${e.id},'retard')" style="background:#f59e0b22;border:1px solid #f59e0b40;color:#f59e0b;border-radius:8px;padding:7px 10px;cursor:pointer;font-size:11px;font-weight:700;font-family:inherit">⏰ Retard</button>
+          <button onclick="addPenalite(${e.id},'cuisine')" style="background:#ef444422;border:1px solid #ef444440;color:#ef4444;border-radius:8px;padding:7px 10px;cursor:pointer;font-size:11px;font-weight:700;font-family:inherit">🍳 Faute cuisine</button>
+        </div>
+        <div style="font-size:10px;color:#444;font-weight:700;letter-spacing:1px;margin-bottom:6px">💵 ACOMPTES</div>
+        ${acomptes.map(a=>`<div style="background:#1a1800;border-radius:8px;padding:7px 10px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center"><div><span style="font-size:12px">💵 Acompte</span><span style="font-size:10px;color:#555;margin-left:6px">${a.date||''}</span></div><div style="display:flex;align-items:center;gap:6px"><span style="color:#f59e0b;font-weight:700;font-size:12px">−${fc(a.montant)}</span><button onclick="delAcompte(${e.id},${a.id})" style="background:none;border:none;color:#555;cursor:pointer;font-size:15px">×</button></div></div>`).join('')}
+        <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;margin-top:6px">
+          <input id="acp_${e.id}" type="number" placeholder="Montant acompte (DZD)" style="flex:1;background:#111418;border:1px solid #f59e0b60;border-radius:8px;padding:8px 10px;color:#f0f0f0;font-size:12px;font-family:inherit"/>
+          <button onclick="addAcompte(${e.id},document.getElementById('acp_${e.id}').value);document.getElementById('acp_${e.id}').value=''" style="background:#f59e0b;border:none;color:#000;border-radius:8px;padding:8px 12px;cursor:pointer;font-size:12px;font-weight:900;font-family:inherit">+ Acompte</button>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-edit" onclick="editEmp(${e.id})">✏️ Modifier</button>
+          <button class="btn-del" onclick="delEmp(${e.id})">🗑 Supprimer</button>
+        </div>
+      </div>`:''}
+    </div>`;
+  });
+  if(showAddEmp){
+    h+=`<div class="card" style="border-color:#22c55e30;margin-bottom:10px">
+      <div style="font-weight:900;margin-bottom:10px">Nouvel employé</div>
+      <input class="inp" placeholder="Nom complet" value="${newEmp.nom}" oninput="newEmp.nom=this.value"/>
+      <input class="inp" placeholder="Poste" value="${newEmp.poste}" oninput="newEmp.poste=this.value"/>
+      <input class="inp" type="number" placeholder="Salaire par service (DZD)" value="${newEmp.salaireService}" oninput="newEmp.salaireService=this.value"/>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-green" onclick="addEmp()">Ajouter</button>
+        <button class="btn btn-gray" onclick="showAddEmp=false;renderEmployes()">Annuler</button>
+      </div>
+    </div>`;
+  }
+  h+=`<button class="btn-outline" style="border-color:#22c55e;color:#22c55e" onclick="showAddEmp=true;renderEmployes()">+ Ajouter un employé</button>`;
+  document.getElementById('page-employes').innerHTML=h;
+}
+function addEmp(){if(!newEmp.nom||!newEmp.salaireService)return;employes.push({id:uid(),nom:newEmp.nom,poste:newEmp.poste,salaireService:+newEmp.salaireService,planning:{},penalites:[],acomptes:[]});newEmp={nom:'',poste:'',salaireService:''};showAddEmp=false;sauvegarder();renderEmployes();}
+function delEmp(id){employes=employes.filter(e=>String(e.id)!==String(id));sauvegarder();renderEmployes();}
+function editEmp(id){const e=employes.find(x=>x.id===id);openModal("✏️ Modifier l'employé",[{k:'nom',l:'Nom',t:'text',v:e.nom},{k:'poste',l:'Poste',t:'text',v:e.poste},{k:'salaireService',l:'Salaire/service (DZD)',t:'number',v:e.salaireService}],data=>{Object.assign(e,{nom:data.nom,poste:data.poste,salaireService:+data.salaireService});sauvegarder();renderEmployes();},'#22c55e');}
+
+// ══════════════════════════════════════════
+// FOURNISSEURS
+// ══════════════════════════════════════════
+let showAddFourn=false,newFourn={nom:''},expandedFourn=null,fournModalId=null;
+function renderFournisseurs(){
+  const curSem=getCurrentSemaine(),semaines=getSemaines(),totalSem=totalTousFourn(semaineActive);
+  const semPrec=semaines[semaines.indexOf(semaineActive)+1];
+  const diff=semPrec?totalSem-totalTousFourn(semPrec):null;
+  let h=`<div class="card" style="margin-bottom:12px">
+    <div class="row">
+      <div><div style="font-size:10px;color:#555;font-weight:700;letter-spacing:1px">SEMAINE</div><div style="font-size:16px;font-weight:900;color:#a78bfa;margin-top:4px">${semaineActive}</div></div>
+      <div style="text-align:right"><div style="font-size:18px;font-weight:900;color:#ef4444">${fc(totalSem)}</div><div style="font-size:10px;color:#555">total achats</div>${diff!==null?`<div style="font-size:10px;font-weight:700;color:${diff>0?'#ef4444':'#22c55e'}">${diff>0?'▲':'▼'} ${fc(Math.abs(diff))}</div>`:''}</div>
+    </div>
+    ${semaines.length>1?`<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">${semaines.map(s=>`<button onclick="semaineActive='${s}';renderFournisseurs()" style="background:${s===semaineActive?'#a78bfa':'#2a2d33'};color:${s===semaineActive?'#fff':'#888'};border:none;border-radius:8px;padding:4px 10px;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">${s}</button>`).join('')}</div>`:''}
+  </div>`;
+  fournisseurs.forEach(f=>{
+    const achats=getAchats(f.id,semaineActive),total=totalFournisseur(f.id,semaineActive);
+    const isOpen=expandedFourn===f.id;
+    h+=`<div class="card" style="margin-bottom:8px;padding:0;overflow:hidden">
+      <div class="acc-header" onclick="expandedFourn=expandedFourn===${f.id}?null:${f.id};renderFournisseurs()">
+        <div><div style="font-weight:900;font-size:14px">🚚 ${f.nom}</div><div style="font-size:11px;color:#555;margin-top:2px">${achats.length} achat${achats.length>1?'s':''}</div></div>
+        <div style="text-align:right"><div style="color:#ef4444;font-weight:900;font-size:15px">${fc(total)}</div><div style="color:#555">${isOpen?'▲':'▼'}</div></div>
+      </div>
+      ${isOpen?`<div class="acc-body">
+        ${DAYS.map(d=>{const lignes=achats.filter(a=>a.jour===d);return `<div style="margin-bottom:8px"><div style="font-size:10px;font-weight:700;color:#a78bfa;margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">${d}</div>
+          ${lignes.length===0?'<div style="font-size:11px;color:#333">—</div>':''}
+          ${lignes.map(a=>`<div style="background:#111418;border-radius:7px;padding:7px 10px;margin-bottom:3px;display:flex;justify-content:space-between;align-items:center"><div><span style="font-size:12px;font-weight:700">${a.produit}</span><span style="font-size:10px;color:#555;margin-left:6px">${a.qte} ${a.unite}</span></div><div style="display:flex;align-items:center;gap:6px"><span style="color:#ef4444;font-weight:800;font-size:11px">${fc(a.prix)}</span>${semaineActive===curSem?`<button onclick="delAchat(${f.id},${a.id})" style="background:none;border:none;color:#555;cursor:pointer;font-size:15px">×</button>`:''}</div></div>`).join('')}
+        </div>`;}).join('')}
+        ${semaineActive===curSem?`<button class="btn-edit" onclick="openAddAchat(${f.id})">+ Ajouter achat</button>`:''}
+        <button class="btn-del" style="margin-left:8px" onclick="delFourn(${f.id})">🗑 Supprimer</button>
+      </div>`:''}
+    </div>`;
+  });
+  if(showAddFourn){
+    h+=`<div class="card" style="border-color:#a78bfa40;margin-bottom:10px">
+      <div style="font-weight:900;margin-bottom:10px">Nouveau fournisseur</div>
+      <input class="inp" placeholder="Nom (ex: Poulet, Légumes…)" value="${newFourn.nom}" oninput="newFourn.nom=this.value"/>
+      <div style="display:flex;gap:8px">
+        <button class="btn" style="background:#a78bfa" onclick="addFourn()">Ajouter</button>
+        <button class="btn btn-gray" onclick="showAddFourn=false;renderFournisseurs()">Annuler</button>
+      </div>
+    </div>`;
+  }
+  h+=`<button class="btn-outline" style="border-color:#a78bfa;color:#a78bfa" onclick="showAddFourn=true;renderFournisseurs()">+ Ajouter un fournisseur</button>`;
+  document.getElementById('page-fournisseurs').innerHTML=h;
+}
+function openAddAchat(fId){
+  fournModalId=fId;
+  openModal('+ Ajouter achat',[
+    {k:'jour',    l:'Jour',      t:'select',  v:'Lun',opts:DAYS.map(d=>({v:d,l:d}))},
+    {k:'produit', l:'Produit',   t:'text',    v:''},
+    {k:'qte',     l:'Quantité',  t:'number',  v:''},
+    {k:'unite',   l:'Unité',     t:'select',  v:'kg',opts:UNITE_OPTIONS},
+    {k:'prix',    l:'Prix total (DZD)',t:'number',v:''},
+  ],data=>{
+    if(!data.produit||!data.prix)return;
+    if(!historiqueSemaines[semaineActive])historiqueSemaines[semaineActive]={};
+    if(!historiqueSemaines[semaineActive][fournModalId])historiqueSemaines[semaineActive][fournModalId]=[];
+    historiqueSemaines[semaineActive][fournModalId].push({id:uid(),jour:data.jour,produit:data.produit,qte:data.qte,unite:data.unite,prix:+data.prix});
+    sauvegarder();renderFournisseurs();
+  },'#a78bfa');
+}
+function addFourn(){if(!newFourn.nom)return;fournisseurs.push({id:uid(),nom:newFourn.nom});newFourn={nom:''};showAddFourn=false;sauvegarder();renderFournisseurs();}
+function delFourn(id){fournisseurs=fournisseurs.filter(f=>String(f.id)!==String(id));sauvegarder();renderFournisseurs();}
+function delAchat(fId,aId){if(!historiqueSemaines[semaineActive]||!historiqueSemaines[semaineActive][fId])return;historiqueSemaines[semaineActive][fId]=historiqueSemaines[semaineActive][fId].filter(a=>a.id!==aId);sauvegarder();renderFournisseurs();}
+
+// ══════════════════════════════════════════
+// RAPPORT
+// ══════════════════════════════════════════
+function renderRapport(){
+  const s=calcStats();
+  const fixes=charges.filter(c=>c.type==='fixe').reduce((a,c)=>a+Number(c.montant),0);
+  const vars=charges.filter(c=>c.type==='variable').reduce((a,c)=>a+Number(c.montant),0);
+  let h=`<div style="background:linear-gradient(135deg,#c94400,#f97316);border-radius:16px;padding:20px;margin-bottom:14px;text-align:center">
+    <div style="font-size:11px;opacity:0.85;font-weight:700;letter-spacing:1px">PROFIT NET</div>
+    <div style="font-size:36px;font-weight:900;margin-top:4px">${fc(s.profitNet)}</div>
+    <div style="font-size:12px;opacity:0.8;margin-top:4px">Marge nette: ${fp(s.margeNette)}</div>
+  </div>
+  <div class="card">
+    <div style="font-weight:900;margin-bottom:10px;font-size:13px">💰 Compte de Résultat</div>
+    ${[
+      {l:"Chiffre d'affaires", v:s.totalCA,   c:"#f97316",ico:"➕"},
+      {l:"Coût ingrédients",   v:s.totalCout, c:"#ef4444", ico:"➖"},
+      {l:"PROFIT BRUT",        v:s.profitBrut,c:"#22c55e", ico:"═",b:true},
+      {l:"Charges fixes",      v:fixes,        c:"#ef4444", ico:"➖"},
+      {l:"Charges variables",  v:vars,         c:"#ef4444", ico:"➖"},
+      {l:"Masse salariale",    v:s.masseSal,  c:"#ef4444", ico:"➖"},
+      {l:"Achats fournisseurs",v:s.totalFourn,c:"#ef4444", ico:"➖"},
+      {l:"PROFIT NET",         v:s.profitNet, c:s.profitNet>=0?'#22c55e':'#ef4444',ico:"═",b:true},
+    ].map(r=>`<div class="fin-row" style="font-weight:${r.b?900:500}">
+      <span style="color:#aaa;font-size:12px">${r.ico} ${r.l}</span>
+      <span style="color:${r.c};font-size:12px;font-weight:${r.b?900:600}">${fc(Math.abs(r.v))}</span>
+    </div>`).join('')}
+  </div>
+  <div class="grid2">
+    <div class="card"><div style="font-size:10px;color:#555;font-weight:700">Nb ventes</div><div style="font-size:20px;font-weight:900;color:#a78bfa;margin-top:4px">${ventes.length}</div></div>
+    <div class="card"><div style="font-size:10px;color:#555;font-weight:700">Panier moyen</div><div style="font-size:16px;font-weight:900;color:#60a5fa;margin-top:4px">${fc(s.totalCA/(ventes.length||1))}</div></div>
+    <div class="card"><div style="font-size:10px;color:#555;font-weight:700">Marge brute</div><div style="font-size:20px;font-weight:900;color:#22c55e;margin-top:4px">${fp(s.margeBrute)}</div></div>
+    <div class="card"><div style="font-size:10px;color:#555;font-weight:700">Marge nette</div><div style="font-size:20px;font-weight:900;color:${s.margeNette>=0?'#22c55e':'#ef4444'};margin-top:4px">${fp(s.margeNette)}</div></div>
+  </div>`;
+  if(employes.length>0){
+    h+=`<div class="card"><div style="font-weight:900;margin-bottom:10px;font-size:13px">👥 Salaires semaine</div>`;
+    employes.forEach(e=>{
+      let srv=0;DAYS_EMP.forEach(d=>{const s=(e.planning||{})[d]||'repos';if(s==='matin'||s==='soir')srv+=1;else if(s==='journee')srv+=2;});
+      const acp=(e.acomptes||[]).reduce((s,a)=>s+Number(a.montant||0),0);
+      h+=`<div class="fin-row"><div><div style="font-weight:700;font-size:12px">${e.nom}</div><div style="font-size:10px;color:#555">${e.poste} — ${srv} services${acp>0?' 💵 Acompte: '+fc(acp):''}</div></div><span style="color:#22c55e;font-weight:900;font-size:12px">${fc(salaireEmp(e))}</span></div>`;
+    });
+    h+=`<div class="row" style="padding-top:10px;font-weight:900"><span>Total</span><span style="color:#ef4444;font-size:15px">${fc(s.masseSal)}</span></div></div>`;
+  }
+  if(recettes.length>0){
+    h+=`<div class="card"><div style="font-weight:900;margin-bottom:10px;font-size:13px">🍔 Coûts par recette</div>`;
+    recettes.forEach(r=>{
+      const cout=coutRecette(r);const marge=r.prix>0?((r.prix-cout)/r.prix)*100:0;
+      h+=`<div class="fin-row"><div><div style="font-size:12px;font-weight:700">${r.nom}</div><div style="font-size:10px;color:#555">${r.cat}</div></div><div style="text-align:right"><div style="color:#f97316;font-size:12px;font-weight:700">${fc(r.prix)}</div><div style="font-size:10px;color:${marge>50?'#22c55e':marge>30?'#f59e0b':'#ef4444'}">Marge: ${fp(marge)}</div></div></div>`;
+    });
+    h+=`</div>`;
+  }
+  document.getElementById('page-rapport').innerHTML=h;
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+chargerDonnees();
+</script>
+
+</body>
+</html>
