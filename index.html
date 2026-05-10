@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="MM Food"/>
@@ -11,1094 +11,1387 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-body{font-family:'Nunito',sans-serif;background:#111418;color:#f0f0f0;min-height:100vh;padding-bottom:90px;}
+body{font-family:'Nunito',sans-serif;background:#111418;color:#f0f0f0;min-height:100vh;padding-bottom:20px;}
 input,select,button{font-family:'Nunito',sans-serif;}
 input::placeholder{color:#444;}
 input:focus,select:focus{outline:none;border-color:#f97316!important;}
-::-webkit-scrollbar{width:3px;height:3px;}
-::-webkit-scrollbar-thumb{background:#2a2d33;border-radius:4px;}
-
-.header{background:linear-gradient(135deg,#c94400,#f97316);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
-.tabbar{display:flex;background:#16191e;border-bottom:1px solid #2a2d33;overflow-x:auto;position:sticky;top:62px;z-index:99;}
-.tab-btn{flex:1;padding:14px 8px;border:none;background:none;color:#555;font-weight:600;font-size:11px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s;min-width:64px;}
-.tab-btn.active{color:#f97316;font-weight:900;border-bottom-color:#f97316;}
-.tab-icon{font-size:22px;margin-bottom:4px;}
-.page{padding:12px;max-width:860px;margin:0 auto;display:none;}
-.page.active{display:block;}
-
-.card{background:#1c1f24;border-radius:16px;padding:16px;border:1px solid #2a2d33;margin-bottom:12px;}
+.hdr{background:linear-gradient(135deg,#c94400,#f97316);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.tabs{display:flex;background:#16191e;border-bottom:1px solid #2a2d33;overflow-x:auto;position:sticky;top:62px;z-index:99;}
+.tab{flex:1;padding:12px 6px;border:none;background:none;color:#555;font-weight:600;font-size:10px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;min-width:58px;font-family:inherit;}
+.tab.on{color:#f97316;font-weight:900;border-bottom-color:#f97316;}
+.ti{font-size:20px;margin-bottom:3px;}
+.pg{padding:12px;max-width:860px;margin:0 auto;display:none;}
+.pg.on{display:block;}
+.card{background:#1c1f24;border-radius:14px;padding:14px;border:1px solid #2a2d33;margin-bottom:10px;}
 .row{display:flex;justify-content:space-between;align-items:center;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:12px;}
+.btn{border:none;color:#fff;border-radius:10px;padding:10px 16px;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit;}
+.bo{background:linear-gradient(135deg,#c94400,#f97316);}
+.bg{background:#2a2d33;}
+.bgr{background:#22c55e;}
+.bedit{background:#1e2a3a;border:1px solid #3b82f640;color:#60a5fa;border-radius:8px;padding:5px 10px;cursor:pointer;font-size:11px;font-weight:700;font-family:inherit;}
+.bdel{background:#2a1a1a;border:1px solid #ef444440;color:#ef4444;border-radius:8px;padding:5px 10px;cursor:pointer;font-size:11px;font-weight:700;font-family:inherit;}
+.inp{width:100%;background:#111418;border:1px solid #2a2d33;border-radius:10px;padding:10px 12px;color:#f0f0f0;font-size:13px;margin-bottom:8px;font-family:inherit;}
 .sep{border-top:1px solid #2a2d33;margin:8px 0;}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
-
-.btn{border:none;color:#fff;border-radius:10px;padding:10px 16px;font-weight:800;font-size:13px;cursor:pointer;}
-.btn-orange{background:linear-gradient(135deg,#c94400,#f97316);}
-.btn-green{background:#22c55e;}
-.btn-gray{background:#2a2d33;}
-.btn-edit{background:#1e2a3a;border:1px solid #3b82f640;color:#60a5fa;border-radius:8px;padding:5px 10px;cursor:pointer;font-size:11px;font-weight:700;}
-.btn-del{background:#2a1a1a;border:1px solid #ef444440;color:#ef4444;border-radius:8px;padding:5px 10px;cursor:pointer;font-size:11px;font-weight:700;}
-.btn-outline{width:100%;background:transparent;border:2px dashed #f97316;color:#f97316;border-radius:12px;padding:12px;font-weight:800;cursor:pointer;font-size:13px;margin-top:4px;}
-
-.inp{width:100%;background:#111418;border:1px solid #2a2d33;border-radius:10px;padding:10px 12px;color:#f0f0f0;font-size:13px;margin-bottom:8px;}
-.tag{border-radius:7px;padding:3px 9px;font-size:11px;font-weight:700;display:inline-block;}
-.section-title{font-weight:900;color:#f97316;margin-bottom:8px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;}
-.fin-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #2a2d33;}
-.empty{text-align:center;padding:40px 20px;color:#333;}
-
-.prod-btn{background:#1c1f24;border:1px solid #2a2d33;border-radius:11px;padding:9px 7px;cursor:pointer;text-align:left;transition:all .15s;width:100%;}
-.prod-btn.in-cart{background:#f9731615;border-color:#f97316;}
-
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;align-items:flex-end;justify-content:center;padding:0;}
-.modal-overlay.open{display:flex;}
-.modal{background:#1c1f24;border-radius:20px 20px 0 0;padding:20px;width:100%;max-height:85vh;overflow-y:auto;}
-.modal-title{font-weight:900;font-size:16px;margin-bottom:14px;}
-
-.acc-header{display:flex;justify-content:space-between;align-items:center;padding:12px;cursor:pointer;}
-.acc-body{padding:0 12px 12px;border-top:1px solid #2a2d33;}
+.frow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #2a2d33;}
+.st{font-weight:900;color:#f97316;margin-bottom:8px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;}
+.ah{display:flex;justify-content:space-between;align-items:center;padding:12px;cursor:pointer;}
+.ab{padding:0 12px 12px;border-top:1px solid #2a2d33;}
+.pb{background:#1c1f24;border:1px solid #2a2d33;border-radius:11px;padding:9px 7px;cursor:pointer;text-align:left;width:100%;font-family:inherit;}
+.pb.ic{background:#f9731615;border-color:#f97316;}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;align-items:flex-end;justify-content:center;}
+.modal.on{display:flex;}
+.mbox{background:#1c1f24;border-radius:20px 20px 0 0;padding:20px;width:100%;max-height:85vh;overflow-y:auto;}
 </style>
-
 </head>
 <body>
 
-<div class="header">
+<div class="hdr">
   <div>
-    <div style="font-size:20px;font-weight:900">🍔 MM Food Manager</div>
-    <div style="font-size:13px;opacity:0.85;font-weight:600;margin-top:2px">Bonjour Aziz 👋</div>
+    <div style="font-size:19px;font-weight:900">🍔 MM Food Manager</div>
+    <div style="font-size:12px;opacity:0.85;font-weight:600;margin-top:1px">Bonjour Aziz 👋</div>
   </div>
   <div style="background:rgba(0,0,0,0.25);border-radius:10px;padding:5px 12px;font-size:11px;font-weight:800">🇩🇿 DZD</div>
 </div>
 
-<div class="tabbar">
-  <button class="tab-btn active" onclick="switchTab('dashboard')"><div class="tab-icon">📊</div>Dashboard</button>
-  <button class="tab-btn" onclick="switchTab('caisse')"><div class="tab-icon">🛒</div>Caisse</button>
-  <button class="tab-btn" onclick="switchTab('ingredients')"><div class="tab-icon">🥬</div>Ingrédients</button>
-  <button class="tab-btn" onclick="switchTab('preparations')"><div class="tab-icon">🏭</div>Préparations</button>
-  <button class="tab-btn" onclick="switchTab('recettes')"><div class="tab-icon">🍔</div>Recettes</button>
-  <button class="tab-btn" onclick="switchTab('charges')"><div class="tab-icon">💸</div>Charges</button>
-  <button class="tab-btn" onclick="switchTab('employes')"><div class="tab-icon">👥</div>Employés</button>
-  <button class="tab-btn" onclick="switchTab('fournisseurs')"><div class="tab-icon">🚚</div>Fournisseurs</button>
-  <button class="tab-btn" onclick="switchTab('rapport')"><div class="tab-icon">📋</div>Rapport</button>
+<div class="tabs" id="tabbar">
+  <button class="tab on" onclick="sw('dash')"><div class="ti">📊</div>Dashboard</button>
+  <button class="tab" onclick="sw('caisse')"><div class="ti">🛒</div>Caisse</button>
+  <button class="tab" onclick="sw('ing')"><div class="ti">🥬</div>Ingrédients</button>
+  <button class="tab" onclick="sw('prep')"><div class="ti">🏭</div>Préparations</button>
+  <button class="tab" onclick="sw('rec')"><div class="ti">🍔</div>Recettes</button>
+  <button class="tab" onclick="sw('chg')"><div class="ti">💸</div>Charges</button>
+  <button class="tab" onclick="sw('emp')"><div class="ti">👥</div>Employés</button>
+  <button class="tab" onclick="sw('fourn')"><div class="ti">🚚</div>Fournisseurs</button>
+  <button class="tab" onclick="sw('rapp')"><div class="ti">📋</div>Rapport</button>
 </div>
 
-<div id="page-dashboard"     class="page active"></div>
-<div id="page-caisse"        class="page"></div>
-<div id="page-ingredients"   class="page"></div>
-<div id="page-preparations"  class="page"></div>
-<div id="page-recettes"      class="page"></div>
-<div id="page-charges"       class="page"></div>
-<div id="page-employes"      class="page"></div>
-<div id="page-fournisseurs"  class="page"></div>
-<div id="page-rapport"       class="page"></div>
+<div id="dash"  class="pg on"></div>
+<div id="caisse" class="pg"></div>
+<div id="ing"   class="pg"></div>
+<div id="prep"  class="pg"></div>
+<div id="rec"   class="pg"></div>
+<div id="chg"   class="pg"></div>
+<div id="emp"   class="pg"></div>
+<div id="fourn" class="pg"></div>
+<div id="rapp"  class="pg"></div>
 
-<div class="modal-overlay" id="modal">
-  <div class="modal">
-    <div class="modal-title" id="modal-title"></div>
-    <div id="modal-fields"></div>
-    <div style="display:flex;gap:8px;margin-top:8px;">
-      <button class="btn btn-orange" onclick="saveModal()">💾 Enregistrer</button>
-      <button class="btn btn-gray" onclick="closeModal()">Annuler</button>
+<div class="modal" id="modal">
+  <div class="mbox">
+    <div id="mtitle" style="font-weight:900;font-size:16px;margin-bottom:14px"></div>
+    <div id="mfields"></div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn bo" onclick="saveM()">💾 Enregistrer</button>
+      <button class="btn bg" onclick="closeM()">Annuler</button>
     </div>
   </div>
 </div>
 
 <script>
-// ══════════════════════════════════════════
-// FIREBASE
-// ══════════════════════════════════════════
-const DB_URL = 'https://fastfood-aziz-default-rtdb.firebaseio.com';
-
-function sauvegarder() {
-  const data = {ingredients,preparations,recettes,charges,employes,ventes,fournisseurs,historiqueSemaines};
-  fetch(DB_URL+'/fastfood.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
-    .catch(e=>console.log('Save error:',e));
+// ══════ FIREBASE ══════
+const DB = 'https://fastfood-aziz-default-rtdb.firebaseio.com';
+function save() {
+  var d = {ingredients:ingredients,preparations:preparations,recettes:recettes,charges:charges,employes:employes,ventes:ventes,fournisseurs:fournisseurs,historiqueS:historiqueS,vRapides:vRapides};
+  fetch(DB+'/ff.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).catch(function(e){console.log('Save err',e);});
+}
+function load() {
+  fetch(DB+'/ff.json').then(function(r){return r.json();}).then(function(d){
+    if(!d){render('dash');return;}
+    if(d.ingredients&&d.ingredients.length)   ingredients   = d.ingredients;
+    if(d.preparations&&d.preparations.length) preparations  = d.preparations;
+    if(d.recettes&&d.recettes.length)         recettes      = d.recettes;
+    if(d.charges&&d.charges.length)           charges       = d.charges;
+    if(d.employes&&d.employes.length)         employes      = d.employes;
+    if(d.ventes&&d.ventes.length){ventes=d.ventes;ventes.forEach(function(v){v.date=new Date(v.date);});}
+    if(d.fournisseurs&&d.fournisseurs.length) fournisseurs  = d.fournisseurs;
+    if(d.historiqueS)                         historiqueS   = d.historiqueS;
+    if(d.vRapides)                            vRapides      = d.vRapides;
+    render('dash');
+  }).catch(function(e){console.log('Load err',e);render('dash');});
 }
 
-function chargerDonnees() {
-  // Show loading indicator
-  document.getElementById('page-dashboard').innerHTML = '<div style="text-align:center;padding:60px;color:#555"><div style="font-size:40px">⏳</div><div style="margin-top:12px;font-size:14px">Chargement...</div></div>';
-  
-  fetch(DB_URL+'/fastfood.json', {
-    method: 'GET',
-    headers: {'Accept': 'application/json'},
-    mode: 'cors'
-  })
-    .then(r=>{
-      if(!r.ok) throw new Error('HTTP '+r.status);
-      return r.json();
-    })
-    .then(data=>{
-      if(data && typeof data === 'object') {
-        if(data.ingredients && data.ingredients.length)        ingredients        = data.ingredients;
-        if(data.preparations && data.preparations.length)      preparations       = data.preparations;
-        if(data.recettes && data.recettes.length)              recettes           = data.recettes;
-        if(data.charges && data.charges.length)                charges            = data.charges;
-        if(data.employes && data.employes.length)              employes           = data.employes;
-        if(data.ventes && data.ventes.length)                  {ventes=data.ventes;ventes.forEach(v=>v.date=new Date(v.date));}
-        if(data.fournisseurs && data.fournisseurs.length)      fournisseurs       = data.fournisseurs;
-        if(data.historiqueSemaines)                            historiqueSemaines = data.historiqueSemaines;
-      }
-      renderDashboard();
-    })
-    .catch(e=>{
-      console.log('Load error:',e);
-      // Continue with default data even if Firebase fails
-      renderDashboard();
-    });
-}
+// ══════ DATA ══════
+var DAYS_F = ["Sam","Dim","Lun","Mar","Mer","Jeu","Ven"];
+var DAYS_E = ["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];
+var CATS   = ["Burger","Tacos","Poutine","Sandwich","Plat","Pizza","Salade","Boison"];
+var UNITES = ["kg","g","L","ml","unité","pièce"];
 
-// ══════════════════════════════════════════
-// DATA
-// ══════════════════════════════════════════
-const UNITE_OPTIONS = [{v:'kg',l:'kg'},{v:'g',l:'g'},{v:'L',l:'Litre'},{v:'ml',l:'ml'},{v:'unité',l:'Unité'},{v:'pièce',l:'Pièce'}];
-const DAYS = ["Sam","Dim","Lun","Mar","Mer","Jeu","Ven"]; // Fournisseurs: Sam → Ven
-const DAYS_EMP = ["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"]; // Employés: Dim → Sam
-
-// Ingrédients de base (prix par unité de base)
-let ingredients = [
-  {id:1,  nom:"Farine",          prix:45,   unite:"kg",  prixUnitaire:0.045},
-  {id:2,  nom:"Poulet",          prix:850,  unite:"kg",  prixUnitaire:0.85},
-  {id:3,  nom:"Viande hachée",   prix:1200, unite:"kg",  prixUnitaire:1.2},
-  {id:4,  nom:"Fromage",         prix:1200, unite:"kg",  prixUnitaire:1.2},
-  {id:5,  nom:"Gouda",           prix:1400, unite:"kg",  prixUnitaire:1.4},
-  {id:6,  nom:"Sauce fromagère", prix:800,  unite:"kg",  prixUnitaire:0.8},
-  {id:7,  nom:"Sauce tomate",    prix:300,  unite:"kg",  prixUnitaire:0.3},
-  {id:8,  nom:"Huile",           prix:200,  unite:"L",   prixUnitaire:0.2},
-  {id:9,  nom:"Pain burger",     prix:50,   unite:"pièce",prixUnitaire:50},
-  {id:10, nom:"Pain sandwich",   prix:30,   unite:"pièce",prixUnitaire:30},
-  {id:11, nom:"Salade",          prix:150,  unite:"kg",  prixUnitaire:0.15},
-  {id:12, nom:"Tomate",          prix:120,  unite:"kg",  prixUnitaire:0.12},
-  {id:13, nom:"Frites",          prix:200,  unite:"kg",  prixUnitaire:0.2},
-  {id:14, nom:"Levure",          prix:300,  unite:"kg",  prixUnitaire:0.3},
-  {id:15, nom:"Sel",             prix:50,   unite:"kg",  prixUnitaire:0.05},
-  {id:16, nom:"Sucre",           prix:80,   unite:"kg",  prixUnitaire:0.08},
-  {id:17, nom:"Crème fraîche",   prix:600,  unite:"L",   prixUnitaire:0.6},
-  {id:18, nom:"Escalope poulet", prix:1000, unite:"kg",  prixUnitaire:1.0},
-  {id:19, nom:"Thon",            prix:900,  unite:"kg",  prixUnitaire:0.9},
-  {id:20, nom:"Oeuf",            prix:25,   unite:"pièce",prixUnitaire:25},
+var ingredients = [
+  {id:1, nom:"Farine",         prix:45,   unite:"kg"},
+  {id:2, nom:"Poulet",         prix:850,  unite:"kg"},
+  {id:3, nom:"Viande hachée",  prix:1200, unite:"kg"},
+  {id:4, nom:"Fromage",        prix:1200, unite:"kg"},
+  {id:5, nom:"Gouda",          prix:1400, unite:"kg"},
+  {id:6, nom:"Sauce fromagère",prix:800,  unite:"kg"},
+  {id:7, nom:"Sauce tomate",   prix:300,  unite:"kg"},
+  {id:8, nom:"Huile",          prix:200,  unite:"L"},
+  {id:9, nom:"Pain burger",    prix:50,   unite:"pièce"},
+  {id:10,nom:"Pain sandwich",  prix:30,   unite:"pièce"},
+  {id:11,nom:"Salade",         prix:150,  unite:"kg"},
+  {id:12,nom:"Tomate",         prix:120,  unite:"kg"},
+  {id:13,nom:"Frites",         prix:200,  unite:"kg"},
+  {id:14,nom:"Levure",         prix:300,  unite:"kg"},
+  {id:15,nom:"Sel",            prix:50,   unite:"kg"},
+  {id:16,nom:"Crème fraîche",  prix:600,  unite:"L"},
+  {id:17,nom:"Escalope poulet",prix:1000, unite:"kg"},
+  {id:18,nom:"Thon",           prix:900,  unite:"kg"},
+  {id:19,nom:"Oeuf",           prix:25,   unite:"pièce"},
 ];
 
-// Préparations maison (recettes intermédiaires)
-let preparations = [
-  {id:1, nom:"Pâte à pizza", description:"Base pour toutes les pizzas",
-   ingredients:[
-     {ingId:1, qte:500, unite:"g"},
-     {ingId:14,qte:10,  unite:"g"},
-     {ingId:8, qte:30,  unite:"ml"},
-     {ingId:15,qte:5,   unite:"g"},
-     {ingId:16,qte:5,   unite:"g"},
-   ], rendement:4, uniteRendement:"pizzas"},
-  {id:2, nom:"Sauce fromagère maison", description:"Pour tacos, sandwichs, poutine",
-   ingredients:[
-     {ingId:17,qte:200, unite:"ml"},
-     {ingId:4, qte:100, unite:"g"},
-   ], rendement:300, uniteRendement:"ml"},
+var preparations = [
+  {id:1,nom:"Pâte à pizza",description:"Base pizzas",rendement:4,uniteR:"pizzas",ings:[
+    {iid:1,qte:500,u:"g"},{iid:14,qte:10,u:"g"},{iid:8,qte:30,u:"ml"},{iid:15,qte:5,u:"g"}
+  ]},
+  {id:2,nom:"Sauce fromagère maison",description:"Tacos, sandwichs, poutine",rendement:300,uniteR:"ml",ings:[
+    {iid:16,qte:200,u:"ml"},{iid:4,qte:100,u:"g"}
+  ]},
 ];
 
-// Recettes (produits finaux avec coût calculé)
-let recettes = [
+var recettes = [
   // BURGER
-  {id:1,  nom:"Burger Simple",    cat:"Burger",   prix:400,  ingredients:[]},
-  {id:2,  nom:"Burger Classique", cat:"Burger",   prix:450,  ingredients:[]},
-  {id:3,  nom:"Burger Crispy",    cat:"Burger",   prix:500,  ingredients:[]},
-  {id:4,  nom:"Burger Suprême",   cat:"Burger",   prix:550,  ingredients:[]},
-  {id:5,  nom:"Burger King",      cat:"Burger",   prix:600,  ingredients:[]},
+  {id:1,nom:"Burger Simple",   cat:"Burger",prix:400, ings:[]},
+  {id:2,nom:"Burger Classique",cat:"Burger",prix:450, ings:[]},
+  {id:3,nom:"Burger Crispy",   cat:"Burger",prix:500, ings:[]},
+  {id:4,nom:"Burger Suprême",  cat:"Burger",prix:550, ings:[]},
+  {id:5,nom:"Burger King",     cat:"Burger",prix:600, ings:[]},
   // TACOS
-  {id:11, nom:"Tacos Poulet",         cat:"Tacos", prix:550,  ingredients:[]},
-  {id:12, nom:"Tacos Poulet XLL",     cat:"Tacos", prix:900,  ingredients:[]},
-  {id:13, nom:"Tacos Viande",         cat:"Tacos", prix:600,  ingredients:[]},
-  {id:14, nom:"Tacos Viande XLL",     cat:"Tacos", prix:950,  ingredients:[]},
-  {id:15, nom:"Tacos Mix",            cat:"Tacos", prix:650,  ingredients:[]},
-  {id:16, nom:"Tacos Mix XLL",        cat:"Tacos", prix:1000, ingredients:[]},
-  {id:17, nom:"MM Tacos",             cat:"Tacos", prix:800,  ingredients:[]},
-  {id:18, nom:"MM Tacos XLL",         cat:"Tacos", prix:1200, ingredients:[]},
+  {id:11,nom:"Tacos Poulet",       cat:"Tacos",prix:550, ings:[]},
+  {id:12,nom:"Tacos Poulet XLL",   cat:"Tacos",prix:900, ings:[]},
+  {id:13,nom:"Tacos Viande",       cat:"Tacos",prix:600, ings:[]},
+  {id:14,nom:"Tacos Viande XLL",   cat:"Tacos",prix:950, ings:[]},
+  {id:15,nom:"Tacos Mix",          cat:"Tacos",prix:650, ings:[]},
+  {id:16,nom:"Tacos Mix XLL",      cat:"Tacos",prix:1000,ings:[]},
+  {id:17,nom:"MM Tacos",           cat:"Tacos",prix:800, ings:[]},
+  {id:18,nom:"MM Tacos XLL",       cat:"Tacos",prix:1200,ings:[]},
   // POUTINE
-  {id:21, nom:"Poutine Poulet",           cat:"Poutine", prix:500, ingredients:[]},
-  {id:22, nom:"Poutine Poulet 3 Fromages",cat:"Poutine", prix:700, ingredients:[]},
-  {id:23, nom:"Poutine VH",               cat:"Poutine", prix:600, ingredients:[]},
-  {id:24, nom:"Poutine Mix",              cat:"Poutine", prix:700, ingredients:[]},
-  {id:25, nom:"Poutine Crispy",           cat:"Poutine", prix:600, ingredients:[]},
+  {id:21,nom:"Poutine Poulet",          cat:"Poutine",prix:500,ings:[]},
+  {id:22,nom:"Poutine Poulet 3 Fromages",cat:"Poutine",prix:700,ings:[]},
+  {id:23,nom:"Poutine VH",              cat:"Poutine",prix:600,ings:[]},
+  {id:24,nom:"Poutine Mix",             cat:"Poutine",prix:700,ings:[]},
+  {id:25,nom:"Poutine Crispy",          cat:"Poutine",prix:600,ings:[]},
   // SANDWICH
-  {id:31, nom:"Sandwich Kebda",      cat:"Sandwich", prix:300, ingredients:[]},
-  {id:32, nom:"Sandwich Mariné",     cat:"Sandwich", prix:350, ingredients:[]},
-  {id:33, nom:"Sandwich Boeuf",      cat:"Sandwich", prix:500, ingredients:[]},
-  {id:34, nom:"Sandwich Escalope",   cat:"Sandwich", prix:500, ingredients:[]},
-  {id:35, nom:"Sandwich BBQ",        cat:"Sandwich", prix:550, ingredients:[]},
-  {id:36, nom:"Sandwich Crispy",     cat:"Sandwich", prix:550, ingredients:[]},
-  {id:37, nom:"Sandwich Mix",        cat:"Sandwich", prix:600, ingredients:[]},
-  {id:38, nom:"Sandwich Mexicane",   cat:"Sandwich", prix:600, ingredients:[]},
-  {id:39, nom:"Sandwich Le Parfait", cat:"Sandwich", prix:700, ingredients:[]},
-  {id:40, nom:"Sandwich Crevette 🌟",cat:"Sandwich", prix:1000,ingredients:[]},
+  {id:31,nom:"Sandwich Kebda",     cat:"Sandwich",prix:300, ings:[]},
+  {id:32,nom:"Sandwich Mariné",    cat:"Sandwich",prix:350, ings:[]},
+  {id:33,nom:"Sandwich Boeuf",     cat:"Sandwich",prix:500, ings:[]},
+  {id:34,nom:"Sandwich Escalope",  cat:"Sandwich",prix:500, ings:[]},
+  {id:35,nom:"Sandwich BBQ",       cat:"Sandwich",prix:550, ings:[]},
+  {id:36,nom:"Sandwich Crispy",    cat:"Sandwich",prix:550, ings:[]},
+  {id:37,nom:"Sandwich Mix",       cat:"Sandwich",prix:600, ings:[]},
+  {id:38,nom:"Sandwich Mexicane",  cat:"Sandwich",prix:600, ings:[]},
+  {id:39,nom:"Sandwich Le Parfait",cat:"Sandwich",prix:700, ings:[]},
+  {id:40,nom:"Sandwich Crevette 🌟",cat:"Sandwich",prix:1000,ings:[]},
   // PLAT
-  {id:41, nom:"Plat Escalope",  cat:"Plat", prix:900,  ingredients:[]},
-  {id:42, nom:"Plat Crispy",    cat:"Plat", prix:1000, ingredients:[]},
-  {id:43, nom:"Plat Mexicane",  cat:"Plat", prix:1300, ingredients:[]},
-  {id:44, nom:"Plat Mixte",     cat:"Plat", prix:1500, ingredients:[]},
-  {id:45, nom:"Plat Hot Dog",   cat:"Plat", prix:1000, ingredients:[]},
-  {id:46, nom:"Plat BBQ",       cat:"Plat", prix:1000, ingredients:[]},
-  {id:47, nom:"MM Pizza Plat",  cat:"Plat", prix:1300, ingredients:[]},
+  {id:41,nom:"Plat Escalope", cat:"Plat",prix:900, ings:[]},
+  {id:42,nom:"Plat Crispy",   cat:"Plat",prix:1000,ings:[]},
+  {id:43,nom:"Plat Mexicane", cat:"Plat",prix:1300,ings:[]},
+  {id:44,nom:"Plat Mixte",    cat:"Plat",prix:1500,ings:[]},
+  {id:45,nom:"Plat Hot Dog",  cat:"Plat",prix:1000,ings:[]},
+  {id:46,nom:"Plat BBQ",      cat:"Plat",prix:1000,ings:[]},
+  {id:47,nom:"MM Pizza Plat", cat:"Plat",prix:1300,ings:[]},
   // PIZZA
-  {id:51, nom:"Pizza Marguerite",          cat:"Pizza", prix:400,  ingredients:[]},
-  {id:52, nom:"Pizza Marguerite XLL",      cat:"Pizza", prix:1000, ingredients:[]},
-  {id:53, nom:"Pizza Végétarienne",        cat:"Pizza", prix:500,  ingredients:[]},
-  {id:54, nom:"Pizza Végétarienne XLL",    cat:"Pizza", prix:1500, ingredients:[]},
-  {id:55, nom:"Pizza Pêcheur",             cat:"Pizza", prix:700,  ingredients:[]},
-  {id:56, nom:"Pizza Pêcheur XLL",         cat:"Pizza", prix:1900, ingredients:[]},
-  {id:57, nom:"Pizza Chicken Cheese",      cat:"Pizza", prix:700,  ingredients:[]},
-  {id:58, nom:"Pizza Chicken Cheese XLL",  cat:"Pizza", prix:2200, ingredients:[]},
-  {id:59, nom:"Pizza Boeuf",               cat:"Pizza", prix:800,  ingredients:[]},
-  {id:60, nom:"Pizza Boeuf XLL",           cat:"Pizza", prix:2300, ingredients:[]},
-  {id:61, nom:"Pizza Mexicaine",           cat:"Pizza", prix:800,  ingredients:[]},
-  {id:62, nom:"Pizza Mexicaine XLL",       cat:"Pizza", prix:2400, ingredients:[]},
-  {id:63, nom:"Pizza 4 Fromages",          cat:"Pizza", prix:900,  ingredients:[]},
-  {id:64, nom:"Pizza 4 Fromages XLL",      cat:"Pizza", prix:2700, ingredients:[]},
-  {id:65, nom:"Pizza Fumato",              cat:"Pizza", prix:950,  ingredients:[]},
-  {id:66, nom:"Pizza Fumato XLL",          cat:"Pizza", prix:2800, ingredients:[]},
-  {id:67, nom:"Pizza Fumé",               cat:"Pizza", prix:900,  ingredients:[]},
-  {id:68, nom:"Pizza Fumé XLL",           cat:"Pizza", prix:2700, ingredients:[]},
-  {id:69, nom:"Pizza Hot Dog",             cat:"Pizza", prix:1000, ingredients:[]},
-  {id:70, nom:"Pizza Hot Dog XLL",         cat:"Pizza", prix:3000, ingredients:[]},
-  {id:71, nom:"Pizza BBQ",                 cat:"Pizza", prix:1000, ingredients:[]},
-  {id:72, nom:"Pizza BBQ XLL",             cat:"Pizza", prix:3000, ingredients:[]},
-  {id:73, nom:"MM Pizza",                  cat:"Pizza", prix:1300, ingredients:[]},
-  {id:74, nom:"MM Pizza XLL",              cat:"Pizza", prix:3500, ingredients:[]},
-  {id:75, nom:"Pizza Crevette 🌟",         cat:"Pizza", prix:800,  ingredients:[]},
-  {id:76, nom:"Pizza Crevette XLL 🌟",     cat:"Pizza", prix:2400, ingredients:[]},
-  {id:77, nom:"Pizza Calamar 🌟",          cat:"Pizza", prix:900,  ingredients:[]},
-  {id:78, nom:"Pizza Calamar XLL 🌟",      cat:"Pizza", prix:2700, ingredients:[]},
-  {id:79, nom:"Pizza Fruits de mer 🌟",    cat:"Pizza", prix:1200, ingredients:[]},
-  {id:80, nom:"Pizza Fruits de mer XLL 🌟",cat:"Pizza", prix:3500, ingredients:[]},
+  {id:51,nom:"Pizza Marguerite",           cat:"Pizza",prix:400, ings:[]},
+  {id:52,nom:"Pizza Marguerite XLL",       cat:"Pizza",prix:1000,ings:[]},
+  {id:53,nom:"Pizza Végétarienne",         cat:"Pizza",prix:500, ings:[]},
+  {id:54,nom:"Pizza Végétarienne XLL",     cat:"Pizza",prix:1500,ings:[]},
+  {id:55,nom:"Pizza Pêcheur",              cat:"Pizza",prix:700, ings:[]},
+  {id:56,nom:"Pizza Pêcheur XLL",          cat:"Pizza",prix:1900,ings:[]},
+  {id:57,nom:"Pizza Chicken Cheese",       cat:"Pizza",prix:700, ings:[]},
+  {id:58,nom:"Pizza Chicken Cheese XLL",   cat:"Pizza",prix:2200,ings:[]},
+  {id:59,nom:"Pizza Boeuf",                cat:"Pizza",prix:800, ings:[]},
+  {id:60,nom:"Pizza Boeuf XLL",            cat:"Pizza",prix:2300,ings:[]},
+  {id:61,nom:"Pizza Mexicaine",            cat:"Pizza",prix:800, ings:[]},
+  {id:62,nom:"Pizza Mexicaine XLL",        cat:"Pizza",prix:2400,ings:[]},
+  {id:63,nom:"Pizza 4 Fromages",           cat:"Pizza",prix:900, ings:[]},
+  {id:64,nom:"Pizza 4 Fromages XLL",       cat:"Pizza",prix:2700,ings:[]},
+  {id:65,nom:"Pizza Fumato",               cat:"Pizza",prix:950, ings:[]},
+  {id:66,nom:"Pizza Fumato XLL",           cat:"Pizza",prix:2800,ings:[]},
+  {id:67,nom:"Pizza Fumé",                 cat:"Pizza",prix:900, ings:[]},
+  {id:68,nom:"Pizza Fumé XLL",             cat:"Pizza",prix:2700,ings:[]},
+  {id:69,nom:"Pizza Hot Dog",              cat:"Pizza",prix:1000,ings:[]},
+  {id:70,nom:"Pizza Hot Dog XLL",          cat:"Pizza",prix:3000,ings:[]},
+  {id:71,nom:"Pizza BBQ",                  cat:"Pizza",prix:1000,ings:[]},
+  {id:72,nom:"Pizza BBQ XLL",              cat:"Pizza",prix:3000,ings:[]},
+  {id:73,nom:"MM Pizza",                   cat:"Pizza",prix:1300,ings:[]},
+  {id:74,nom:"MM Pizza XLL",               cat:"Pizza",prix:3500,ings:[]},
+  {id:75,nom:"Pizza Crevette 🌟",          cat:"Pizza",prix:800, ings:[]},
+  {id:76,nom:"Pizza Crevette XLL 🌟",      cat:"Pizza",prix:2400,ings:[]},
+  {id:77,nom:"Pizza Calamar 🌟",           cat:"Pizza",prix:900, ings:[]},
+  {id:78,nom:"Pizza Calamar XLL 🌟",       cat:"Pizza",prix:2700,ings:[]},
+  {id:79,nom:"Pizza Fruits de mer 🌟",     cat:"Pizza",prix:1200,ings:[]},
+  {id:80,nom:"Pizza Fruits de mer XLL 🌟", cat:"Pizza",prix:3500,ings:[]},
   // SALADE
-  {id:91, nom:"Salade Poulet", cat:"Salade", prix:450, ingredients:[]},
-  {id:92, nom:"Salade Thon",   cat:"Salade", prix:450, ingredients:[]},
-  {id:93, nom:"Salade César",  cat:"Salade", prix:600, ingredients:[]},
+  {id:91,nom:"Salade Poulet",cat:"Salade",prix:450,ings:[]},
+  {id:92,nom:"Salade Thon",  cat:"Salade",prix:450,ings:[]},
+  {id:93,nom:"Salade César", cat:"Salade",prix:600,ings:[]},
   // BOISON
-  {id:101,nom:"Coca Cola",    cat:"Boison", prix:150, ingredients:[]},
-  {id:102,nom:"Fanta",        cat:"Boison", prix:150, ingredients:[]},
-  {id:103,nom:"Sprite",       cat:"Boison", prix:150, ingredients:[]},
-  {id:104,nom:"Eau Minérale", cat:"Boison", prix:80,  ingredients:[]},
-  {id:105,nom:"Jus Orange",   cat:"Boison", prix:200, ingredients:[]},
-  {id:106,nom:"Café",         cat:"Boison", prix:100, ingredients:[]},
-  // dummy to close - will be replaced
+  {id:101,nom:"Coca Cola",   cat:"Boison",prix:150,ings:[]},
+  {id:102,nom:"Fanta",       cat:"Boison",prix:150,ings:[]},
+  {id:103,nom:"Sprite",      cat:"Boison",prix:150,ings:[]},
+  {id:104,nom:"Eau Minérale",cat:"Boison",prix:80, ings:[]},
+  {id:105,nom:"Jus Orange",  cat:"Boison",prix:200,ings:[]},
+  {id:106,nom:"Café",        cat:"Boison",prix:100,ings:[]},
 ];
 
-let charges = [
-  {id:1,nom:"Loyer",         montant:50000,type:"fixe"},
-  {id:2,nom:"Électricité",   montant:12000,type:"fixe"},
-  {id:3,nom:"Internet",      montant:3000, type:"fixe"},
-  {id:4,nom:"Assurance",     montant:8000, type:"fixe"},
-  {id:5,nom:"Emballages",    montant:10000,type:"variable"},
-  {id:6,nom:"Nettoyage",     montant:5000, type:"variable"},
-  {id:7,nom:"Marketing",     montant:7000, type:"variable"},
+var charges = [
+  {id:1,nom:"Loyer",        montant:50000,type:"fixe"},
+  {id:2,nom:"Électricité",  montant:12000,type:"fixe"},
+  {id:3,nom:"Internet",     montant:3000, type:"fixe"},
+  {id:4,nom:"Assurance",    montant:8000, type:"fixe"},
+  {id:5,nom:"Emballages",   montant:10000,type:"variable"},
+  {id:6,nom:"Nettoyage",    montant:5000, type:"variable"},
+  {id:7,nom:"Marketing",    montant:7000, type:"variable"},
 ];
 
-let employes = [
-  {id:1, nom:"Hafid",   poste:"Pizza",          salaireService:2500,planning:{},penalites:[],acomptes:[]},
-  {id:2, nom:"Hicham",  poste:"Plaque",          salaireService:2500,planning:{},penalites:[],acomptes:[]},
-  {id:3, nom:"Yacin",   poste:"Plaque",          salaireService:2500,planning:{},penalites:[],acomptes:[]},
-  {id:4, nom:"Yacin 2", poste:"Pizza",           salaireService:2000,planning:{},penalites:[],acomptes:[]},
-  {id:5, nom:"Yahya",   poste:"Pizza",           salaireService:2000,planning:{},penalites:[],acomptes:[]},
-  {id:6, nom:"Mohamed", poste:"Plaque",          salaireService:2000,planning:{},penalites:[],acomptes:[]},
-  {id:7, nom:"Taybe",   poste:"Transport",       salaireService:1200,planning:{},penalites:[],acomptes:[]},
-  {id:8, nom:"Nadia",   poste:"Femme de ménage", salaireService:1500,planning:{},penalites:[],acomptes:[]},
-  {id:9, nom:"Haja",    poste:"Femme de ménage", salaireService:1000,planning:{},penalites:[],acomptes:[]},
+var employes = [
+  {id:1,nom:"Hafid",  poste:"Pizza",         sal:2500,planning:{},hpen:{},hacp:{}},
+  {id:2,nom:"Hicham", poste:"Plaque",         sal:2500,planning:{},hpen:{},hacp:{}},
+  {id:3,nom:"Yacin",  poste:"Plaque",         sal:2500,planning:{},hpen:{},hacp:{}},
+  {id:4,nom:"Yacin 2",poste:"Pizza",          sal:2000,planning:{},hpen:{},hacp:{}},
+  {id:5,nom:"Yahya",  poste:"Pizza",          sal:2000,planning:{},hpen:{},hacp:{}},
+  {id:6,nom:"Mohamed",poste:"Plaque",         sal:2000,planning:{},hpen:{},hacp:{}},
+  {id:7,nom:"Taybe",  poste:"Transport",      sal:1200,planning:{},hpen:{},hacp:{}},
+  {id:8,nom:"Nadia",  poste:"Femme de ménage",sal:1500,planning:{},hpen:{},hacp:{}},
+  {id:9,nom:"Haja",   poste:"Femme de ménage",sal:1000,planning:{},hpen:{},hacp:{}},
 ];
 
-let fournisseurs       = [];
-let historiqueSemaines = {};
-let ventes             = [];
-let panier             = [];
+var fournisseurs  = [];
+var historiqueS   = {};
+var ventes        = [];
+var panier        = [];
 
-// ══════════════════════════════════════════
-// UTILS
-// ══════════════════════════════════════════
-const fc  = v => `${Math.round(v||0).toLocaleString('fr-DZ')} DZD`;
-const fp  = v => `${(v||0).toFixed(1)}%`;
-const uid = () => Date.now()+Math.random();
+// ══════ UTILS ══════
+var uid = function(){ return Date.now() + Math.random(); };
+var fc  = function(v){ return Math.round(v||0).toLocaleString('fr-DZ') + ' DZD'; };
+var fp  = function(v){ return (v||0).toFixed(1) + '%'; };
 
-// Calcul coût d'une recette
-function coutRecette(r) {
-  if(!r.ingredients||!r.ingredients.length) return 0;
-  return r.ingredients.reduce((total,item)=>{
-    if(item.type==='ing'){
-      const ing = ingredients.find(i=>i.id===item.id);
-      if(!ing) return total;
-      // Convertir en unité de base
-      let qteBase = item.qte;
-      if(item.unite==='g' && ing.unite==='kg') qteBase = item.qte/1000;
-      else if(item.unite==='ml' && ing.unite==='L') qteBase = item.qte/1000;
-      return total + (ing.prix * qteBase);
-    } else if(item.type==='prep'){
-      const prep = preparations.find(p=>p.id===item.id);
-      if(!prep) return total;
-      const coutTotal = coutPreparation(prep);
-      const coutParPortion = coutTotal / (prep.rendement||1);
-      return total + (coutParPortion * item.qte);
+function getSem() {
+  var now = new Date();
+  var start = new Date(now.getFullYear(), 0, 1);
+  var week = Math.ceil(((now - start) / 86400000 + start.getDay() + 1) / 7);
+  return now.getFullYear() + '-S' + String(week).padStart(2,'0');
+}
+
+function ingPrixUnitaire(ing) {
+  if(!ing) return 0;
+  // Source: fournisseur
+  if(ing.source==='fourn' && ing.fournId) {
+    var sem = getSem();
+    var achats = (historiqueS[sem]&&historiqueS[sem][ing.fournId]) ? historiqueS[sem][ing.fournId] : [];
+    // Filter achats matching this ingredient
+    var related = achats.filter(function(a){ return a.ingId && String(a.ingId)===String(ing.id); });
+    if(related.length) {
+      // Get latest achat price per unit
+      var last = related[related.length-1];
+      var qte = +last.qte || 1;
+      var prix = +last.prix || 0;
+      // Convert to prix per ing.unite
+      var q = qte;
+      if(last.u==='g'  && ing.unite==='kg') q = qte/1000;
+      if(last.u==='ml' && ing.unite==='L')  q = qte/1000;
+      return q>0 ? prix/q : ing.prix;
     }
-    return total;
-  },0);
+  }
+  // Source: charge
+  if(ing.source==='chg' && ing.chgId) {
+    var chg = charges.find(function(c){return String(c.id)===String(ing.chgId);});
+    if(chg) return Number(chg.montant);
+  }
+  // Manual / default
+  return ing.prix || 0;
 }
 
-// Calcul coût d'une préparation
-function coutPreparation(prep) {
-  if(!prep.ingredients||!prep.ingredients.length) return 0;
-  return prep.ingredients.reduce((total,item)=>{
-    const ing = ingredients.find(i=>i.id===item.id);
-    if(!ing) return total;
-    let qteBase = item.qte;
-    if(item.unite==='g' && ing.unite==='kg') qteBase = item.qte/1000;
-    else if(item.unite==='ml' && ing.unite==='L') qteBase = item.qte/1000;
-    return total + (ing.prix * qteBase);
-  },0);
+function ingPrix(iid, qte, u) {
+  var ing = ingredients.find(function(i){return String(i.id)===String(iid);});
+  if(!ing) return 0;
+  var prixU = ingPrixUnitaire(ing);
+  var q = +qte;
+  if(u==='g'  && ing.unite==='kg') q = q/1000;
+  if(u==='ml' && ing.unite==='L')  q = q/1000;
+  return prixU * q;
 }
 
-function calcStats() {
-  const totalCA    = ventes.reduce((s,v)=>s+v.total,0);
-  const totalCout  = ventes.reduce((s,v)=>s+v.cout,0);
-  const totalChg   = charges.reduce((s,c)=>s+Number(c.montant),0);
-  const masseSal   = employes.reduce((s,e)=>s+salaireEmp(e),0);
-  const totalFourn = totalTousFourn(getCurrentSemaine());
-  const profitBrut = totalCA - totalCout;
-  const profitNet  = profitBrut - totalChg - masseSal - totalFourn;
-  const margeBrute = totalCA>0?(profitBrut/totalCA)*100:0;
-  const margeNette = totalCA>0?(profitNet/totalCA)*100:0;
-  return {totalCA,totalCout,totalChg,masseSal,totalFourn,profitBrut,profitNet,margeBrute,margeNette};
+function prepCout(prep) {
+  if(!prep||!prep.ings) return 0;
+  return prep.ings.reduce(function(s,it){ return s + ingPrix(it.iid, it.qte, it.u); }, 0);
 }
 
-function salaireEmp(e) {
-  const planning=e.planning||{};
-  const penalites=e.penalites||[];
-  const acomptes=e.acomptes||[];
-  let srv=0;
-  DAYS_EMP.forEach(d=>{const s=planning[d]||'repos';if(s==='matin'||s==='soir')srv+=1;else if(s==='journee')srv+=2;});
-  const brut=srv*Number(e.salaireService||0);
-  const pen=penalites.reduce((s,p)=>s+Number(p.montant||200),0);
-  const acp=acomptes.reduce((s,a)=>s+Number(a.montant||0),0);
-  return Math.max(0,brut-pen-acp);
+function recCout(rec) {
+  if(!rec||!rec.ings) return 0;
+  return rec.ings.reduce(function(s,it){
+    if(it.type==='ing') return s + ingPrix(it.id, it.qte, it.u);
+    if(it.type==='prep'){
+      var p = preparations.find(function(x){return String(x.id)===String(it.id);});
+      if(!p) return s;
+      return s + (prepCout(p) / (p.rendement||1)) * it.qte;
+    }
+    return s;
+  }, 0);
 }
 
-function getCurrentSemaine() {
-  const now=new Date();
-  // Week starts Saturday (day 6)
-  const day=now.getDay(); // 0=Sun, 6=Sat
-  const diff=now.getDate() - day + (day===6?0:-1) - (day===0?6:day-6);
-  const weekStart=new Date(now.setDate(diff));
-  const start=new Date(weekStart.getFullYear(),0,1);
-  const week=Math.ceil(((weekStart-start)/86400000+start.getDay()+1)/7);
-  return weekStart.getFullYear()+'-S'+String(week).padStart(2,'0');
-}
-function getSemaines(){const t=Object.keys(historiqueSemaines).sort().reverse();if(!t.includes(semaineActive))t.unshift(semaineActive);return t;}
-function getAchats(fId,sem){return (historiqueSemaines[sem]&&historiqueSemaines[sem][fId])||[];}
-function totalFournisseur(fId,sem){return getAchats(fId,sem).reduce((s,a)=>s+Number(a.prix),0);}
-function totalTousFourn(sem){return fournisseurs.reduce((s,f)=>s+totalFournisseur(f.id,sem),0);}
-
-let currentTab='dashboard';
-let semaineActive=getCurrentSemaine();
-
-function switchTab(tab){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('page-'+tab).classList.add('active');
-  const tabs=['dashboard','caisse','ingredients','preparations','recettes','charges','employes','fournisseurs','rapport'];
-  document.querySelectorAll('.tab-btn')[tabs.indexOf(tab)].classList.add('active');
-  currentTab=tab;
-  renders[tab]&&renders[tab]();
+function empSal(e) {
+  var sem = getSem();
+  var pl  = e.planning || {};
+  var pen = (e.hpen&&e.hpen[sem]) ? e.hpen[sem] : [];
+  var acp = (e.hacp&&e.hacp[sem]) ? e.hacp[sem] : [];
+  var srv = 0;
+  DAYS_E.forEach(function(d){ var s=pl[d]||'repos'; if(s==='matin'||s==='soir')srv+=1; else if(s==='journee')srv+=2; });
+  var brut = srv * (e.sal||0);
+  var tpen = pen.reduce(function(s,p){return s+Number(p.m||200);},0);
+  var tacp = acp.reduce(function(s,a){return s+Number(a.m||0);},0);
+  return Math.max(0, brut - tpen - tacp);
 }
 
-const renders={
-  dashboard:renderDashboard,
-  caisse:renderCaisse,
-  ingredients:renderIngredients,
-  preparations:renderPreparations,
-  recettes:renderRecettes,
-  charges:renderCharges,
-  employes:renderEmployes,
-  fournisseurs:renderFournisseurs,
-  rapport:renderRapport
-};
+function fournTotal(fid, sem) {
+  return ((historiqueS[sem]&&historiqueS[sem][fid]) ? historiqueS[sem][fid] : []).reduce(function(s,a){return s+Number(a.prix||0);},0);
+}
+function allFournTotal(sem) {
+  return fournisseurs.reduce(function(s,f){return s+fournTotal(f.id,sem);},0);
+}
 
-// ══════════════════════════════════════════
-// MODAL
-// ══════════════════════════════════════════
-let modalCb=null, modalData={};
-function openModal(title,fields,cb,accent='#f97316'){
-  modalCb=cb; modalData={};
-  fields.forEach(f=>modalData[f.k]=f.v!==undefined?String(f.v):'');
-  document.getElementById('modal-title').textContent=title;
-  document.getElementById('modal-title').style.color=accent;
-  let html='';
-  fields.forEach(f=>{
+function stats() {
+  var ca   = ventes.reduce(function(s,v){return s+v.total;},0);
+  var cout = ventes.reduce(function(s,v){return s+v.cout;},0);
+  var chg  = charges.reduce(function(s,c){return s+Number(c.montant);},0);
+  var sal  = employes.reduce(function(s,e){return s+empSal(e);},0);
+  var four = allFournTotal(getSem());
+  var pb   = ca - cout;
+  var pn   = pb - chg - sal - four;
+  var mb   = ca>0?(pb/ca)*100:0;
+  var mn   = ca>0?(pn/ca)*100:0;
+  return {ca:ca,cout:cout,chg:chg,sal:sal,four:four,pb:pb,pn:pn,mb:mb,mn:mn};
+}
+
+// ══════ TABS ══════
+var curTab = 'dash';
+function sw(id) {
+  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});
+  document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('on');});
+  document.getElementById(id).classList.add('on');
+  var tabs = ['dash','caisse','ing','prep','rec','chg','emp','fourn','rapp'];
+  document.querySelectorAll('.tab')[tabs.indexOf(id)].classList.add('on');
+  curTab = id;
+  render(id);
+}
+
+function render(id) {
+  if(id==='dash')   rDash();
+  if(id==='caisse') rCaisse();
+  if(id==='ing')    rIng();
+  if(id==='prep')   rPrep();
+  if(id==='rec')    rRec();
+  if(id==='chg')    rChg();
+  if(id==='emp')    rEmp();
+  if(id==='fourn')  rFourn();
+  if(id==='rapp')   rRapp();
+}
+
+// ══════ MODAL ══════
+var mCb = null, mData = {};
+function openM(title, fields, cb, color) {
+  mCb = cb; mData = {};
+  fields.forEach(function(f){ mData[f.k] = f.v !== undefined ? String(f.v) : ''; });
+  document.getElementById('mtitle').textContent = title;
+  document.getElementById('mtitle').style.color = color || '#f97316';
+  var html = '';
+  fields.forEach(function(f){
     if(f.t==='select'){
-      html+=`<select class="inp" onchange="modalData['${f.k}']=this.value">
-        ${f.opts.map(o=>`<option value="${o.v}"${o.v==f.v?' selected':''}>${o.l}</option>`).join('')}
-      </select>`;
+      html += '<select class="inp" onchange="mData[\'' + f.k + '\']=this.value">';
+      (f.opts||[]).forEach(function(o){ html += '<option value="'+o.v+'"'+(o.v==f.v?' selected':'')+'>'+o.l+'</option>'; });
+      html += '</select>';
     } else {
-      html+=`<input class="inp" type="${f.t||'text'}" placeholder="${f.l}" value="${f.v!==undefined?f.v:''}" oninput="modalData['${f.k}']=this.value"/>`;
+      html += '<input class="inp" type="'+(f.t||'text')+'" placeholder="'+f.l+'" value="'+(f.v!==undefined?f.v:'')+'" oninput="mData[\''+f.k+'\']=this.value"/>';
     }
   });
-  document.getElementById('modal-fields').innerHTML=html;
-  document.getElementById('modal').classList.add('open');
+  document.getElementById('mfields').innerHTML = html;
+  document.getElementById('modal').classList.add('on');
 }
-function saveModal(){if(modalCb)modalCb(modalData);closeModal();}
-function closeModal(){document.getElementById('modal').classList.remove('open');modalCb=null;}
+function saveM(){ if(mCb) mCb(mData); closeM(); }
+function closeM(){ document.getElementById('modal').classList.remove('on'); mCb=null; }
 
-// ══════════════════════════════════════════
-// DASHBOARD
-// ══════════════════════════════════════════
-function renderDashboard(){
-  const s=calcStats();
-  const top=Object.entries(ventes.reduce((m,v)=>{v.items.forEach(i=>{m[i.nom]=(m[i.nom]||0)+i.qte;});return m;},{})).sort((a,b)=>b[1]-a[1]).slice(0,5);
-  let h=`
-    <div class="grid2">
-      <div class="card"><div style="font-size:22px">💰</div><div style="font-size:17px;font-weight:900;color:#f97316;margin-top:4px">${fc(s.totalCA)}</div><div style="font-size:10px;color:#555;font-weight:700;margin-top:2px">Chiffre d'affaires</div></div>
-      <div class="card"><div style="font-size:22px">📈</div><div style="font-size:17px;font-weight:900;color:${s.profitNet>=0?'#22c55e':'#ef4444'};margin-top:4px">${fc(s.profitNet)}</div><div style="font-size:10px;color:#555;font-weight:700;margin-top:2px">Profit Net</div></div>
-      <div class="card"><div style="font-size:22px">📊</div><div style="font-size:20px;font-weight:900;color:#60a5fa;margin-top:4px">${fp(s.margeBrute)}</div><div style="font-size:10px;color:#555;font-weight:700;margin-top:2px">Marge Brute</div></div>
-      <div class="card"><div style="font-size:22px">🛒</div><div style="font-size:20px;font-weight:900;color:#a78bfa;margin-top:4px">${ventes.length}</div><div style="font-size:10px;color:#555;font-weight:700;margin-top:2px">Nb Ventes</div></div>
-    </div>
-    <div class="card">
-      <div style="font-weight:900;margin-bottom:10px;font-size:13px">📋 Résumé</div>
-      ${[
-        {l:"CA Total",         v:s.totalCA,    c:"#f97316",ico:"➕"},
-        {l:"Coût ingrédients", v:s.totalCout,  c:"#ef4444", ico:"➖"},
-        {l:"Profit Brut",      v:s.profitBrut, c:"#22c55e", ico:"═",b:true},
-        {l:"Charges",          v:s.totalChg,   c:"#ef4444", ico:"➖"},
-        {l:"Salaires",         v:s.masseSal,   c:"#ef4444", ico:"➖"},
-        {l:"Fournisseurs",     v:s.totalFourn, c:"#ef4444", ico:"➖"},
-        {l:"PROFIT NET",       v:s.profitNet,  c:s.profitNet>=0?'#22c55e':'#ef4444',ico:"═",b:true},
-      ].map(r=>`<div class="fin-row" style="font-weight:${r.b?900:500}">
-        <span style="color:#aaa;font-size:12px">${r.ico} ${r.l}</span>
-        <span style="color:${r.c};font-size:12px;font-weight:${r.b?900:600}">${fc(Math.abs(r.v))}</span>
-      </div>`).join('')}
-    </div>
-    ${top.length?`<div class="card"><div style="font-weight:900;margin-bottom:10px;font-size:13px">🏆 Top Produits</div>${top.map(([n,q],i)=>`<div class="row" style="margin-bottom:6px"><div style="display:flex;gap:8px;align-items:center"><span style="color:${['#ffd700','#c0c0c0','#cd7f32','#888','#666'][i]};font-weight:900">#${i+1}</span><span style="font-size:12px">${n}</span></div><span class="tag" style="background:#f9731622;color:#f97316">${q}</span></div>`).join('')}</div>`:''}
-    ${!ventes.length?`<div class="empty"><div style="font-size:48px">🍔</div><div style="font-size:13px;margin-top:8px;color:#555">Lance tes premières ventes depuis <b style="color:#f97316">Caisse</b> !</div></div>`:''}`;
-  document.getElementById('page-dashboard').innerHTML=h;
-}
-
-// ══════════════════════════════════════════
-// CAISSE
-// ══════════════════════════════════════════
-let caisseSearch='', caisseCat='Tous';
-function renderCaisse(){
-  const cats=['Tous',...new Set(recettes.map(r=>r.cat))];
-  const filtered=recettes.filter(r=>caisseCat==='Tous'||r.cat===caisseCat).filter(r=>r.nom.toLowerCase().includes(caisseSearch.toLowerCase()));
-  let h=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
-    <input class="inp" style="margin:0" placeholder="🔍 Rechercher…" value="${caisseSearch}" oninput="caisseSearch=this.value;renderCaisse()"/>
-    <select class="inp" style="margin:0" onchange="caisseCat=this.value;renderCaisse()">
-      ${cats.map(c=>`<option${c===caisseCat?' selected':''}>${c}</option>`).join('')}
-    </select>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:12px">`;
-  filtered.forEach(r=>{
-    const qte=panier.find(x=>x.id===r.id)?.qte||0;
-    const cout=coutRecette(r);
-    h+=`<button class="prod-btn${qte>0?' in-cart':''}" onclick="addToCart(${r.id})">
-      <div style="font-size:9px;color:#555;margin-bottom:1px;font-weight:700;text-transform:uppercase">${r.cat}</div>
-      <div style="font-size:11px;font-weight:700;color:#f0f0f0;line-height:1.3;margin-bottom:3px">${r.nom}</div>
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="color:#f97316;font-weight:900;font-size:12px">${fc(r.prix)}</span>
-        ${qte>0?`<span style="background:#f97316;color:#fff;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900">${qte}</span>`:''}
-      </div>
-    </button>`;
+// ══════ DASHBOARD ══════
+function rDash() {
+  var s = stats();
+  var top = {};
+  ventes.forEach(function(v){ v.items.forEach(function(i){ top[i.nom]=(top[i.nom]||0)+i.qte; }); });
+  var topArr = Object.entries(top).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
+  var h = '';
+  h += '<div class="g2">';
+  h += '<div class="card"><div style="font-size:22px">💰</div><div style="font-size:17px;font-weight:900;color:#f97316;margin-top:4px">'+fc(s.ca)+'</div><div style="font-size:10px;color:#555;font-weight:700;margin-top:2px">Chiffre d\'affaires</div></div>';
+  h += '<div class="card"><div style="font-size:22px">📈</div><div style="font-size:17px;font-weight:900;color:'+(s.pn>=0?'#22c55e':'#ef4444')+';margin-top:4px">'+fc(s.pn)+'</div><div style="font-size:10px;color:#555;font-weight:700;margin-top:2px">Profit Net</div></div>';
+  h += '<div class="card"><div style="font-size:22px">📊</div><div style="font-size:20px;font-weight:900;color:#60a5fa;margin-top:4px">'+fp(s.mb)+'</div><div style="font-size:10px;color:#555;font-weight:700;margin-top:2px">Marge Brute</div></div>';
+  h += '<div class="card"><div style="font-size:22px">🛒</div><div style="font-size:20px;font-weight:900;color:#a78bfa;margin-top:4px">'+ventes.length+'</div><div style="font-size:10px;color:#555;font-weight:700;margin-top:2px">Nb Ventes</div></div>';
+  h += '</div>';
+  h += '<div class="card">';
+  h += '<div style="font-weight:900;margin-bottom:10px;font-size:13px">📋 Résumé</div>';
+  var rows = [
+    {l:"CA Total",         v:s.ca,   c:"#f97316",ico:"➕"},
+    {l:"Coût ingrédients", v:s.cout, c:"#ef4444", ico:"➖"},
+    {l:"Profit Brut",      v:s.pb,   c:"#22c55e", ico:"═",b:true},
+    {l:"Charges",          v:s.chg,  c:"#ef4444", ico:"➖"},
+    {l:"Salaires",         v:s.sal,  c:"#ef4444", ico:"➖"},
+    {l:"Fournisseurs",     v:s.four, c:"#ef4444", ico:"➖"},
+    {l:"PROFIT NET",       v:s.pn,   c:s.pn>=0?"#22c55e":"#ef4444",ico:"═",b:true},
+  ];
+  rows.forEach(function(r){
+    h += '<div class="frow" style="font-weight:'+(r.b?900:500)+'">';
+    h += '<span style="color:#aaa;font-size:12px">'+r.ico+' '+r.l+'</span>';
+    h += '<span style="color:'+r.c+';font-size:12px;font-weight:'+(r.b?900:600)+'">'+fc(Math.abs(r.v))+'</span>';
+    h += '</div>';
   });
-  h+=`</div>`;
-  if(panier.length>0){
-    const total=panier.reduce((s,x)=>s+x.prix*x.qte,0);
-    h+=`<div class="card" style="border-color:#f9731640">
-      <div style="font-weight:900;margin-bottom:10px;font-size:13px">🛒 Commande</div>`;
-    panier.forEach(x=>{
-      h+=`<div class="row" style="margin-bottom:8px">
-        <span style="font-size:12px;flex:1">${x.nom}</span>
-        <div style="display:flex;align-items:center;gap:6px">
-          <button onclick="remFromCart(${x.id})" style="background:#2a2d33;border:none;color:#fff;border-radius:6px;width:26px;height:26px;cursor:pointer;font-weight:800;font-size:14px">−</button>
-          <span style="font-weight:900;min-width:18px;text-align:center">${x.qte}</span>
-          <button onclick="addToCart(${x.id})" style="background:#f97316;border:none;color:#fff;border-radius:6px;width:26px;height:26px;cursor:pointer;font-weight:800;font-size:14px">+</button>
-          <span style="color:#f97316;font-weight:800;font-size:11px;min-width:70px;text-align:right">${fc(x.prix*x.qte)}</span>
-        </div>
-      </div>`;
+  h += '</div>';
+  if(topArr.length) {
+    h += '<div class="card"><div style="font-weight:900;margin-bottom:10px;font-size:13px">🏆 Top Produits</div>';
+    topArr.forEach(function(t,i){
+      var colors=['#ffd700','#c0c0c0','#cd7f32','#888','#666'];
+      h += '<div class="row" style="margin-bottom:6px"><div style="display:flex;gap:8px;align-items:center"><span style="color:'+colors[i]+';font-weight:900">#'+(i+1)+'</span><span style="font-size:12px">'+t[0]+'</span></div><span style="background:#f9731622;color:#f97316;border-radius:7px;padding:3px 9px;font-size:11px;font-weight:700">'+t[1]+'</span></div>';
     });
-    h+=`<div class="sep"></div>
-      <div class="row" style="margin-top:8px">
-        <span style="font-weight:900;font-size:14px">Total: <span style="color:#f97316">${fc(total)}</span></span>
-        <button class="btn btn-orange" onclick="validerVente()">✅ Valider</button>
-      </div></div>`;
+    h += '</div>';
   }
-  if(ventes.length>0){
-    h+=`<div style="margin-top:12px"><div style="font-weight:900;margin-bottom:8px;font-size:13px">📜 Historique</div>`;
-    ventes.slice(0,8).forEach(v=>{
-      h+=`<div class="card" style="margin-bottom:6px">
-        <div class="row"><span style="color:#555;font-size:10px">${v.date.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</span><span style="color:#f97316;font-weight:900">${fc(v.total)}</span></div>
-        <div style="font-size:11px;color:#888;margin-top:3px">${v.items.map(i=>`${i.nom} ×${i.qte}`).join(', ')}</div>
-      </div>`;
-    });
-    h+=`</div>`;
-  }
-  document.getElementById('page-caisse').innerHTML=h;
-}
-function addToCart(id){
-  const r=recettes.find(x=>String(x.id)===String(id));if(!r)return;
-  const ex=panier.find(x=>x.id===id);
-  if(ex)ex.qte++;else panier.push({...r,qte:1});
-  renderCaisse();
-}
-function remFromCart(id){
-  const ex=panier.find(x=>x.id===id);if(!ex)return;
-  if(ex.qte===1)panier=panier.filter(x=>x.id!==id);else ex.qte--;
-  renderCaisse();
-}
-function validerVente(){
-  if(!panier.length)return;
-  const total=panier.reduce((s,x)=>s+x.prix*x.qte,0);
-  const cout=panier.reduce((s,x)=>s+coutRecette(x)*x.qte,0);
-  ventes.unshift({id:uid(),items:panier.map(x=>({nom:x.nom,qte:x.qte,prix:x.prix})),total,cout,date:new Date()});
-  panier=[];sauvegarder();renderCaisse();
+  if(!ventes.length) h += '<div style="text-align:center;padding:40px;color:#333"><div style="font-size:48px">🍔</div><div style="font-size:13px;margin-top:8px;color:#555">Lance tes premières ventes depuis <b style="color:#f97316">Caisse</b> !</div></div>';
+  document.getElementById('dash').innerHTML = h;
 }
 
-// ══════════════════════════════════════════
-// INGRÉDIENTS
-// ══════════════════════════════════════════
-let showAddIng=false, newIng={nom:'',prix:'',unite:'kg'};
-function renderIngredients(){
-  let h=`<div class="row" style="margin-bottom:10px">
-    <span style="color:#555;font-size:12px;font-weight:700">${ingredients.length} ingrédients</span>
-    <button class="btn btn-orange" onclick="showAddIng=true;renderIngredients()">+ Ajouter</button>
-  </div>`;
+// ══════ CAISSE ══════
+var selectedFamille=null, jourActif='Sam';
+var vRapides = {}; // {sem: {jour: {prodId: {qte, total}}}}
+function rCaisse() {
+  var sem = getSem();
+  if(!vRapides[sem]) vRapides[sem] = {};
+  if(!vRapides[sem][jourActif]) vRapides[sem][jourActif] = {};
+  var jourData = vRapides[sem][jourActif];
+  var h = '';
+
+  // ── JOUR SELECTOR ──
+  h += '<div style="margin-bottom:12px">';
+  h += '<div style="font-size:11px;color:#555;font-weight:700;margin-bottom:6px;letter-spacing:1px">📅 JOUR</div>';
+  h += '<div style="display:flex;gap:5px;flex-wrap:wrap">';
+  DAYS_F.forEach(function(d){
+    var isOn = jourActif===d;
+    // Count total for this day
+    var dayTotal = 0;
+    if(vRapides[sem]&&vRapides[sem][d]) {
+      Object.values(vRapides[sem][d]).forEach(function(v){ dayTotal += v.total||0; });
+    }
+    h += '<div style="text-align:center">';
+    h += '<button style="padding:7px 10px;border:none;border-radius:9px;font-weight:800;font-size:12px;cursor:pointer;font-family:inherit;background:'+(isOn?'linear-gradient(135deg,#c94400,#f97316)':'#1c1f24')+';color:'+(isOn?'#fff':'#888')+';border:1px solid '+(isOn?'transparent':'#2a2d33')+'" id="jbtn_'+d+'">'+d+'</button>';
+    if(dayTotal>0) h += '<div style="font-size:9px;color:#22c55e;font-weight:700;margin-top:2px">'+Math.round(dayTotal/1000)+'k</div>';
+    h += '</div>';
+  });
+  h += '</div></div>';
+
+  // ── FAMILLE SELECTOR ──
+  h += '<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px">';
+  CATS.forEach(function(cat){
+    var isOn = selectedFamille===cat;
+    var catTotal = 0;
+    var catQte   = 0;
+    recettes.filter(function(r){return r.cat===cat;}).forEach(function(r){
+      var v = jourData[r.id]||{};
+      catTotal += v.total||0;
+      catQte   += v.qte||0;
+    });
+    h += '<button style="padding:7px 12px;border:none;border-radius:9px;font-weight:800;font-size:11px;cursor:pointer;font-family:inherit;background:'+(isOn?'linear-gradient(135deg,#c94400,#f97316)':'#1c1f24')+';color:'+(isOn?'#fff':'#888')+';border:1px solid '+(isOn?'transparent':'#2a2d33')+'" id="fam_'+cat+'">';
+    h += cat+(catTotal>0?' ✓':'');
+    h += '</button>';
+  });
+  h += '</div>';
+
+  // ── TABLEAU RÉSUMÉ DU JOUR ──
+  h += '<div class="card" style="margin-bottom:12px">';
+  h += '<div style="font-weight:900;margin-bottom:8px;font-size:13px">📋 '+jourActif+' — Résumé</div>';
+  h += '<div style="display:grid;grid-template-columns:1fr 50px 100px;gap:4px;margin-bottom:6px">';
+  h += '<span style="font-size:10px;color:#555;font-weight:700">FAMILLE</span>';
+  h += '<span style="font-size:10px;color:#555;font-weight:700;text-align:center">QTE</span>';
+  h += '<span style="font-size:10px;color:#555;font-weight:700;text-align:right">TOTAL</span>';
+  h += '</div>';
+  var grandTotal=0, grandQte=0;
+  CATS.forEach(function(cat){
+    var catTotal=0, catQte=0;
+    recettes.filter(function(r){return r.cat===cat;}).forEach(function(r){
+      var v=jourData[r.id]||{};
+      catTotal += v.total||0;
+      catQte   += v.qte||0;
+    });
+    grandTotal += catTotal;
+    grandQte   += catQte;
+    if(catQte>0||catTotal>0){
+      h += '<div style="display:grid;grid-template-columns:1fr 50px 100px;gap:4px;padding:5px 0;border-bottom:1px solid #2a2d33;cursor:pointer" id="famrow_'+cat+'">';
+      h += '<span style="font-size:12px;font-weight:700;color:#f97316">'+cat+'</span>';
+      h += '<span style="font-size:12px;font-weight:700;text-align:center">'+catQte+'</span>';
+      h += '<span style="font-size:12px;font-weight:700;color:#22c55e;text-align:right">'+fc(catTotal)+'</span>';
+      h += '</div>';
+    }
+  });
+  h += '<div style="display:grid;grid-template-columns:1fr 50px 100px;gap:4px;padding:8px 0;margin-top:2px">';
+  h += '<span style="font-size:13px;font-weight:900">TOTAL JOUR</span>';
+  h += '<span style="font-size:13px;font-weight:900;color:#f97316;text-align:center">'+grandQte+'</span>';
+  h += '<span style="font-size:13px;font-weight:900;color:#22c55e;text-align:right">'+fc(grandTotal)+'</span>';
+  h += '</div></div>';
+
+  // ── ARTICLES DE LA FAMILLE ──
+  if(selectedFamille) {
+    var famProds = recettes.filter(function(r){return r.cat===selectedFamille;});
+    h += '<div class="card" style="border-color:#f9731640;margin-bottom:12px">';
+    h += '<div style="font-weight:900;margin-bottom:10px;font-size:13px;color:#f97316">'+selectedFamille+' — '+jourActif+'</div>';
+    h += '<div style="display:grid;grid-template-columns:1fr 65px 95px;gap:6px;margin-bottom:6px">';
+    h += '<span style="font-size:10px;color:#555;font-weight:700">PRODUIT</span>';
+    h += '<span style="font-size:10px;color:#555;font-weight:700;text-align:center">QTE</span>';
+    h += '<span style="font-size:10px;color:#555;font-weight:700;text-align:right">TOTAL DZD</span>';
+    h += '</div>';
+    famProds.forEach(function(r){
+      var vr = jourData[r.id]||{qte:0,total:0};
+      h += '<div style="display:grid;grid-template-columns:1fr 65px 95px;gap:6px;padding:5px 0;border-bottom:1px solid #2a2d33;align-items:center">';
+      h += '<span style="font-size:12px;font-weight:600">'+r.nom+'</span>';
+      h += '<input type="number" placeholder="0" value="'+(vr.qte||'')+'" style="background:#111418;border:1px solid #2a2d33;border-radius:7px;padding:6px 4px;color:#f97316;font-size:13px;font-weight:800;text-align:center;font-family:inherit;width:100%" id="vqte_'+r.id+'"/>';
+      h += '<input type="number" placeholder="0" value="'+(vr.total||'')+'" style="background:#111418;border:1px solid #2a2d33;border-radius:7px;padding:6px 4px;color:#22c55e;font-size:12px;font-weight:800;text-align:right;font-family:inherit;width:100%" id="vtot_'+r.id+'"/>';
+      h += '</div>';
+    });
+    h += '</div>';
+  }
+
+  // ── TOTAL SEMAINE ──
+  h += '<div class="card" style="background:linear-gradient(135deg,#1a1a2e,#1c1f24);border-color:#a78bfa40;margin-bottom:12px">';
+  h += '<div style="font-weight:900;margin-bottom:10px;font-size:13px;color:#a78bfa">📊 Total Semaine — '+sem+'</div>';
+  h += '<div style="display:grid;grid-template-columns:1fr 50px 100px;gap:4px;margin-bottom:6px">';
+  h += '<span style="font-size:10px;color:#555;font-weight:700">FAMILLE</span>';
+  h += '<span style="font-size:10px;color:#555;font-weight:700;text-align:center">QTE</span>';
+  h += '<span style="font-size:10px;color:#555;font-weight:700;text-align:right">TOTAL</span>';
+  h += '</div>';
+  var semTotal=0, semQte=0;
+  CATS.forEach(function(cat){
+    var catT=0, catQ=0;
+    DAYS_F.forEach(function(d){
+      var dd = (vRapides[sem]&&vRapides[sem][d])?vRapides[sem][d]:{};
+      recettes.filter(function(r){return r.cat===cat;}).forEach(function(r){
+        var v=dd[r.id]||{};
+        catT += v.total||0;
+        catQ += v.qte||0;
+      });
+    });
+    semTotal += catT;
+    semQte   += catQ;
+    if(catQ>0||catT>0){
+      h += '<div style="display:grid;grid-template-columns:1fr 50px 100px;gap:4px;padding:5px 0;border-bottom:1px solid #2a2d33">';
+      h += '<span style="font-size:12px;font-weight:700;color:#a78bfa">'+cat+'</span>';
+      h += '<span style="font-size:12px;font-weight:700;text-align:center">'+catQ+'</span>';
+      h += '<span style="font-size:12px;font-weight:700;color:#22c55e;text-align:right">'+fc(catT)+'</span>';
+      h += '</div>';
+    }
+  });
+  h += '<div style="display:grid;grid-template-columns:1fr 50px 100px;gap:4px;padding:8px 0;margin-top:2px">';
+  h += '<span style="font-size:14px;font-weight:900">TOTAL SEMAINE</span>';
+  h += '<span style="font-size:14px;font-weight:900;color:#f97316;text-align:center">'+semQte+'</span>';
+  h += '<span style="font-size:14px;font-weight:900;color:#22c55e;text-align:right">'+fc(semTotal)+'</span>';
+  h += '</div></div>';
+
+  // ── VALIDER JOUR ──
+  if(grandTotal>0) {
+    h += '<button class="btn bo" style="width:100%;padding:14px;font-size:14px" id="valjour">✅ Enregistrer '+jourActif+' — '+fc(grandTotal)+'</button>';
+  }
+
+  document.getElementById('caisse').innerHTML = h;
+
+  // Events - jours
+  DAYS_F.forEach(function(d){
+    var jb = document.getElementById('jbtn_'+d);
+    if(jb) jb.onclick = function(){ jourActif=d; selectedFamille=null; rCaisse(); };
+  });
+  // Events - familles
+  CATS.forEach(function(cat){
+    var fb = document.getElementById('fam_'+cat);
+    var fr = document.getElementById('famrow_'+cat);
+    var handler = function(){ selectedFamille=selectedFamille===cat?null:cat; rCaisse(); };
+    if(fb) fb.onclick = handler;
+    if(fr) fr.onclick = handler;
+  });
+  // Events - inputs
+  if(selectedFamille){
+    recettes.filter(function(r){return r.cat===selectedFamille;}).forEach(function(r){
+      var qi = document.getElementById('vqte_'+r.id);
+      var ti = document.getElementById('vtot_'+r.id);
+      var upd = function(){
+        var q = qi?+(qi.value)||0:0;
+        var t = ti?+(ti.value)||0:0;
+        if(q>0||t>0){ if(!vRapides[sem][jourActif])vRapides[sem][jourActif]={}; vRapides[sem][jourActif][r.id]={qte:q,total:t}; }
+        else { if(vRapides[sem]&&vRapides[sem][jourActif]) delete vRapides[sem][jourActif][r.id]; }
+        save();
+      };
+      if(qi) qi.oninput = upd;
+      if(ti) ti.oninput = upd;
+    });
+  }
+  // Valider jour
+  var vj = document.getElementById('valjour');
+  if(vj) vj.onclick = function(){
+    var items=[], total=0, cout=0;
+    CATS.forEach(function(cat){
+      recettes.filter(function(r){return r.cat===cat;}).forEach(function(r){
+        var v=jourData[r.id]||{};
+        if(!v.qte&&!v.total) return;
+        items.push({nom:r.nom,qte:v.qte||0,prix:v.qte>0?Math.round(v.total/v.qte):0});
+        total += v.total||0;
+        cout  += recCout(r)*(v.qte||0);
+      });
+    });
+    if(!items.length) return;
+    ventes.unshift({id:uid(),items:items,total:total,cout:cout,date:new Date(),jour:jourActif,sem:sem});
+    // Clear this day data
+    if(vRapides[sem]) delete vRapides[sem][jourActif];
+    save(); rCaisse();
+  };
+}
+
+function addCart(id){
+  var r = recettes.find(function(x){return String(x.id)===String(id);});
+  if(!r) return;
+  var ex = panier.find(function(x){return String(x.id)===String(id);});
+  if(ex) ex.qte++; else panier.push({id:r.id,nom:r.nom,prix:r.prix,cat:r.cat,qte:1});
+  rCaisse();
+}
+function remCart(id){
+  var ex = panier.find(function(x){return String(x.id)===String(id);});
+  if(!ex) return;
+  if(ex.qte===1) panier = panier.filter(function(x){return String(x.id)!==String(id);});
+  else ex.qte--;
+  rCaisse();
+}
+function valider(){
+  if(!panier.length) return;
+  var tot  = panier.reduce(function(s,x){return s+x.prix*x.qte;},0);
+  var cout = panier.reduce(function(s,x){
+    var r = recettes.find(function(rr){return String(rr.id)===String(x.id);});
+    return s + (r?recCout(r):0)*x.qte;
+  },0);
+  ventes.unshift({id:uid(),items:panier.map(function(x){return {nom:x.nom,qte:x.qte,prix:x.prix};}),total:tot,cout:cout,date:new Date()});
+  panier = [];
+  save();
+  rCaisse();
+}
+
+// ══════ INGRÉDIENTS ══════
+var showAddIng=false, newIng={nom:'',prix:'',unite:'kg'};
+function rIng(){
+  var h = '<div class="row" style="margin-bottom:10px"><span style="color:#555;font-size:12px;font-weight:700">'+ingredients.length+' ingrédients</span>';
+  h += '<button class="btn bo" id="showingbtn">+ Ajouter</button></div>';
   if(showAddIng){
-    h+=`<div class="card" style="border-color:#f9731640;margin-bottom:12px">
-      <div style="font-weight:900;margin-bottom:10px">Nouvel ingrédient</div>
-      <input class="inp" placeholder="Nom (ex: Poulet)" value="${newIng.nom}" oninput="newIng.nom=this.value"/>
-      <input class="inp" type="number" placeholder="Prix" value="${newIng.prix}" oninput="newIng.prix=this.value"/>
-      <select class="inp" onchange="newIng.unite=this.value">
-        ${UNITE_OPTIONS.map(u=>`<option value="${u.v}"${u.v===newIng.unite?' selected':''}>${u.l}</option>`).join('')}
-      </select>
-      <div style="display:flex;gap:8px">
-        <button class="btn btn-orange" onclick="addIng()">Ajouter</button>
-        <button class="btn btn-gray" onclick="showAddIng=false;renderIngredients()">Annuler</button>
-      </div>
-    </div>`;
+    h += '<div class="card" style="border-color:#f9731640;margin-bottom:12px">';
+    h += '<div style="font-weight:900;margin-bottom:10px">Nouvel ingrédient</div>';
+    h += '<input class="inp" id="ingnom" placeholder="Nom"/>';
+    h += '<input class="inp" id="ingprix" type="number" placeholder="Prix"/>';
+    h += '<select class="inp" id="ingunite">';
+    UNITES.forEach(function(u){ h += '<option'+(u===newIng.unite?' selected':'')+'>'+u+'</option>'; });
+    h += '</select>';
+    h += '<div style="display:flex;gap:8px"><button class="btn bo" id="addingbtn">Ajouter</button><button class="btn bg" id="cancelingbtn">Annuler</button></div>';
+    h += '</div>';
   }
-  ingredients.forEach(ing=>{
-    h+=`<div class="card" style="margin-bottom:6px">
-      <div class="row">
-        <div><div style="font-weight:700;font-size:13px">${ing.nom}</div>
-        <div style="font-size:11px;color:#555;margin-top:2px">Prix: ${fc(ing.prix)} / ${ing.unite}</div></div>
-        <div style="display:flex;gap:6px">
-          <button class="btn-edit" onclick="editIng(${ing.id})">✏️</button>
-          <button class="btn-del" onclick="delIng(${ing.id})">🗑</button>
-        </div>
-      </div>
-    </div>`;
+  ingredients.forEach(function(ing){
+    var prixActuel = ingPrixUnitaire(ing);
+    var sourceLabel = '📝 Manuel';
+    var sourceColor = '#555';
+    if(ing.source==='fourn' && ing.fournId) {
+      var f = fournisseurs.find(function(x){return String(x.id)===String(ing.fournId);});
+      sourceLabel = '🚚 ' + (f?f.nom:'Fournisseur');
+      sourceColor = '#a78bfa';
+    } else if(ing.source==='chg' && ing.chgId) {
+      var c = charges.find(function(x){return String(x.id)===String(ing.chgId);});
+      sourceLabel = '💸 ' + (c?c.nom:'Charge');
+      sourceColor = '#ef4444';
+    }
+    h += '<div class="card" style="margin-bottom:6px">';
+    h += '<div class="row">';
+    h += '<div><div style="font-weight:700;font-size:13px">'+ing.nom+'</div>';
+    h += '<div style="font-size:11px;margin-top:2px"><span style="color:'+sourceColor+';font-weight:700">'+sourceLabel+'</span> — <span style="color:#f97316;font-weight:700">'+fc(prixActuel)+' / '+ing.unite+'</span></div></div>';
+    h += '<div style="display:flex;gap:6px"><button class="bedit" id="eing_'+ing.id+'">✏️</button><button class="bdel" id="ding_'+ing.id+'">🗑</button></div>';
+    h += '</div></div>';
   });
-  document.getElementById('page-ingredients').innerHTML=h;
-}
-function addIng(){
-  if(!newIng.nom||!newIng.prix)return;
-  ingredients.push({id:uid(),nom:newIng.nom,prix:+newIng.prix,unite:newIng.unite});
-  newIng={nom:'',prix:'',unite:'kg'};showAddIng=false;sauvegarder();renderIngredients();
-}
-function delIng(id){ingredients=ingredients.filter(i=>String(i.id)!==String(id));sauvegarder();renderIngredients();}
-function editIng(id){
-  const ing=ingredients.find(i=>i.id===id);
-  openModal('✏️ Modifier ingrédient',[
-    {k:'nom',  l:'Nom',   t:'text',   v:ing.nom},
-    {k:'prix', l:'Prix',  t:'number', v:ing.prix},
-    {k:'unite',l:'Unité', t:'select', v:ing.unite, opts:UNITE_OPTIONS},
-  ],data=>{Object.assign(ing,{nom:data.nom,prix:+data.prix,unite:data.unite});sauvegarder();renderIngredients();});
+  document.getElementById('ing').innerHTML = h;
+  document.getElementById('showingbtn').onclick = function(){ showAddIng=true; rIng(); };
+  if(showAddIng){
+    document.getElementById('addingbtn').onclick = function(){
+      var n=document.getElementById('ingnom').value;
+      var p=document.getElementById('ingprix').value;
+      var u=document.getElementById('ingunite').value;
+      if(!n||!p) return;
+      ingredients.push({id:uid(),nom:n,prix:+p,unite:u});
+      showAddIng=false; save(); rIng();
+    };
+    document.getElementById('cancelingbtn').onclick = function(){ showAddIng=false; rIng(); };
+  }
+  ingredients.forEach(function(ing){
+    var eb = document.getElementById('eing_'+ing.id);
+    var db = document.getElementById('ding_'+ing.id);
+    if(eb) eb.onclick = function(){
+      var srcOpts = [{v:'manuel',l:'📝 Prix Manuel'}];
+      fournisseurs.forEach(function(f){ srcOpts.push({v:'fourn_'+f.id,l:'🚚 '+f.nom}); });
+      charges.forEach(function(c){ srcOpts.push({v:'chg_'+c.id,l:'💸 '+c.nom}); });
+      var curSrc = ing.source==='fourn'?'fourn_'+ing.fournId:ing.source==='chg'?'chg_'+ing.chgId:'manuel';
+      openM('✏️ Modifier ingrédient',[
+        {k:'nom',   l:'Nom',    t:'text',   v:ing.nom},
+        {k:'prix',  l:'Prix manuel (DZD)', t:'number', v:ing.prix},
+        {k:'unite', l:'Unité',  t:'select', v:ing.unite, opts:UNITES.map(function(u){return {v:u,l:u};})},
+        {k:'src',   l:'Source du prix',    t:'select', v:curSrc, opts:srcOpts},
+      ],function(d){
+        ing.nom   = d.nom;
+        ing.prix  = +d.prix;
+        ing.unite = d.unite;
+        if(d.src==='manuel'){ ing.source=null; ing.fournId=null; ing.chgId=null; }
+        else if(d.src.startsWith('fourn_')){ ing.source='fourn'; ing.fournId=+d.src.split('_')[1]; ing.chgId=null; }
+        else if(d.src.startsWith('chg_')){ ing.source='chg'; ing.chgId=+d.src.split('_')[1]; ing.fournId=null; }
+        save(); rIng();
+      });
+    };
+    if(db) db.onclick = function(){ ingredients=ingredients.filter(function(i){return String(i.id)!==String(ing.id);}); save(); rIng(); };
+  });
 }
 
-// ══════════════════════════════════════════
-// PRÉPARATIONS
-// ══════════════════════════════════════════
-let expandedPrep=null, showAddPrep=false, newPrep={nom:'',description:'',rendement:'',uniteRendement:'portions'};
-function renderPreparations(){
-  let h=`<div class="row" style="margin-bottom:10px">
-    <span style="color:#555;font-size:12px;font-weight:700">${preparations.length} préparations maison</span>
-    <button class="btn btn-orange" onclick="showAddPrep=true;renderPreparations()">+ Ajouter</button>
-  </div>`;
+// ══════ PRÉPARATIONS ══════
+var expPrep=null, showAddPrep=false;
+function rPrep(){
+  var h = '<div class="row" style="margin-bottom:10px"><span style="color:#555;font-size:12px;font-weight:700">'+preparations.length+' préparations</span>';
+  h += '<button class="btn bo" id="showprepbtn">+ Ajouter</button></div>';
   if(showAddPrep){
-    h+=`<div class="card" style="border-color:#f9731640;margin-bottom:12px">
-      <div style="font-weight:900;margin-bottom:10px">Nouvelle préparation</div>
-      <input class="inp" placeholder="Nom (ex: Pâte à pizza)" value="${newPrep.nom}" oninput="newPrep.nom=this.value"/>
-      <input class="inp" placeholder="Description" value="${newPrep.description}" oninput="newPrep.description=this.value"/>
-      <input class="inp" type="number" placeholder="Rendement (ex: 4)" value="${newPrep.rendement}" oninput="newPrep.rendement=this.value"/>
-      <input class="inp" placeholder="Unité rendement (ex: pizzas)" value="${newPrep.uniteRendement}" oninput="newPrep.uniteRendement=this.value"/>
-      <div style="display:flex;gap:8px">
-        <button class="btn btn-orange" onclick="addPrep()">Créer</button>
-        <button class="btn btn-gray" onclick="showAddPrep=false;renderPreparations()">Annuler</button>
-      </div>
-    </div>`;
+    h += '<div class="card" style="border-color:#f9731640;margin-bottom:12px">';
+    h += '<div style="font-weight:900;margin-bottom:10px">Nouvelle préparation</div>';
+    h += '<input class="inp" id="prepnom" placeholder="Nom (ex: Pâte à pizza)"/>';
+    h += '<input class="inp" id="prepdesc" placeholder="Description"/>';
+    h += '<input class="inp" id="preprendement" type="number" placeholder="Rendement (ex: 4)"/>';
+    h += '<input class="inp" id="prepuniter" placeholder="Unité rendement (ex: pizzas)"/>';
+    h += '<div style="display:flex;gap:8px"><button class="btn bo" id="addprepbtn">Créer</button><button class="btn bg" id="cancelprepbtn">Annuler</button></div>';
+    h += '</div>';
   }
-  preparations.forEach(prep=>{
-    const cout=coutPreparation(prep);
-    const isOpen=expandedPrep===prep.id;
-    h+=`<div class="card" style="margin-bottom:8px;padding:0;overflow:hidden">
-      <div class="acc-header" onclick="expandedPrep=expandedPrep===${prep.id}?null:${prep.id};renderPreparations()">
-        <div>
-          <div style="font-weight:900;font-size:14px">🏭 ${prep.nom}</div>
-          <div style="font-size:11px;color:#555;margin-top:2px">${prep.description}</div>
-        </div>
-        <div style="text-align:right">
-          <div style="color:#a78bfa;font-weight:900">${fc(cout)}</div>
-          <div style="font-size:10px;color:#555">coût total</div>
-          <div style="font-size:10px;color:#22c55e">${fc(cout/(prep.rendement||1))} / portion</div>
-        </div>
-      </div>
-      ${isOpen?`<div class="acc-body">
-        <div style="font-size:11px;color:#555;font-weight:700;margin-bottom:8px;letter-spacing:1px">INGRÉDIENTS</div>
-        ${(prep.ingredients||[]).map(item=>{
-          const ing=ingredients.find(i=>i.id===item.ingId);
-          if(!ing)return '';
-          let qteBase=item.qte;
-          if(item.unite==='g'&&ing.unite==='kg')qteBase=item.qte/1000;
-          else if(item.unite==='ml'&&ing.unite==='L')qteBase=item.qte/1000;
-          const coutItem=ing.prix*qteBase;
-          return `<div class="row" style="padding:6px 0;border-bottom:1px solid #2a2d33">
-            <span style="font-size:12px">${ing.nom} — ${item.qte}${item.unite}</span>
-            <div style="display:flex;align-items:center;gap:8px">
-              <span style="color:#f97316;font-size:12px;font-weight:700">${fc(coutItem)}</span>
-              <button onclick="delIngPrep(${prep.id},${item.ingId})" style="background:none;border:none;color:#555;cursor:pointer;font-size:14px">×</button>
-            </div>
-          </div>`;
-        }).join('')}
-        <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:6px;align-items:center">
-          <select id="prep_ing_${prep.id}" class="inp" style="margin:0">
-            ${ingredients.map(i=>`<option value="${i.id}">${i.nom}</option>`).join('')}
-          </select>
-          <input id="prep_qte_${prep.id}" class="inp" style="margin:0" type="number" placeholder="Qté"/>
-          <select id="prep_unite_${prep.id}" class="inp" style="margin:0">
-            ${UNITE_OPTIONS.map(u=>`<option value="${u.v}">${u.l}</option>`).join('')}
-          </select>
-          <button class="btn btn-orange" style="padding:10px 12px" onclick="addIngToPrep(${prep.id})">+</button>
-        </div>
-        <div style="display:flex;gap:8px;margin-top:10px">
-          <button class="btn-del" onclick="delPrep(${prep.id})">🗑 Supprimer</button>
-        </div>
-      </div>`:''}
-    </div>`;
+  preparations.forEach(function(p){
+    var cout = prepCout(p);
+    var isO = String(expPrep)===String(p.id);
+    h += '<div class="card" style="margin-bottom:8px;padding:0;overflow:hidden">';
+    h += '<div class="ah" id="phdr_'+p.id+'">';
+    h += '<div><div style="font-weight:900;font-size:14px">🏭 '+p.nom+'</div><div style="font-size:11px;color:#555;margin-top:2px">'+p.description+'</div></div>';
+    h += '<div style="text-align:right"><div style="color:#a78bfa;font-weight:900">'+fc(cout)+'</div><div style="font-size:10px;color:#22c55e">'+fc(cout/(p.rendement||1))+'/portion</div><div style="color:#555">'+( isO?'▲':'▼')+'</div></div>';
+    h += '</div>';
+    if(isO){
+      h += '<div class="ab">';
+      h += '<div style="font-size:11px;color:#555;font-weight:700;margin-bottom:8px;letter-spacing:1px">INGRÉDIENTS</div>';
+      (p.ings||[]).forEach(function(it){
+        var ing = ingredients.find(function(i){return String(i.id)===String(it.iid);});
+        if(!ing) return;
+        var c = ingPrix(it.iid,it.qte,it.u);
+        h += '<div class="row" style="padding:6px 0;border-bottom:1px solid #2a2d33">';
+        h += '<span style="font-size:12px">'+ing.nom+' — '+it.qte+it.u+'</span>';
+        h += '<div style="display:flex;align-items:center;gap:8px"><span style="color:#f97316;font-size:12px;font-weight:700">'+fc(c)+'</span>';
+        h += '<button style="background:none;border:none;color:#555;cursor:pointer;font-size:14px" id="dprit_'+p.id+'_'+it.iid+'">×</button></div>';
+        h += '</div>';
+      });
+      h += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:5px;align-items:center;margin-top:10px">';
+      h += '<select class="inp" style="margin:0;font-size:11px" id="pring_'+p.id+'">';
+      ingredients.forEach(function(i){ h += '<option value="'+i.id+'">'+i.nom+'</option>'; });
+      h += '</select>';
+      h += '<input class="inp" style="margin:0" type="number" placeholder="Qté" id="prqte_'+p.id+'"/>';
+      h += '<select class="inp" style="margin:0" id="pru_'+p.id+'">';
+      UNITES.forEach(function(u){ h += '<option>'+u+'</option>'; });
+      h += '</select>';
+      h += '<button class="btn bo" style="padding:10px" id="addprit_'+p.id+'">+</button>';
+      h += '</div>';
+      h += '<button class="bdel" style="margin-top:10px" id="dprep_'+p.id+'">🗑 Supprimer</button>';
+      h += '</div>';
+    }
+    h += '</div>';
   });
-  document.getElementById('page-preparations').innerHTML=h;
-}
-function addPrep(){
-  if(!newPrep.nom)return;
-  preparations.push({id:uid(),nom:newPrep.nom,description:newPrep.description,rendement:+newPrep.rendement||1,uniteRendement:newPrep.uniteRendement,ingredients:[]});
-  newPrep={nom:'',description:'',rendement:'',uniteRendement:'portions'};showAddPrep=false;sauvegarder();renderPreparations();
-}
-function delPrep(id){preparations=preparations.filter(p=>String(p.id)!==String(id));expandedPrep=null;sauvegarder();renderPreparations();}
-function addIngToPrep(prepId){
-  const prep=preparations.find(p=>p.id===prepId);if(!prep)return;
-  const ingId=+document.getElementById('prep_ing_'+prepId).value;
-  const qte=+document.getElementById('prep_qte_'+prepId).value;
-  const unite=document.getElementById('prep_unite_'+prepId).value;
-  if(!qte)return;
-  if(!prep.ingredients)prep.ingredients=[];
-  prep.ingredients.push({ingId,qte,unite});
-  sauvegarder();renderPreparations();
-}
-function delIngPrep(prepId,ingId){
-  const prep=preparations.find(p=>p.id===prepId);if(!prep)return;
-  prep.ingredients=prep.ingredients.filter(i=>i.ingId!==ingId);
-  sauvegarder();renderPreparations();
+  document.getElementById('prep').innerHTML = h;
+  document.getElementById('showprepbtn').onclick = function(){ showAddPrep=true; rPrep(); };
+  if(showAddPrep){
+    document.getElementById('addprepbtn').onclick = function(){
+      var n=document.getElementById('prepnom').value;
+      if(!n) return;
+      preparations.push({id:uid(),nom:n,description:document.getElementById('prepdesc').value,rendement:+document.getElementById('preprendement').value||1,uniteR:document.getElementById('prepuniter').value,ings:[]});
+      showAddPrep=false; save(); rPrep();
+    };
+    document.getElementById('cancelprepbtn').onclick = function(){ showAddPrep=false; rPrep(); };
+  }
+  preparations.forEach(function(p){
+    var hdr = document.getElementById('phdr_'+p.id);
+    if(hdr) hdr.onclick = function(){ expPrep = String(expPrep)===String(p.id)?null:p.id; rPrep(); };
+    (p.ings||[]).forEach(function(it){
+      var db = document.getElementById('dprit_'+p.id+'_'+it.iid);
+      if(db) db.onclick = function(){ p.ings=p.ings.filter(function(x){return String(x.iid)!==String(it.iid);}); save(); rPrep(); };
+    });
+    var addbtn = document.getElementById('addprit_'+p.id);
+    if(addbtn) addbtn.onclick = function(){
+      var iid=document.getElementById('pring_'+p.id).value;
+      var qte=document.getElementById('prqte_'+p.id).value;
+      var u=document.getElementById('pru_'+p.id).value;
+      if(!qte) return;
+      if(!p.ings) p.ings=[];
+      p.ings.push({iid:+iid,qte:+qte,u:u});
+      save(); rPrep();
+    };
+    var delbtn = document.getElementById('dprep_'+p.id);
+    if(delbtn) delbtn.onclick = function(){ preparations=preparations.filter(function(x){return String(x.id)!==String(p.id);}); expPrep=null; save(); rPrep(); };
+  });
 }
 
-// ══════════════════════════════════════════
-// RECETTES
-// ══════════════════════════════════════════
-let expandedRec=null, showAddRec=false, newRec={nom:'',cat:'Burger',prix:''};
-const CATS=['Burger','Tacos','Poutine','Sandwich','Plat','Pizza','Salade','Boison'];
-function renderRecettes(){
-  let h=`<div class="row" style="margin-bottom:10px">
-    <span style="color:#555;font-size:12px;font-weight:700">${recettes.length} recettes</span>
-    <button class="btn btn-orange" onclick="showAddRec=true;renderRecettes()">+ Ajouter</button>
-  </div>`;
+// ══════ RECETTES ══════
+var expRec=null, showAddRec=false, newRec={nom:'',cat:'Burger',prix:''};
+function rRec(){
+  var h = '<div class="row" style="margin-bottom:10px"><span style="color:#555;font-size:12px;font-weight:700">'+recettes.length+' recettes</span>';
+  h += '<button class="btn bo" id="showrecbtn">+ Ajouter</button></div>';
   if(showAddRec){
-    h+=`<div class="card" style="border-color:#f9731640;margin-bottom:12px">
-      <div style="font-weight:900;margin-bottom:10px">Nouvelle recette</div>
-      <input class="inp" placeholder="Nom du produit" value="${newRec.nom}" oninput="newRec.nom=this.value"/>
-      <select class="inp" onchange="newRec.cat=this.value">
-        ${CATS.map(c=>`<option value="${c}"${c===newRec.cat?' selected':''}>${c}</option>`).join('')}
-      </select>
-      <input class="inp" type="number" placeholder="Prix de vente (DZD)" value="${newRec.prix}" oninput="newRec.prix=this.value"/>
-      <div style="display:flex;gap:8px">
-        <button class="btn btn-orange" onclick="addRec()">Créer</button>
-        <button class="btn btn-gray" onclick="showAddRec=false;renderRecettes()">Annuler</button>
-      </div>
-    </div>`;
+    h += '<div class="card" style="border-color:#f9731640;margin-bottom:12px">';
+    h += '<div style="font-weight:900;margin-bottom:10px">Nouvelle recette</div>';
+    h += '<input class="inp" id="recnom" placeholder="Nom du produit"/>';
+    h += '<select class="inp" id="reccat">';
+    CATS.forEach(function(c){ h += '<option'+(c===newRec.cat?' selected':'')+'>'+c+'</option>'; });
+    h += '</select>';
+    h += '<input class="inp" id="recprix" type="number" placeholder="Prix de vente (DZD)"/>';
+    h += '<div style="display:flex;gap:8px"><button class="btn bo" id="addrecbtn">Créer</button><button class="btn bg" id="cancelrecbtn">Annuler</button></div>';
+    h += '</div>';
   }
-  CATS.forEach(cat=>{
-    const catRecs=recettes.filter(r=>r.cat===cat);
-    if(!catRecs.length)return;
-    h+=`<div style="margin-bottom:14px"><div class="section-title">${cat}</div>`;
-    catRecs.forEach(rec=>{
-      const cout=coutRecette(rec);
-      const marge=rec.prix>0?((rec.prix-cout)/rec.prix)*100:0;
-      const isOpen=String(expandedRec)===String(rec.id);
-      h+=`<div class="card" style="margin-bottom:6px;padding:0;overflow:hidden">
-        <div class="acc-header" onclick="expandedRec=String(expandedRec)===String(${rec.id})?null:${rec.id};renderRecettes()">
-          <div style="flex:1">
-            <div style="font-weight:900;font-size:13px">${rec.nom}</div>
-            <div style="font-size:11px;color:#555;margin-top:2px">
-              Coût: <span style="color:#ef4444;font-weight:700">${fc(cout)}</span> &nbsp;|&nbsp;
-              Marge: <span style="color:${marge>50?'#22c55e':marge>30?'#f59e0b':'#ef4444'};font-weight:700">${fp(marge)}</span>
-            </div>
-          </div>
-          <div style="text-align:right;margin-left:8px">
-            <div style="color:#f97316;font-weight:900">${fc(rec.prix)}</div>
-            <div style="color:#22c55e;font-size:10px">+${fc(rec.prix-cout)}</div>
-          </div>
-        </div>
-        ${isOpen?`<div class="acc-body">
-          <div style="font-size:11px;color:#555;font-weight:700;margin-bottom:8px;letter-spacing:1px">INGRÉDIENTS DE CETTE RECETTE</div>
-          ${(rec.ingredients||[]).map(item=>{
-            let nomItem='?', coutItem=0;
-            if(item.type==='ing'){
-              const ing=ingredients.find(i=>i.id===item.id);
-              if(ing){
-                nomItem=ing.nom;
-                let qteBase=item.qte;
-                if(item.unite==='g'&&ing.unite==='kg')qteBase=item.qte/1000;
-                else if(item.unite==='ml'&&ing.unite==='L')qteBase=item.qte/1000;
-                coutItem=ing.prix*qteBase;
-              }
-            } else if(item.type==='prep'){
-              const prep=preparations.find(p=>p.id===item.id);
-              if(prep){nomItem='🏭 '+prep.nom;coutItem=(coutPreparation(prep)/prep.rendement)*item.qte;}
-            }
-            return `<div class="row" style="padding:6px 0;border-bottom:1px solid #2a2d33">
-              <span style="font-size:12px">${nomItem} — ${item.qte} ${item.unite}</span>
-              <div style="display:flex;align-items:center;gap:8px">
-                <span style="color:#f97316;font-size:11px;font-weight:700">${fc(coutItem)}</span>
-                <button onclick="delIngRec(${rec.id},'${item.type}',${item.id})" style="background:none;border:none;color:#555;cursor:pointer;font-size:14px">×</button>
-              </div>
-            </div>`;
-          }).join('')}
-          <div style="margin-top:10px;font-size:11px;color:#a78bfa;font-weight:700;margin-bottom:6px">+ AJOUTER INGRÉDIENT</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:5px;align-items:center;margin-bottom:8px">
-            <select id="rec_ing_${rec.id}" class="inp" style="margin:0;font-size:11px">
-              ${ingredients.map(i=>`<option value="ing_${i.id}">${i.nom}</option>`).join('')}
-            </select>
-            <input id="rec_qte_${rec.id}" class="inp" style="margin:0" type="number" placeholder="Qté"/>
-            <select id="rec_unite_${rec.id}" class="inp" style="margin:0">
-              ${UNITE_OPTIONS.map(u=>`<option value="${u.v}">${u.l}</option>`).join('')}
-            </select>
-            <button class="btn btn-orange" style="padding:10px 10px" onclick="addIngToRec(${rec.id})">+</button>
-          </div>
-          <div style="font-size:11px;color:#22c55e;font-weight:700;margin-bottom:6px">+ AJOUTER PRÉPARATION MAISON</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:5px;align-items:center;margin-bottom:10px">
-            <select id="rec_prep_${rec.id}" class="inp" style="margin:0;font-size:11px">
-              ${preparations.map(p=>`<option value="${p.id}">${p.nom}</option>`).join('')}
-            </select>
-            <input id="rec_prep_qte_${rec.id}" class="inp" style="margin:0" type="number" placeholder="Nb portions"/>
-            <button class="btn btn-green" style="padding:10px 10px" onclick="addPrepToRec(${rec.id})">+</button>
-          </div>
-          <div style="display:flex;gap:8px">
-            <button class="btn-edit" onclick="editRecette(this)" data-id="${rec.id}">✏️ Modifier prix</button>
-            <button class="btn-del" onclick="delRecette(this)" data-id="${rec.id}">🗑 Supprimer</button>
-          </div>
-        </div>`:''}
-      </div>`;
+  CATS.forEach(function(cat){
+    var cr = recettes.filter(function(r){return r.cat===cat;});
+    if(!cr.length) return;
+    h += '<div style="margin-bottom:14px"><div class="st">'+cat+'</div>';
+    cr.forEach(function(r){
+      var cout = recCout(r);
+      var marge = r.prix>0?((r.prix-cout)/r.prix)*100:0;
+      var mc = marge>50?'#22c55e':marge>30?'#f59e0b':'#ef4444';
+      var isO = String(expRec)===String(r.id);
+      h += '<div class="card" style="margin-bottom:6px;padding:0;overflow:hidden">';
+      h += '<div class="ah" id="rhdr_'+r.id+'">';
+      h += '<div style="flex:1"><div style="font-weight:900;font-size:13px">'+r.nom+'</div>';
+      h += '<div style="font-size:11px;color:#555;margin-top:2px">Coût: <span style="color:#ef4444;font-weight:700">'+fc(cout)+'</span> | Marge: <span style="color:'+mc+';font-weight:700">'+fp(marge)+'</span></div></div>';
+      h += '<div style="text-align:right;margin-left:8px"><div style="color:#f97316;font-weight:900">'+fc(r.prix)+'</div><div style="color:#22c55e;font-size:10px">+'+fc(r.prix-cout)+'</div></div>';
+      h += '</div>';
+      if(isO){
+        h += '<div class="ab">';
+        h += '<div style="font-size:11px;color:#555;font-weight:700;margin-bottom:8px;letter-spacing:1px">INGRÉDIENTS</div>';
+        (r.ings||[]).forEach(function(it,idx){
+          var nom='?',cout2=0;
+          if(it.type==='ing'){
+            var ing=ingredients.find(function(i){return String(i.id)===String(it.id);});
+            if(ing){nom=ing.nom;cout2=ingPrix(it.id,it.qte,it.u);}
+          } else if(it.type==='prep'){
+            var pp=preparations.find(function(x){return String(x.id)===String(it.id);});
+            if(pp){nom='🏭 '+pp.nom;cout2=(prepCout(pp)/pp.rendement)*it.qte;}
+          }
+          h += '<div class="row" style="padding:6px 0;border-bottom:1px solid #2a2d33">';
+          h += '<span style="font-size:12px">'+nom+' — '+it.qte+' '+it.u+'</span>';
+          h += '<div style="display:flex;align-items:center;gap:8px"><span style="color:#f97316;font-size:11px;font-weight:700">'+fc(cout2)+'</span>';
+          h += '<button style="background:none;border:none;color:#555;cursor:pointer;font-size:14px" id="drit_'+r.id+'_'+idx+'">×</button></div>';
+          h += '</div>';
+        });
+        h += '<div style="font-size:11px;color:#a78bfa;font-weight:700;margin:10px 0 6px">+ AJOUTER INGRÉDIENT</div>';
+        h += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:5px;align-items:center;margin-bottom:8px">';
+        h += '<select class="inp" style="margin:0;font-size:11px" id="ring_'+r.id+'">';
+        ingredients.forEach(function(i){ h += '<option value="'+i.id+'">'+i.nom+'</option>'; });
+        h += '</select>';
+        h += '<input class="inp" style="margin:0" type="number" placeholder="Qté" id="rqte_'+r.id+'"/>';
+        h += '<select class="inp" style="margin:0" id="ru_'+r.id+'">';
+        UNITES.forEach(function(u){ h += '<option>'+u+'</option>'; });
+        h += '</select>';
+        h += '<button class="btn bo" style="padding:10px" id="addring_'+r.id+'">+</button>';
+        h += '</div>';
+        if(preparations.length){
+          h += '<div style="font-size:11px;color:#22c55e;font-weight:700;margin-bottom:6px">+ AJOUTER PRÉPARATION MAISON</div>';
+          h += '<div style="display:grid;grid-template-columns:1fr 1fr auto;gap:5px;align-items:center;margin-bottom:10px">';
+          h += '<select class="inp" style="margin:0;font-size:11px" id="rprep_'+r.id+'">';
+          preparations.forEach(function(p){ h += '<option value="'+p.id+'">'+p.nom+'</option>'; });
+          h += '</select>';
+          h += '<input class="inp" style="margin:0" type="number" placeholder="Nb portions" id="rpreqte_'+r.id+'"/>';
+          h += '<button class="btn bgr" style="padding:10px" id="addrprep_'+r.id+'">+</button>';
+          h += '</div>';
+        }
+        h += '<div style="display:flex;gap:8px">';
+        h += '<button class="bedit" id="editrec_'+r.id+'">✏️ Modifier</button>';
+        h += '<button class="bdel" id="delrec_'+r.id+'">🗑 Supprimer</button>';
+        h += '</div></div>';
+      }
+      h += '</div>';
     });
-    h+=`</div>`;
+    h += '</div>';
   });
-  document.getElementById('page-recettes').innerHTML=h;
-}
-function addRec(){
-  if(!newRec.nom||!newRec.prix)return;
-  recettes.push({id:uid(),nom:newRec.nom,cat:newRec.cat,prix:+newRec.prix,ingredients:[]});
-  newRec={nom:'',cat:'Burger',prix:''};showAddRec=false;sauvegarder();renderRecettes();
-}
-function delRecette(btn){var id=btn.getAttribute('data-id');delRec(id);}
-function editRecette(btn){var id=+btn.getAttribute('data-id');editRec(id);}
-function delRec(id){
-  recettes=recettes.filter(r=>String(r.id)!==String(id));
-  expandedRec=null;
-  sauvegarder();
-  renderRecettes();
-}
-function editRec(id){
-  const r=recettes.find(x=>String(x.id)===String(id));
-  openModal('✏️ Modifier recette',[
-    {k:'nom',  l:'Nom',              t:'text',   v:r.nom},
-    {k:'prix', l:'Prix vente (DZD)', t:'number', v:r.prix},
-    {k:'cat',  l:'Catégorie',        t:'select', v:r.cat, opts:CATS.map(c=>({v:c,l:c}))},
-  ],data=>{Object.assign(r,{nom:data.nom,prix:+data.prix,cat:data.cat});sauvegarder();renderRecettes();});
-}
-function addIngToRec(recId){
-  const rec=recettes.find(r=>String(r.id)===String(recId));if(!rec)return;
-  const val=document.getElementById('rec_ing_'+recId).value;
-  const id=+val.split('_')[1];
-  const qte=+document.getElementById('rec_qte_'+recId).value;
-  const unite=document.getElementById('rec_unite_'+recId).value;
-  if(!qte)return;
-  if(!rec.ingredients)rec.ingredients=[];
-  rec.ingredients.push({type:'ing',id,qte,unite});
-  sauvegarder();renderRecettes();
-}
-function addPrepToRec(recId){
-  const rec=recettes.find(r=>String(r.id)===String(recId));if(!rec)return;
-  const id=+document.getElementById('rec_prep_'+recId).value;
-  const qte=+document.getElementById('rec_prep_qte_'+recId).value||1;
-  if(!rec.ingredients)rec.ingredients=[];
-  rec.ingredients.push({type:'prep',id,qte,unite:'portion'});
-  sauvegarder();renderRecettes();
-}
-function delIngRec(recId,type,ingId){
-  const rec=recettes.find(r=>String(r.id)===String(recId));if(!rec)return;
-  rec.ingredients=rec.ingredients.filter(i=>!(i.type===type&&i.id===ingId));
-  sauvegarder();renderRecettes();
+  document.getElementById('rec').innerHTML = h;
+  // Events
+  document.getElementById('showrecbtn').onclick = function(){ showAddRec=true; rRec(); };
+  if(showAddRec){
+    document.getElementById('addrecbtn').onclick = function(){
+      var n=document.getElementById('recnom').value;
+      var p=document.getElementById('recprix').value;
+      if(!n||!p) return;
+      recettes.push({id:uid(),nom:n,cat:document.getElementById('reccat').value,prix:+p,ings:[]});
+      showAddRec=false; save(); rRec();
+    };
+    document.getElementById('cancelrecbtn').onclick = function(){ showAddRec=false; rRec(); };
+  }
+  recettes.forEach(function(r){
+    var hdr = document.getElementById('rhdr_'+r.id);
+    if(hdr) hdr.onclick = function(){ expRec = String(expRec)===String(r.id)?null:r.id; rRec(); };
+    (r.ings||[]).forEach(function(it,idx){
+      var db = document.getElementById('drit_'+r.id+'_'+idx);
+      if(db) db.onclick = function(){ r.ings.splice(idx,1); save(); rRec(); };
+    });
+    var addi = document.getElementById('addring_'+r.id);
+    if(addi) addi.onclick = function(){
+      var id=document.getElementById('ring_'+r.id).value;
+      var qte=document.getElementById('rqte_'+r.id).value;
+      var u=document.getElementById('ru_'+r.id).value;
+      if(!qte) return;
+      if(!r.ings) r.ings=[];
+      r.ings.push({type:'ing',id:+id,qte:+qte,u:u});
+      save(); rRec();
+    };
+    var addp = document.getElementById('addrprep_'+r.id);
+    if(addp) addp.onclick = function(){
+      var pid=document.getElementById('rprep_'+r.id).value;
+      var qte=document.getElementById('rpreqte_'+r.id).value||1;
+      if(!r.ings) r.ings=[];
+      r.ings.push({type:'prep',id:+pid,qte:+qte,u:'portion'});
+      save(); rRec();
+    };
+    var edb = document.getElementById('editrec_'+r.id);
+    if(edb) edb.onclick = function(){
+      openM('✏️ Modifier recette',[
+        {k:'nom',l:'Nom',t:'text',v:r.nom},
+        {k:'prix',l:'Prix vente (DZD)',t:'number',v:r.prix},
+        {k:'cat',l:'Catégorie',t:'select',v:r.cat,opts:CATS.map(function(c){return {v:c,l:c};})},
+      ],function(d){ Object.assign(r,{nom:d.nom,prix:+d.prix,cat:d.cat}); save(); rRec(); });
+    };
+    var delbtn = document.getElementById('delrec_'+r.id);
+    if(delbtn) delbtn.onclick = function(){ recettes=recettes.filter(function(x){return String(x.id)!==String(r.id);}); expRec=null; save(); rRec(); };
+  });
 }
 
-// ══════════════════════════════════════════
-// CHARGES
-// ══════════════════════════════════════════
-let showAddChg=false,newChg={nom:'',montant:'',type:'fixe'};
-function renderCharges(){
-  const fixes=charges.filter(c=>c.type==='fixe').reduce((s,c)=>s+Number(c.montant),0);
-  const vars=charges.filter(c=>c.type==='variable').reduce((s,c)=>s+Number(c.montant),0);
-  let h=`<div class="grid2">
-    <div class="card"><div style="font-size:10px;color:#555;font-weight:700">Charges Fixes</div><div style="font-size:16px;font-weight:900;color:#ef4444;margin-top:4px">${fc(fixes)}</div></div>
-    <div class="card"><div style="font-size:10px;color:#555;font-weight:700">Charges Variables</div><div style="font-size:16px;font-weight:900;color:#f59e0b;margin-top:4px">${fc(vars)}</div></div>
-  </div>
-  <div class="card row" style="margin-bottom:14px"><span style="font-weight:900">Total / mois</span><span style="color:#ef4444;font-weight:900;font-size:16px">${fc(fixes+vars)}</span></div>`;
-  ['fixe','variable'].forEach(type=>{
-    h+=`<div style="margin-bottom:12px"><div class="section-title" style="color:${type==='fixe'?'#ef4444':'#f59e0b'}">${type==='fixe'?'🔒 Fixes':'🔄 Variables'}</div>`;
-    charges.filter(c=>c.type===type).forEach(c=>{
-      h+=`<div class="card row" style="margin-bottom:6px">
-        <span style="font-size:13px;font-weight:700">${c.nom}</span>
-        <div style="display:flex;align-items:center;gap:8px">
-          <span style="color:#ef4444;font-weight:800">${fc(+c.montant)}</span>
-          <button class="btn-edit" onclick="editChg(${c.id})">✏️</button>
-          <button class="btn-del" onclick="delChg(${c.id})">🗑</button>
-        </div>
-      </div>`;
+// ══════ CHARGES ══════
+var showAddChg=false, newChg={nom:'',montant:'',type:'fixe'};
+function rChg(){
+  var fix = charges.filter(function(c){return c.type==='fixe';}).reduce(function(s,c){return s+Number(c.montant);},0);
+  var vr  = charges.filter(function(c){return c.type==='variable';}).reduce(function(s,c){return s+Number(c.montant);},0);
+  var h = '<div class="g2">';
+  h += '<div class="card"><div style="font-size:10px;color:#555;font-weight:700">Charges Fixes</div><div style="font-size:16px;font-weight:900;color:#ef4444;margin-top:4px">'+fc(fix)+'</div></div>';
+  h += '<div class="card"><div style="font-size:10px;color:#555;font-weight:700">Charges Variables</div><div style="font-size:16px;font-weight:900;color:#f59e0b;margin-top:4px">'+fc(vr)+'</div></div>';
+  h += '</div>';
+  h += '<div class="card row" style="margin-bottom:14px"><span style="font-weight:900">Total / mois</span><span style="color:#ef4444;font-weight:900;font-size:16px">'+fc(fix+vr)+'</span></div>';
+  ['fixe','variable'].forEach(function(type){
+    var col = type==='fixe'?'#ef4444':'#f59e0b';
+    var lbl = type==='fixe'?'🔒 Fixes':'🔄 Variables';
+    h += '<div style="margin-bottom:12px"><div class="st" style="color:'+col+'">'+lbl+'</div>';
+    charges.filter(function(c){return c.type===type;}).forEach(function(c){
+      h += '<div class="card row" style="margin-bottom:6px"><span style="font-size:13px;font-weight:700">'+c.nom+'</span>';
+      h += '<div style="display:flex;align-items:center;gap:8px"><span style="color:#ef4444;font-weight:800">'+fc(+c.montant)+'</span>';
+      h += '<button class="bedit" id="echg_'+c.id+'">✏️</button><button class="bdel" id="dchg_'+c.id+'">🗑</button></div></div>';
     });
-    h+=`</div>`;
+    h += '</div>';
   });
   if(showAddChg){
-    h+=`<div class="card" style="border-color:#ef444440;margin-bottom:10px">
-      <div style="font-weight:900;margin-bottom:10px">Nouvelle charge</div>
-      <input class="inp" placeholder="Nom" value="${newChg.nom}" oninput="newChg.nom=this.value"/>
-      <input class="inp" type="number" placeholder="Montant (DZD)" value="${newChg.montant}" oninput="newChg.montant=this.value"/>
-      <select class="inp" onchange="newChg.type=this.value"><option value="fixe">Fixe</option><option value="variable">Variable</option></select>
-      <div style="display:flex;gap:8px">
-        <button class="btn" style="background:#ef4444" onclick="addChg()">Ajouter</button>
-        <button class="btn btn-gray" onclick="showAddChg=false;renderCharges()">Annuler</button>
-      </div>
-    </div>`;
+    h += '<div class="card" style="border-color:#ef444440;margin-bottom:10px">';
+    h += '<div style="font-weight:900;margin-bottom:10px">Nouvelle charge</div>';
+    h += '<input class="inp" id="chgnom" placeholder="Nom"/>';
+    h += '<input class="inp" id="chgmontant" type="number" placeholder="Montant (DZD)"/>';
+    h += '<select class="inp" id="chgtype"><option value="fixe">Fixe</option><option value="variable">Variable</option></select>';
+    h += '<div style="display:flex;gap:8px"><button class="btn" style="background:#ef4444" id="addchgbtn">Ajouter</button><button class="btn bg" id="cancelchgbtn">Annuler</button></div>';
+    h += '</div>';
   }
-  h+=`<button class="btn-outline" onclick="showAddChg=true;renderCharges()">+ Ajouter une charge</button>`;
-  document.getElementById('page-charges').innerHTML=h;
-}
-function addChg(){if(!newChg.nom||!newChg.montant)return;charges.push({id:uid(),nom:newChg.nom,montant:+newChg.montant,type:newChg.type});newChg={nom:'',montant:'',type:'fixe'};showAddChg=false;sauvegarder();renderCharges();}
-function delChg(id){charges=charges.filter(c=>String(c.id)!==String(id));sauvegarder();renderCharges();}
-function editChg(id){const c=charges.find(x=>x.id===id);openModal('✏️ Modifier charge',[{k:'nom',l:'Nom',t:'text',v:c.nom},{k:'montant',l:'Montant (DZD)',t:'number',v:c.montant},{k:'type',l:'Type',t:'select',v:c.type,opts:[{v:'fixe',l:'Fixe'},{v:'variable',l:'Variable'}]}],data=>{Object.assign(c,{nom:data.nom,montant:+data.montant,type:data.type});sauvegarder();renderCharges();},'#ef4444');}
-
-// ══════════════════════════════════════════
-// EMPLOYÉS
-// ══════════════════════════════════════════
-let showAddEmp=false,newEmp={nom:'',poste:'',salaireService:''},expandedEmp=null,acompteTemp={};
-function cycleService(empId,jour){const e=employes.find(x=>x.id===empId);if(!e)return;if(!e.planning)e.planning={};const cur=e.planning[jour]||'repos';const next=cur==='repos'?'matin':cur==='matin'?'soir':cur==='soir'?'journee':'repos';e.planning[jour]=next;sauvegarder();renderEmployes();}
-function addPenalite(empId,type){const e=employes.find(x=>x.id===empId);if(!e)return;if(!e.penalites)e.penalites=[];e.penalites.push({id:uid(),type,montant:200,date:new Date().toLocaleDateString('fr-FR')});sauvegarder();renderEmployes();}
-function delPenalite(empId,penId){const e=employes.find(x=>x.id===empId);if(!e)return;e.penalites=(e.penalites||[]).filter(p=>p.id!==penId);sauvegarder();renderEmployes();}
-function addAcompte(empId,montant){const e=employes.find(x=>x.id===empId);if(!e||!montant)return;if(!e.acomptes)e.acomptes=[];e.acomptes.push({id:uid(),montant:+montant,date:new Date().toLocaleDateString('fr-FR')});sauvegarder();renderEmployes();}
-function delAcompte(empId,aId){const e=employes.find(x=>x.id===empId);if(!e)return;e.acomptes=(e.acomptes||[]).filter(a=>a.id!==aId);sauvegarder();renderEmployes();}
-
-function renderEmployes(){
-  const masseSal=employes.reduce((s,e)=>s+salaireEmp(e),0);
-  let h=`<div class="card" style="background:linear-gradient(135deg,#1a2e1a,#1c1f24);border-color:#22c55e30;margin-bottom:12px">
-    <div class="row">
-      <div><div style="font-size:10px;color:#555;font-weight:700;letter-spacing:1px">MASSE SALARIALE SEMAINE</div><div style="font-size:22px;font-weight:900;color:#22c55e;margin-top:4px">${fc(masseSal)}</div></div>
-      <div style="text-align:right"><div style="font-size:20px;font-weight:900;color:#555">${employes.length}</div><div style="font-size:10px;color:#555;font-weight:700">employé${employes.length>1?'s':''}</div></div>
-    </div>
-  </div>`;
-  employes.forEach(e=>{
-    const planning=e.planning||{},penalites=e.penalites||[],acomptes=e.acomptes||[];
-    const sal=salaireEmp(e);
-    let srv=0;DAYS_EMP.forEach(d=>{const s=planning[d]||'repos';if(s==='matin'||s==='soir')srv+=1;else if(s==='journee')srv+=2;});
-    const pen=penalites.reduce((s,p)=>s+Number(p.montant||200),0);
-    const acp=acomptes.reduce((s,a)=>s+Number(a.montant||0),0);
-    const brut=srv*Number(e.salaireService||0);
-    const isOpen=expandedEmp===e.id;
-    h+=`<div class="card" style="margin-bottom:8px;padding:0;overflow:hidden">
-      <div class="acc-header" onclick="expandedEmp=expandedEmp===${e.id}?null:${e.id};renderEmployes()">
-        <div><div style="font-weight:900;font-size:14px">${e.nom}</div><div style="font-size:11px;color:#555;margin-top:2px">${e.poste} — ${fc(Number(e.salaireService||0))}/service</div></div>
-        <div style="display:flex;align-items:center;gap:8px">
-          <div style="text-align:right"><div style="color:#22c55e;font-weight:900;font-size:15px">${fc(sal)}</div><div style="font-size:10px;color:#555">reste à payer</div></div>
-          <div style="color:#555">${isOpen?'▲':'▼'}</div>
-        </div>
-      </div>
-      ${isOpen?`<div class="acc-body">
-        <div style="background:#111418;border-radius:10px;padding:10px;margin-bottom:10px;font-size:12px">
-          <div class="row" style="margin-bottom:4px"><span style="color:#888">${srv} services × ${fc(e.salaireService||0)}</span><span style="font-weight:700">${fc(brut)}</span></div>
-          <div class="row" style="margin-bottom:4px"><span style="color:#888">Pénalités</span><span style="color:#ef4444;font-weight:700">− ${fc(pen)}</span></div>
-          <div class="row" style="margin-bottom:4px"><span style="color:#888">Acomptes</span><span style="color:#f59e0b;font-weight:700">− ${fc(acp)}</span></div>
-          <div class="sep"></div>
-          <div class="row"><span style="font-weight:800">Reste à payer</span><span style="color:#22c55e;font-weight:900">${fc(sal)}</span></div>
-        </div>
-        <div style="font-size:10px;color:#444;font-weight:700;letter-spacing:1px;margin-bottom:8px">PLANNING</div>
-        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px">
-          ${DAYS_EMP.map(d=>{const s=planning[d]||'repos';const bg=s==='matin'?'#f59e0b':s==='soir'?'#3b82f6':s==='journee'?'#22c55e':'#2a2d33';const ico=s==='matin'?'🌅':s==='soir'?'🌙':s==='journee'?'☀️':'—';return `<div style="text-align:center"><div style="font-size:9px;color:#444;margin-bottom:3px;font-weight:700">${d}</div><button onclick="cycleService(${e.id},'${d}')" style="width:38px;height:38px;border-radius:9px;border:none;cursor:pointer;font-size:13px;background:${bg};color:#fff">${ico}</button></div>`;}).join('')}
-        </div>
-        <div style="font-size:10px;color:#444;font-weight:700;letter-spacing:1px;margin-bottom:6px">PÉNALITÉS</div>
-        ${penalites.map(p=>`<div style="background:#2a1a1a;border-radius:8px;padding:7px 10px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center"><div><span style="font-size:12px">${p.type==='retard'?'⏰':'🍳'} ${p.type==='retard'?'Retard':'Faute cuisine'}</span><span style="font-size:10px;color:#555;margin-left:6px">${p.date||''}</span></div><div style="display:flex;align-items:center;gap:6px"><span style="color:#ef4444;font-weight:700;font-size:12px">−${fc(p.montant||200)}</span><button onclick="delPenalite(${e.id},${p.id})" style="background:none;border:none;color:#555;cursor:pointer;font-size:15px">×</button></div></div>`).join('')}
-        <div style="display:flex;gap:8px;margin-bottom:12px;margin-top:6px">
-          <button onclick="addPenalite(${e.id},'retard')" style="background:#f59e0b22;border:1px solid #f59e0b40;color:#f59e0b;border-radius:8px;padding:7px 10px;cursor:pointer;font-size:11px;font-weight:700;font-family:inherit">⏰ Retard</button>
-          <button onclick="addPenalite(${e.id},'cuisine')" style="background:#ef444422;border:1px solid #ef444440;color:#ef4444;border-radius:8px;padding:7px 10px;cursor:pointer;font-size:11px;font-weight:700;font-family:inherit">🍳 Faute cuisine</button>
-        </div>
-        <div style="font-size:10px;color:#444;font-weight:700;letter-spacing:1px;margin-bottom:6px">💵 ACOMPTES</div>
-        ${acomptes.map(a=>`<div style="background:#1a1800;border-radius:8px;padding:7px 10px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center"><div><span style="font-size:12px">💵 Acompte</span><span style="font-size:10px;color:#555;margin-left:6px">${a.date||''}</span></div><div style="display:flex;align-items:center;gap:6px"><span style="color:#f59e0b;font-weight:700;font-size:12px">−${fc(a.montant)}</span><button onclick="delAcompte(${e.id},${a.id})" style="background:none;border:none;color:#555;cursor:pointer;font-size:15px">×</button></div></div>`).join('')}
-        <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;margin-top:6px">
-          <input id="acp_${e.id}" type="number" placeholder="Montant acompte (DZD)" style="flex:1;background:#111418;border:1px solid #f59e0b60;border-radius:8px;padding:8px 10px;color:#f0f0f0;font-size:12px;font-family:inherit"/>
-          <button onclick="addAcompte(${e.id},document.getElementById('acp_${e.id}').value);document.getElementById('acp_${e.id}').value=''" style="background:#f59e0b;border:none;color:#000;border-radius:8px;padding:8px 12px;cursor:pointer;font-size:12px;font-weight:900;font-family:inherit">+ Acompte</button>
-        </div>
-        <div style="display:flex;gap:8px">
-          <button class="btn-edit" onclick="editEmp(${e.id})">✏️ Modifier</button>
-          <button class="btn-del" onclick="delEmp(${e.id})">🗑 Supprimer</button>
-        </div>
-      </div>`:''}
-    </div>`;
+  h += '<button style="width:100%;background:transparent;border:2px dashed #ef4444;color:#ef4444;border-radius:12px;padding:12px;font-weight:800;cursor:pointer;font-size:13px;font-family:inherit" id="showchgbtn">+ Ajouter une charge</button>';
+  document.getElementById('chg').innerHTML = h;
+  document.getElementById('showchgbtn').onclick = function(){ showAddChg=true; rChg(); };
+  if(showAddChg){
+    document.getElementById('addchgbtn').onclick = function(){
+      var n=document.getElementById('chgnom').value;
+      var m=document.getElementById('chgmontant').value;
+      if(!n||!m) return;
+      charges.push({id:uid(),nom:n,montant:+m,type:document.getElementById('chgtype').value});
+      showAddChg=false; save(); rChg();
+    };
+    document.getElementById('cancelchgbtn').onclick = function(){ showAddChg=false; rChg(); };
+  }
+  charges.forEach(function(c){
+    var eb=document.getElementById('echg_'+c.id);
+    var db=document.getElementById('dchg_'+c.id);
+    if(eb) eb.onclick = function(){
+      openM('✏️ Modifier charge',[
+        {k:'nom',l:'Nom',t:'text',v:c.nom},
+        {k:'montant',l:'Montant (DZD)',t:'number',v:c.montant},
+        {k:'type',l:'Type',t:'select',v:c.type,opts:[{v:'fixe',l:'Fixe'},{v:'variable',l:'Variable'}]},
+      ],function(d){ Object.assign(c,{nom:d.nom,montant:+d.montant,type:d.type}); save(); rChg(); },'#ef4444');
+    };
+    if(db) db.onclick = function(){ charges=charges.filter(function(x){return String(x.id)!==String(c.id);}); save(); rChg(); };
   });
-  if(showAddEmp){
-    h+=`<div class="card" style="border-color:#22c55e30;margin-bottom:10px">
-      <div style="font-weight:900;margin-bottom:10px">Nouvel employé</div>
-      <input class="inp" placeholder="Nom complet" value="${newEmp.nom}" oninput="newEmp.nom=this.value"/>
-      <input class="inp" placeholder="Poste" value="${newEmp.poste}" oninput="newEmp.poste=this.value"/>
-      <input class="inp" type="number" placeholder="Salaire par service (DZD)" value="${newEmp.salaireService}" oninput="newEmp.salaireService=this.value"/>
-      <div style="display:flex;gap:8px">
-        <button class="btn btn-green" onclick="addEmp()">Ajouter</button>
-        <button class="btn btn-gray" onclick="showAddEmp=false;renderEmployes()">Annuler</button>
-      </div>
-    </div>`;
-  }
-  h+=`<button class="btn-outline" style="border-color:#22c55e;color:#22c55e" onclick="showAddEmp=true;renderEmployes()">+ Ajouter un employé</button>`;
-  document.getElementById('page-employes').innerHTML=h;
 }
-function addEmp(){if(!newEmp.nom||!newEmp.salaireService)return;employes.push({id:uid(),nom:newEmp.nom,poste:newEmp.poste,salaireService:+newEmp.salaireService,planning:{},penalites:[],acomptes:[]});newEmp={nom:'',poste:'',salaireService:''};showAddEmp=false;sauvegarder();renderEmployes();}
-function delEmp(id){employes=employes.filter(e=>String(e.id)!==String(id));sauvegarder();renderEmployes();}
-function editEmp(id){const e=employes.find(x=>x.id===id);openModal("✏️ Modifier l'employé",[{k:'nom',l:'Nom',t:'text',v:e.nom},{k:'poste',l:'Poste',t:'text',v:e.poste},{k:'salaireService',l:'Salaire/service (DZD)',t:'number',v:e.salaireService}],data=>{Object.assign(e,{nom:data.nom,poste:data.poste,salaireService:+data.salaireService});sauvegarder();renderEmployes();},'#22c55e');}
 
-// ══════════════════════════════════════════
-// FOURNISSEURS
-// ══════════════════════════════════════════
-let showAddFourn=false,newFourn={nom:''},expandedFourn=null,fournModalId=null;
-function renderFournisseurs(){
-  const curSem=getCurrentSemaine(),semaines=getSemaines(),totalSem=totalTousFourn(semaineActive);
-  const semPrec=semaines[semaines.indexOf(semaineActive)+1];
-  const diff=semPrec?totalSem-totalTousFourn(semPrec):null;
-  let h=`<div class="card" style="margin-bottom:12px">
-    <div class="row">
-      <div><div style="font-size:10px;color:#555;font-weight:700;letter-spacing:1px">SEMAINE</div><div style="font-size:16px;font-weight:900;color:#a78bfa;margin-top:4px">${semaineActive}</div></div>
-      <div style="text-align:right"><div style="font-size:18px;font-weight:900;color:#ef4444">${fc(totalSem)}</div><div style="font-size:10px;color:#555">total achats</div>${diff!==null?`<div style="font-size:10px;font-weight:700;color:${diff>0?'#ef4444':'#22c55e'}">${diff>0?'▲':'▼'} ${fc(Math.abs(diff))}</div>`:''}</div>
-    </div>
-    ${semaines.length>1?`<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">${semaines.map(s=>`<button onclick="semaineActive='${s}';renderFournisseurs()" style="background:${s===semaineActive?'#a78bfa':'#2a2d33'};color:${s===semaineActive?'#fff':'#888'};border:none;border-radius:8px;padding:4px 10px;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">${s}</button>`).join('')}</div>`:''}
-  </div>`;
-  fournisseurs.forEach(f=>{
-    const achats=getAchats(f.id,semaineActive),total=totalFournisseur(f.id,semaineActive);
-    const isOpen=expandedFourn===f.id;
-    h+=`<div class="card" style="margin-bottom:8px;padding:0;overflow:hidden">
-      <div class="acc-header" onclick="expandedFourn=expandedFourn===${f.id}?null:${f.id};renderFournisseurs()">
-        <div><div style="font-weight:900;font-size:14px">🚚 ${f.nom}</div><div style="font-size:11px;color:#555;margin-top:2px">${achats.length} achat${achats.length>1?'s':''}</div></div>
-        <div style="text-align:right"><div style="color:#ef4444;font-weight:900;font-size:15px">${fc(total)}</div><div style="color:#555">${isOpen?'▲':'▼'}</div></div>
-      </div>
-      ${isOpen?`<div class="acc-body">
-        ${DAYS.map(d=>{const lignes=achats.filter(a=>a.jour===d);return `<div style="margin-bottom:8px"><div style="font-size:10px;font-weight:700;color:#a78bfa;margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">${d}</div>
-          ${lignes.length===0?'<div style="font-size:11px;color:#333">—</div>':''}
-          ${lignes.map(a=>`<div style="background:#111418;border-radius:7px;padding:7px 10px;margin-bottom:3px;display:flex;justify-content:space-between;align-items:center"><div><span style="font-size:12px;font-weight:700">${a.produit}</span><span style="font-size:10px;color:#555;margin-left:6px">${a.qte} ${a.unite}</span></div><div style="display:flex;align-items:center;gap:6px"><span style="color:#ef4444;font-weight:800;font-size:11px">${fc(a.prix)}</span>${semaineActive===curSem?`<button onclick="delAchat(${f.id},${a.id})" style="background:none;border:none;color:#555;cursor:pointer;font-size:15px">×</button>`:''}</div></div>`).join('')}
-        </div>`;}).join('')}
-        ${semaineActive===curSem?`<button class="btn-edit" onclick="openAddAchat(${f.id})">+ Ajouter achat</button>`:''}
-        <button class="btn-del" style="margin-left:8px" onclick="delFourn(${f.id})">🗑 Supprimer</button>
-      </div>`:''}
-    </div>`;
+// ══════ EMPLOYÉS ══════
+var expEmp=null, showAddEmpForm=false, semEmpAct=null;
+function semEmp(){ return semEmpAct || getSem(); }
+function rEmp(){
+  var sem = semEmp();
+  var masseSal = employes.reduce(function(s,e){return s+empSal(e);},0);
+  var allSems = new Set([sem]);
+  employes.forEach(function(e){
+    Object.keys(e.hpen||{}).forEach(function(s){allSems.add(s);});
+    Object.keys(e.hacp||{}).forEach(function(s){allSems.add(s);});
+  });
+  var semList = Array.from(allSems).sort().reverse();
+  var h = '';
+  h += '<div class="card" style="background:linear-gradient(135deg,#1a2e1a,#1c1f24);border-color:#22c55e30;margin-bottom:12px">';
+  h += '<div class="row"><div>';
+  h += '<div style="font-size:10px;color:#555;font-weight:700;letter-spacing:1px">MASSE SALARIALE</div>';
+  h += '<div style="font-size:20px;font-weight:900;color:#22c55e;margin-top:4px">'+fc(masseSal)+'</div>';
+  h += '<div style="font-size:11px;color:#a78bfa;margin-top:2px;font-weight:700">'+sem+'</div>';
+  h += '</div><div style="text-align:right"><div style="font-size:20px;font-weight:900;color:#555">'+employes.length+'</div>';
+  h += '<div style="font-size:10px;color:#555;font-weight:700">employé'+(employes.length>1?'s':'')+'</div></div></div>';
+  h += '<div id="semEmpBtns" style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"></div>';
+  h += '</div>';
+  employes.forEach(function(e){
+    var pl  = e.planning||{};
+    var pen = (e.hpen&&e.hpen[sem])?e.hpen[sem]:[];
+    var acp = (e.hacp&&e.hacp[sem])?e.hacp[sem]:[];
+    var sal = empSal(e);
+    var srv=0; DAYS_E.forEach(function(d){var s=pl[d]||'repos';if(s==='matin'||s==='soir')srv+=1;else if(s==='journee')srv+=2;});
+    var tpen=pen.reduce(function(s,p){return s+Number(p.m||200);},0);
+    var tacp=acp.reduce(function(s,a){return s+Number(a.m||0);},0);
+    var brut=srv*(e.sal||0);
+    var isO=String(expEmp)===String(e.id);
+    h += '<div class="card" style="margin-bottom:8px;padding:0;overflow:hidden">';
+    h += '<div class="ah" id="ehdr_'+e.id+'">';
+    h += '<div><div style="font-weight:900;font-size:14px">'+e.nom+'</div><div style="font-size:11px;color:#555;margin-top:2px">'+e.poste+' — '+fc(e.sal||0)+'/service</div></div>';
+    h += '<div style="display:flex;align-items:center;gap:8px"><div style="text-align:right"><div style="color:#22c55e;font-weight:900;font-size:15px">'+fc(sal)+'</div><div style="font-size:10px;color:#555">reste à payer</div></div>';
+    h += '<div style="color:#555">'+(isO?'▲':'▼')+'</div></div></div>';
+    if(isO){
+      h += '<div class="ab">';
+      h += '<div style="background:#111418;border-radius:10px;padding:10px;margin-bottom:10px;font-size:12px">';
+      h += '<div class="row" style="margin-bottom:4px"><span style="color:#888">'+srv+' services × '+fc(e.sal||0)+'</span><span style="font-weight:700">'+fc(brut)+'</span></div>';
+      h += '<div class="row" style="margin-bottom:4px"><span style="color:#888">Pénalités</span><span style="color:#ef4444;font-weight:700">− '+fc(tpen)+'</span></div>';
+      h += '<div class="row" style="margin-bottom:4px"><span style="color:#888">Acomptes</span><span style="color:#f59e0b;font-weight:700">− '+fc(tacp)+'</span></div>';
+      h += '<div class="sep"></div><div class="row"><span style="font-weight:800">Reste à payer</span><span style="color:#22c55e;font-weight:900">'+fc(sal)+'</span></div>';
+      h += '</div>';
+      // Planning
+      h += '<div style="font-size:10px;color:#444;font-weight:700;letter-spacing:1px;margin-bottom:8px">PLANNING</div>';
+      h += '<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px">';
+      DAYS_E.forEach(function(d){
+        var s=pl[d]||'repos';
+        var bg=s==='matin'?'#f59e0b':s==='soir'?'#3b82f6':s==='journee'?'#22c55e':'#2a2d33';
+        var ico=s==='matin'?'🌅':s==='soir'?'🌙':s==='journee'?'☀️':'—';
+        h += '<div style="text-align:center"><div style="font-size:9px;color:#444;margin-bottom:3px;font-weight:700">'+d+'</div>';
+        h += '<button style="width:38px;height:38px;border-radius:9px;border:none;cursor:pointer;font-size:13px;background:'+bg+';color:#fff;font-family:inherit" id="db_'+e.id+'_'+d+'">'+ico+'</button></div>';
+      });
+      h += '</div>';
+      // Penalites
+      h += '<div style="font-size:10px;color:#444;font-weight:700;letter-spacing:1px;margin-bottom:6px">PÉNALITÉS</div>';
+      if(!pen.length) h += '<div style="font-size:12px;color:#444;margin-bottom:6px">Aucune pénalité</div>';
+      pen.forEach(function(p){
+        h += '<div style="background:#2a1a1a;border-radius:8px;padding:7px 10px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center">';
+        h += '<div><span style="font-size:12px">'+(p.type==='retard'?'⏰ Retard':'🍳 Faute cuisine')+'</span><span style="font-size:10px;color:#555;margin-left:6px">'+(p.date||'')+'</span></div>';
+        h += '<div style="display:flex;align-items:center;gap:6px"><span style="color:#ef4444;font-weight:700;font-size:12px">−'+fc(p.m||200)+'</span>';
+        h += '<button style="background:none;border:none;color:#555;cursor:pointer;font-size:15px;font-family:inherit" id="dpen_'+e.id+'_'+p.id+'">×</button></div></div>';
+      });
+      h += '<div style="display:flex;gap:8px;margin-bottom:12px;margin-top:6px">';
+      h += '<button style="background:#f59e0b22;border:1px solid #f59e0b40;color:#f59e0b;border-radius:8px;padding:7px 10px;cursor:pointer;font-size:11px;font-weight:700;font-family:inherit" id="aret_'+e.id+'">⏰ Retard</button>';
+      h += '<button style="background:#ef444422;border:1px solid #ef444440;color:#ef4444;border-radius:8px;padding:7px 10px;cursor:pointer;font-size:11px;font-weight:700;font-family:inherit" id="acui_'+e.id+'">🍳 Faute cuisine</button>';
+      h += '</div>';
+      // Acomptes
+      h += '<div style="font-size:10px;color:#444;font-weight:700;letter-spacing:1px;margin-bottom:6px">💵 ACOMPTES</div>';
+      if(!acp.length) h += '<div style="font-size:12px;color:#444;margin-bottom:6px">Aucun acompte</div>';
+      acp.forEach(function(a){
+        h += '<div style="background:#1a1800;border-radius:8px;padding:7px 10px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center">';
+        h += '<div><span style="font-size:12px">💵 Acompte</span><span style="font-size:10px;color:#555;margin-left:6px">'+(a.date||'')+'</span></div>';
+        h += '<div style="display:flex;align-items:center;gap:6px"><span style="color:#f59e0b;font-weight:700;font-size:12px">−'+fc(a.m||0)+'</span>';
+        h += '<button style="background:none;border:none;color:#555;cursor:pointer;font-size:15px;font-family:inherit" id="dacp_'+e.id+'_'+a.id+'">×</button></div></div>';
+      });
+      h += '<div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;margin-top:6px">';
+      h += '<input id="acpinp_'+e.id+'" type="number" placeholder="Montant acompte (DZD)" style="flex:1;background:#111418;border:1px solid #f59e0b60;border-radius:8px;padding:8px 10px;color:#f0f0f0;font-size:12px;font-family:inherit"/>';
+      h += '<button style="background:#f59e0b;border:none;color:#000;border-radius:8px;padding:8px 12px;cursor:pointer;font-size:12px;font-weight:900;font-family:inherit" id="aacp_'+e.id+'">+ Acompte</button>';
+      h += '</div>';
+      h += '<div style="display:flex;gap:8px"><button class="bedit" id="eemp_'+e.id+'">✏️ Modifier</button><button class="bdel" id="demp_'+e.id+'">🗑 Supprimer</button></div>';
+      h += '</div>';
+    }
+    h += '</div>';
+  });
+  if(showAddEmpForm){
+    h += '<div class="card" style="border-color:#22c55e30;margin-bottom:10px">';
+    h += '<div style="font-weight:900;margin-bottom:10px">Nouvel employé</div>';
+    h += '<input class="inp" id="empnom" placeholder="Nom complet"/>';
+    h += '<input class="inp" id="empposte" placeholder="Poste"/>';
+    h += '<input class="inp" id="empsal" type="number" placeholder="Salaire par service (DZD)"/>';
+    h += '<div style="display:flex;gap:8px"><button class="btn bgr" id="addempbtn">Ajouter</button><button class="btn bg" id="cancelempbtn">Annuler</button></div>';
+    h += '</div>';
+  }
+  h += '<button style="width:100%;background:transparent;border:2px dashed #22c55e;color:#22c55e;border-radius:12px;padding:12px;font-weight:800;cursor:pointer;font-size:13px;font-family:inherit" id="showempbtn">+ Ajouter un employé</button>';
+  document.getElementById('emp').innerHTML = h;
+
+  // Semaine buttons
+  var bc = document.getElementById('semEmpBtns');
+  if(bc && semList.length>1){
+    semList.forEach(function(s){
+      var btn=document.createElement('button');
+      btn.textContent=s;
+      btn.style.cssText='background:'+(s===sem?'#22c55e':'#2a2d33')+';color:'+(s===sem?'#fff':'#888')+';border:none;border-radius:8px;padding:4px 10px;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:4px';
+      btn.onclick=function(){semEmpAct=s;rEmp();};
+      bc.appendChild(btn);
+    });
+  }
+  // Accordion
+  employes.forEach(function(e){
+    var hdr=document.getElementById('ehdr_'+e.id);
+    if(hdr) hdr.onclick=function(){expEmp=String(expEmp)===String(e.id)?null:e.id;rEmp();};
+    // Day buttons
+    DAYS_E.forEach(function(d){
+      var db=document.getElementById('db_'+e.id+'_'+d);
+      if(db) db.onclick=function(ev){ev.stopPropagation();cycleS(e.id,d);};
+    });
+    // Penalites
+    var ar=document.getElementById('aret_'+e.id);
+    var ac=document.getElementById('acui_'+e.id);
+    if(ar) ar.onclick=function(){addPen(e.id,'retard');};
+    if(ac) ac.onclick=function(){addPen(e.id,'cuisine');};
+    var pen2=(e.hpen&&e.hpen[sem])?e.hpen[sem]:[];
+    pen2.forEach(function(p){
+      var db=document.getElementById('dpen_'+e.id+'_'+p.id);
+      if(db) db.onclick=function(){delPen(e.id,p.id);};
+    });
+    // Acomptes
+    var acp2=(e.hacp&&e.hacp[sem])?e.hacp[sem]:[];
+    acp2.forEach(function(a){
+      var db=document.getElementById('dacp_'+e.id+'_'+a.id);
+      if(db) db.onclick=function(){delAcp(e.id,a.id);};
+    });
+    var ainp=document.getElementById('aacp_'+e.id);
+    if(ainp) ainp.onclick=function(){
+      var val=document.getElementById('acpinp_'+e.id).value;
+      if(val) addAcp(e.id,val);
+    };
+    // Edit/del
+    var eb=document.getElementById('eemp_'+e.id);
+    var db2=document.getElementById('demp_'+e.id);
+    if(eb) eb.onclick=function(){
+      openM("✏️ Modifier l'employé",[
+        {k:'nom',l:'Nom',t:'text',v:e.nom},
+        {k:'poste',l:'Poste',t:'text',v:e.poste},
+        {k:'sal',l:'Salaire/service (DZD)',t:'number',v:e.sal},
+      ],function(d){Object.assign(e,{nom:d.nom,poste:d.poste,sal:+d.sal});save();rEmp();},'#22c55e');
+    };
+    if(db2) db2.onclick=function(){employes=employes.filter(function(x){return String(x.id)!==String(e.id);});save();rEmp();};
+  });
+  // Add form
+  var sb=document.getElementById('showempbtn');
+  if(sb) sb.onclick=function(){showAddEmpForm=true;rEmp();};
+  var cb=document.getElementById('cancelempbtn');
+  if(cb) cb.onclick=function(){showAddEmpForm=false;rEmp();};
+  var ab=document.getElementById('addempbtn');
+  if(ab) ab.onclick=function(){
+    var n=document.getElementById('empnom').value;
+    var s=document.getElementById('empsal').value;
+    if(!n||!s) return;
+    employes.push({id:uid(),nom:n,poste:document.getElementById('empposte').value,sal:+s,planning:{},hpen:{},hacp:{}});
+    showAddEmpForm=false;save();rEmp();
+  };
+}
+function cycleS(eid,d){
+  var e=employes.find(function(x){return String(x.id)===String(eid);});
+  if(!e) return;
+  if(!e.planning) e.planning={};
+  var cur=e.planning[d]||'repos';
+  e.planning[d]=cur==='repos'?'matin':cur==='matin'?'soir':cur==='soir'?'journee':'repos';
+  save();rEmp();
+}
+function addPen(eid,type){
+  var e=employes.find(function(x){return String(x.id)===String(eid);});
+  if(!e) return;
+  var sem=semEmp();
+  if(!e.hpen) e.hpen={};
+  if(!e.hpen[sem]) e.hpen[sem]=[];
+  e.hpen[sem].push({id:uid(),type:type,m:200,date:new Date().toLocaleDateString('fr-FR')});
+  save();rEmp();
+}
+function delPen(eid,pid){
+  var e=employes.find(function(x){return String(x.id)===String(eid);});
+  if(!e) return;
+  var sem=semEmp();
+  if(e.hpen&&e.hpen[sem]) e.hpen[sem]=e.hpen[sem].filter(function(p){return String(p.id)!==String(pid);});
+  save();rEmp();
+}
+function addAcp(eid,montant){
+  var e=employes.find(function(x){return String(x.id)===String(eid);});
+  if(!e||!montant) return;
+  var sem=semEmp();
+  if(!e.hacp) e.hacp={};
+  if(!e.hacp[sem]) e.hacp[sem]=[];
+  e.hacp[sem].push({id:uid(),m:+montant,date:new Date().toLocaleDateString('fr-FR')});
+  save();rEmp();
+}
+function delAcp(eid,aid){
+  var e=employes.find(function(x){return String(x.id)===String(eid);});
+  if(!e) return;
+  var sem=semEmp();
+  if(e.hacp&&e.hacp[sem]) e.hacp[sem]=e.hacp[sem].filter(function(a){return String(a.id)!==String(aid);});
+  save();rEmp();
+}
+
+// ══════ FOURNISSEURS ══════
+var expFourn=null, showAddFourn=false, semFAct=null;
+function semF(){ return semFAct || getSem(); }
+function rFourn(){
+  var sem=semF();
+  var tot=allFournTotal(sem);
+  var allSems=new Set([sem]);
+  Object.keys(historiqueS).forEach(function(s){allSems.add(s);});
+  var semList=Array.from(allSems).sort().reverse();
+  var prev=semList[semList.indexOf(sem)+1];
+  var diff=prev?tot-allFournTotal(prev):null;
+  var h='';
+  h+='<div class="card" style="margin-bottom:12px"><div class="row">';
+  h+='<div><div style="font-size:10px;color:#555;font-weight:700;letter-spacing:1px">SEMAINE</div><div style="font-size:18px;font-weight:900;color:#a78bfa;margin-top:4px">'+sem+'</div></div>';
+  h+='<div style="text-align:right"><div style="font-size:18px;font-weight:900;color:#ef4444">'+fc(tot)+'</div><div style="font-size:10px;color:#555">total achats</div>';
+  if(diff!==null) h+='<div style="font-size:10px;font-weight:700;color:'+(diff>0?'#ef4444':'#22c55e')+'">'+(diff>0?'▲':'▼')+' '+fc(Math.abs(diff))+'</div>';
+  h+='</div></div>';
+  h+='<div id="semFBtns" style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"></div>';
+  h+='</div>';
+  fournisseurs.forEach(function(f){
+    var achats=(historiqueS[sem]&&historiqueS[sem][f.id])?historiqueS[sem][f.id]:[];
+    var ftot=fournTotal(f.id,sem);
+    var isO=String(expFourn)===String(f.id);
+    h+='<div class="card" style="margin-bottom:8px;padding:0;overflow:hidden">';
+    h+='<div class="ah" id="fhdr_'+f.id+'">';
+    h+='<div><div style="font-weight:900;font-size:14px">🚚 '+f.nom+'</div><div style="font-size:11px;color:#555;margin-top:2px">'+achats.length+' achat'+(achats.length>1?'s':'')+'</div></div>';
+    h+='<div style="text-align:right"><div style="color:#ef4444;font-weight:900;font-size:15px">'+fc(ftot)+'</div><div style="color:#555">'+(isO?'▲':'▼')+'</div></div>';
+    h+='</div>';
+    if(isO){
+      h+='<div class="ab">';
+      DAYS_F.forEach(function(d){
+        var lignes=achats.filter(function(a){return a.jour===d;});
+        h+='<div style="margin-bottom:8px"><div style="font-size:10px;font-weight:700;color:#a78bfa;margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">'+d+'</div>';
+        if(!lignes.length) h+='<div style="font-size:11px;color:#333">—</div>';
+        lignes.forEach(function(a){
+          h+='<div style="background:#111418;border-radius:7px;padding:7px 10px;margin-bottom:3px;display:flex;justify-content:space-between;align-items:center">';
+          h+='<div><span style="font-size:12px;font-weight:700">'+a.produit+'</span><span style="font-size:10px;color:#555;margin-left:6px">'+a.qte+' '+a.u+'</span></div>';
+          h+='<div style="display:flex;align-items:center;gap:6px"><span style="color:#ef4444;font-weight:800;font-size:11px">'+fc(a.prix)+'</span>';
+          if(sem===getSem()) h+='<button style="background:none;border:none;color:#555;cursor:pointer;font-size:15px;font-family:inherit" id="dach_'+f.id+'_'+a.id+'">×</button>';
+          h+='</div></div>';
+        });
+        h+='</div>';
+      });
+      if(sem===getSem()) h+='<button class="bedit" id="addachbtn_'+f.id+'">+ Ajouter achat</button>';
+      h+='<button class="bdel" style="margin-left:8px" id="dfourn_'+f.id+'">🗑 Supprimer</button>';
+      h+='</div>';
+    }
+    h+='</div>';
   });
   if(showAddFourn){
-    h+=`<div class="card" style="border-color:#a78bfa40;margin-bottom:10px">
-      <div style="font-weight:900;margin-bottom:10px">Nouveau fournisseur</div>
-      <input class="inp" placeholder="Nom (ex: Poulet, Légumes…)" value="${newFourn.nom}" oninput="newFourn.nom=this.value"/>
-      <div style="display:flex;gap:8px">
-        <button class="btn" style="background:#a78bfa" onclick="addFourn()">Ajouter</button>
-        <button class="btn btn-gray" onclick="showAddFourn=false;renderFournisseurs()">Annuler</button>
-      </div>
-    </div>`;
+    h+='<div class="card" style="border-color:#a78bfa40;margin-bottom:10px">';
+    h+='<div style="font-weight:900;margin-bottom:10px">Nouveau fournisseur</div>';
+    h+='<input class="inp" id="fnomip" placeholder="Nom (ex: Poulet, Légumes...)"/>';
+    h+='<div style="display:flex;gap:8px"><button class="btn" style="background:#a78bfa" id="addfbtn">Ajouter</button><button class="btn bg" id="cancelfbtn">Annuler</button></div>';
+    h+='</div>';
   }
-  h+=`<button class="btn-outline" style="border-color:#a78bfa;color:#a78bfa" onclick="showAddFourn=true;renderFournisseurs()">+ Ajouter un fournisseur</button>`;
-  document.getElementById('page-fournisseurs').innerHTML=h;
-}
-function openAddAchat(fId){
-  fournModalId=fId;
-  openModal('+ Ajouter achat',[
-    {k:'jour',    l:'Jour',      t:'select',  v:'Lun',opts:DAYS.map(d=>({v:d,l:d}))},
-    {k:'produit', l:'Produit',   t:'text',    v:''},
-    {k:'qte',     l:'Quantité',  t:'number',  v:''},
-    {k:'unite',   l:'Unité',     t:'select',  v:'kg',opts:UNITE_OPTIONS},
-    {k:'prix',    l:'Prix total (DZD)',t:'number',v:''},
-  ],data=>{
-    if(!data.produit||!data.prix)return;
-    if(!historiqueSemaines[semaineActive])historiqueSemaines[semaineActive]={};
-    if(!historiqueSemaines[semaineActive][fournModalId])historiqueSemaines[semaineActive][fournModalId]=[];
-    historiqueSemaines[semaineActive][fournModalId].push({id:uid(),jour:data.jour,produit:data.produit,qte:data.qte,unite:data.unite,prix:+data.prix});
-    sauvegarder();renderFournisseurs();
-  },'#a78bfa');
-}
-function addFourn(){if(!newFourn.nom)return;fournisseurs.push({id:uid(),nom:newFourn.nom});newFourn={nom:''};showAddFourn=false;sauvegarder();renderFournisseurs();}
-function delFourn(id){fournisseurs=fournisseurs.filter(f=>String(f.id)!==String(id));sauvegarder();renderFournisseurs();}
-function delAchat(fId,aId){if(!historiqueSemaines[semaineActive]||!historiqueSemaines[semaineActive][fId])return;historiqueSemaines[semaineActive][fId]=historiqueSemaines[semaineActive][fId].filter(a=>a.id!==aId);sauvegarder();renderFournisseurs();}
-
-// ══════════════════════════════════════════
-// RAPPORT
-// ══════════════════════════════════════════
-function renderRapport(){
-  const s=calcStats();
-  const fixes=charges.filter(c=>c.type==='fixe').reduce((a,c)=>a+Number(c.montant),0);
-  const vars=charges.filter(c=>c.type==='variable').reduce((a,c)=>a+Number(c.montant),0);
-  let h=`<div style="background:linear-gradient(135deg,#c94400,#f97316);border-radius:16px;padding:20px;margin-bottom:14px;text-align:center">
-    <div style="font-size:11px;opacity:0.85;font-weight:700;letter-spacing:1px">PROFIT NET</div>
-    <div style="font-size:36px;font-weight:900;margin-top:4px">${fc(s.profitNet)}</div>
-    <div style="font-size:12px;opacity:0.8;margin-top:4px">Marge nette: ${fp(s.margeNette)}</div>
-  </div>
-  <div class="card">
-    <div style="font-weight:900;margin-bottom:10px;font-size:13px">💰 Compte de Résultat</div>
-    ${[
-      {l:"Chiffre d'affaires", v:s.totalCA,   c:"#f97316",ico:"➕"},
-      {l:"Coût ingrédients",   v:s.totalCout, c:"#ef4444", ico:"➖"},
-      {l:"PROFIT BRUT",        v:s.profitBrut,c:"#22c55e", ico:"═",b:true},
-      {l:"Charges fixes",      v:fixes,        c:"#ef4444", ico:"➖"},
-      {l:"Charges variables",  v:vars,         c:"#ef4444", ico:"➖"},
-      {l:"Masse salariale",    v:s.masseSal,  c:"#ef4444", ico:"➖"},
-      {l:"Achats fournisseurs",v:s.totalFourn,c:"#ef4444", ico:"➖"},
-      {l:"PROFIT NET",         v:s.profitNet, c:s.profitNet>=0?'#22c55e':'#ef4444',ico:"═",b:true},
-    ].map(r=>`<div class="fin-row" style="font-weight:${r.b?900:500}">
-      <span style="color:#aaa;font-size:12px">${r.ico} ${r.l}</span>
-      <span style="color:${r.c};font-size:12px;font-weight:${r.b?900:600}">${fc(Math.abs(r.v))}</span>
-    </div>`).join('')}
-  </div>
-  <div class="grid2">
-    <div class="card"><div style="font-size:10px;color:#555;font-weight:700">Nb ventes</div><div style="font-size:20px;font-weight:900;color:#a78bfa;margin-top:4px">${ventes.length}</div></div>
-    <div class="card"><div style="font-size:10px;color:#555;font-weight:700">Panier moyen</div><div style="font-size:16px;font-weight:900;color:#60a5fa;margin-top:4px">${fc(s.totalCA/(ventes.length||1))}</div></div>
-    <div class="card"><div style="font-size:10px;color:#555;font-weight:700">Marge brute</div><div style="font-size:20px;font-weight:900;color:#22c55e;margin-top:4px">${fp(s.margeBrute)}</div></div>
-    <div class="card"><div style="font-size:10px;color:#555;font-weight:700">Marge nette</div><div style="font-size:20px;font-weight:900;color:${s.margeNette>=0?'#22c55e':'#ef4444'};margin-top:4px">${fp(s.margeNette)}</div></div>
-  </div>`;
-  if(employes.length>0){
-    h+=`<div class="card"><div style="font-weight:900;margin-bottom:10px;font-size:13px">👥 Salaires semaine</div>`;
-    employes.forEach(e=>{
-      let srv=0;DAYS_EMP.forEach(d=>{const s=(e.planning||{})[d]||'repos';if(s==='matin'||s==='soir')srv+=1;else if(s==='journee')srv+=2;});
-      const acp=(e.acomptes||[]).reduce((s,a)=>s+Number(a.montant||0),0);
-      h+=`<div class="fin-row"><div><div style="font-weight:700;font-size:12px">${e.nom}</div><div style="font-size:10px;color:#555">${e.poste} — ${srv} services${acp>0?' 💵 Acompte: '+fc(acp):''}</div></div><span style="color:#22c55e;font-weight:900;font-size:12px">${fc(salaireEmp(e))}</span></div>`;
+  h+='<button style="width:100%;background:transparent;border:2px dashed #a78bfa;color:#a78bfa;border-radius:12px;padding:12px;font-weight:800;cursor:pointer;font-size:13px;font-family:inherit" id="showfbtn">+ Ajouter un fournisseur</button>';
+  document.getElementById('fourn').innerHTML=h;
+  // Semaine buttons
+  var bc=document.getElementById('semFBtns');
+  if(bc&&semList.length>1){
+    semList.forEach(function(s){
+      var btn=document.createElement('button');
+      btn.textContent=s;
+      btn.style.cssText='background:'+(s===sem?'#a78bfa':'#2a2d33')+';color:'+(s===sem?'#fff':'#888')+';border:none;border-radius:8px;padding:4px 10px;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:4px';
+      btn.onclick=function(){semFAct=s;rFourn();};
+      bc.appendChild(btn);
     });
-    h+=`<div class="row" style="padding-top:10px;font-weight:900"><span>Total</span><span style="color:#ef4444;font-size:15px">${fc(s.masseSal)}</span></div></div>`;
   }
-  if(recettes.length>0){
-    h+=`<div class="card"><div style="font-weight:900;margin-bottom:10px;font-size:13px">🍔 Coûts par recette</div>`;
-    recettes.forEach(r=>{
-      const cout=coutRecette(r);const marge=r.prix>0?((r.prix-cout)/r.prix)*100:0;
-      h+=`<div class="fin-row"><div><div style="font-size:12px;font-weight:700">${r.nom}</div><div style="font-size:10px;color:#555">${r.cat}</div></div><div style="text-align:right"><div style="color:#f97316;font-size:12px;font-weight:700">${fc(r.prix)}</div><div style="font-size:10px;color:${marge>50?'#22c55e':marge>30?'#f59e0b':'#ef4444'}">Marge: ${fp(marge)}</div></div></div>`;
+  // Events
+  fournisseurs.forEach(function(f){
+    var hdr=document.getElementById('fhdr_'+f.id);
+    if(hdr) hdr.onclick=function(){expFourn=String(expFourn)===String(f.id)?null:f.id;rFourn();};
+    var achats=(historiqueS[sem]&&historiqueS[sem][f.id])?historiqueS[sem][f.id]:[];
+    achats.forEach(function(a){
+      var db=document.getElementById('dach_'+f.id+'_'+a.id);
+      if(db) db.onclick=function(){
+        if(!historiqueS[sem]||!historiqueS[sem][f.id]) return;
+        historiqueS[sem][f.id]=historiqueS[sem][f.id].filter(function(x){return String(x.id)!==String(a.id);});
+        save();rFourn();
+      };
     });
-    h+=`</div>`;
+    var addb=document.getElementById('addachbtn_'+f.id);
+    if(addb) addb.onclick=function(){
+      openM('+ Ajouter achat',[
+        {k:'jour',l:'Jour',t:'select',v:'Sam',opts:DAYS_F.map(function(d){return {v:d,l:d};})},
+        {k:'produit',l:'Produit',t:'text',v:''},
+        {k:'qte',l:'Quantité',t:'number',v:''},
+        {k:'u',l:'Unité',t:'select',v:'kg',opts:UNITES.map(function(u){return {v:u,l:u};})},
+        {k:'prix',l:'Prix total (DZD)',t:'number',v:''},
+      ],function(d){
+        if(!d.produit||!d.prix) return;
+        if(!historiqueS[sem]) historiqueS[sem]={};
+        if(!historiqueS[sem][f.id]) historiqueS[sem][f.id]=[];
+        historiqueS[sem][f.id].push({id:uid(),jour:d.jour,produit:d.produit,qte:d.qte,u:d.u,prix:+d.prix});
+        save();rFourn();
+      },'#a78bfa');
+    };
+    var db2=document.getElementById('dfourn_'+f.id);
+    if(db2) db2.onclick=function(){fournisseurs=fournisseurs.filter(function(x){return String(x.id)!==String(f.id);});save();rFourn();};
+  });
+  var sf=document.getElementById('showfbtn');
+  if(sf) sf.onclick=function(){showAddFourn=true;rFourn();};
+  if(showAddFourn){
+    var ab=document.getElementById('addfbtn');
+    var cb=document.getElementById('cancelfbtn');
+    if(ab) ab.onclick=function(){
+      var n=document.getElementById('fnomip').value;
+      if(!n) return;
+      fournisseurs.push({id:uid(),nom:n});
+      showAddFourn=false;save();rFourn();
+    };
+    if(cb) cb.onclick=function(){showAddFourn=false;rFourn();};
   }
-  document.getElementById('page-rapport').innerHTML=h;
 }
 
-// ══════════════════════════════════════════
-// INIT
-// ══════════════════════════════════════════
-chargerDonnees();
+// ══════ RAPPORT ══════
+function rRapp(){
+  var s=stats();
+  var fix=charges.filter(function(c){return c.type==='fixe';}).reduce(function(s,c){return s+Number(c.montant);},0);
+  var vr=charges.filter(function(c){return c.type==='variable';}).reduce(function(s,c){return s+Number(c.montant);},0);
+  var h='';
+  h+='<div style="background:linear-gradient(135deg,#c94400,#f97316);border-radius:16px;padding:20px;margin-bottom:14px;text-align:center">';
+  h+='<div style="font-size:11px;opacity:0.85;font-weight:700;letter-spacing:1px">PROFIT NET</div>';
+  h+='<div style="font-size:36px;font-weight:900;margin-top:4px">'+fc(s.pn)+'</div>';
+  h+='<div style="font-size:12px;opacity:0.8;margin-top:4px">Marge nette: '+fp(s.mn)+'</div>';
+  h+='</div>';
+  h+='<div class="card"><div style="font-weight:900;margin-bottom:10px;font-size:13px">💰 Compte de Résultat</div>';
+  [
+    {l:"Chiffre d'affaires",v:s.ca,  c:"#f97316",ico:"➕"},
+    {l:"Coût ingrédients", v:s.cout, c:"#ef4444", ico:"➖"},
+    {l:"PROFIT BRUT",      v:s.pb,   c:"#22c55e", ico:"═",b:true},
+    {l:"Charges fixes",    v:fix,    c:"#ef4444", ico:"➖"},
+    {l:"Charges variables",v:vr,     c:"#ef4444", ico:"➖"},
+    {l:"Masse salariale",  v:s.sal,  c:"#ef4444", ico:"➖"},
+    {l:"Fournisseurs",     v:s.four, c:"#ef4444", ico:"➖"},
+    {l:"PROFIT NET",       v:s.pn,   c:s.pn>=0?"#22c55e":"#ef4444",ico:"═",b:true},
+  ].forEach(function(r){
+    h+='<div class="frow" style="font-weight:'+(r.b?900:500)+'">';
+    h+='<span style="color:#aaa;font-size:12px">'+r.ico+' '+r.l+'</span>';
+    h+='<span style="color:'+r.c+';font-size:12px;font-weight:'+(r.b?900:600)+'">'+fc(Math.abs(r.v))+'</span>';
+    h+='</div>';
+  });
+  h+='</div>';
+  h+='<div class="g2">';
+  h+='<div class="card"><div style="font-size:10px;color:#555;font-weight:700">Nb ventes</div><div style="font-size:20px;font-weight:900;color:#a78bfa;margin-top:4px">'+ventes.length+'</div></div>';
+  h+='<div class="card"><div style="font-size:10px;color:#555;font-weight:700">Panier moyen</div><div style="font-size:16px;font-weight:900;color:#60a5fa;margin-top:4px">'+fc(s.ca/(ventes.length||1))+'</div></div>';
+  h+='<div class="card"><div style="font-size:10px;color:#555;font-weight:700">Marge brute</div><div style="font-size:20px;font-weight:900;color:#22c55e;margin-top:4px">'+fp(s.mb)+'</div></div>';
+  h+='<div class="card"><div style="font-size:10px;color:#555;font-weight:700">Marge nette</div><div style="font-size:20px;font-weight:900;color:'+(s.mn>=0?'#22c55e':'#ef4444')+';margin-top:4px">'+fp(s.mn)+'</div></div>';
+  h+='</div>';
+  if(employes.length){
+    h+='<div class="card"><div style="font-weight:900;margin-bottom:10px;font-size:13px">👥 Salaires semaine</div>';
+    employes.forEach(function(e){
+      var sem=getSem();
+      var pl=e.planning||{};
+      var srv=0; DAYS_E.forEach(function(d){var s=pl[d]||'repos';if(s==='matin'||s==='soir')srv+=1;else if(s==='journee')srv+=2;});
+      var acp=(e.hacp&&e.hacp[sem])?e.hacp[sem].reduce(function(s,a){return s+Number(a.m||0);},0):0;
+      h+='<div class="frow"><div><div style="font-weight:700;font-size:12px">'+e.nom+'</div>';
+      h+='<div style="font-size:10px;color:#555">'+e.poste+' — '+srv+' services'+(acp>0?' | 💵 '+fc(acp):'')+'</div></div>';
+      h+='<span style="color:#22c55e;font-weight:900;font-size:12px">'+fc(empSal(e))+'</span></div>';
+    });
+    h+='<div class="row" style="padding-top:10px;font-weight:900"><span>Total</span><span style="color:#ef4444;font-size:15px">'+fc(s.sal)+'</span></div>';
+    h+='</div>';
+  }
+  document.getElementById('rapp').innerHTML=h;
+}
+
+// ══════ INIT ══════
+load();
 </script>
 
 </body>
